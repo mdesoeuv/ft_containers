@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/25 15:41:33 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 15:47:41 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,11 @@ namespace ft
 				{
 					c[i++] = *inc;
 				}
+			}
+
+			allocator_type get_allocator() const
+			{
+				return (allocator_type);
 			}
 		
 		/* ---------- element access ---------- */
