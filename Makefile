@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/04/22 14:35:37 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/04/25 11:00:33 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,17 @@ OBJS_DIR	:=	objs/
 
 OBJS_FILES	:=	$(addprefix $(OBJS_DIR), $(OBJS))
 
-$(OBJS_DIR)%.o:	$(SRCS_DIR)%.cpp Makefile
+HEADERS	:= stack.hpp
+
+INC_DIR		:= inc/
+
+$(OBJS_DIR)%.o:	$(SRCS_DIR)%.cpp Makefile $(addprefix $(INC_DIR), $(HEADERS))
 				mkdir -p $(OBJS_DIR)
-				$(CXX) $(CXXFLAGS) -c $< -o $@
+				$(CXX) $(CXXFLAGS)  -c $< -o $@
 
 all			:	$(NAME)
 
 $(NAME)		:	$(OBJS_FILES)
-				$(CXX) $(CXXFLAGS) $(OBJS_FILES) -o $(NAME)
+				$(CXX) $(CXXFLAGS) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
 				
 				

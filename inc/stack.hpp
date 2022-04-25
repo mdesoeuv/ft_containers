@@ -9,11 +9,11 @@ namespace ft
 	class stack
 	{
 
-		using container_type = Container;
-		using value_type = Container::value_type;
-		using size_type = Container::size_type;
-		using reference = Container::reference;
-		using const_reference = Container::const_reference;
+		typedef Container container_type;  //typename or not typename ?
+		typedef typename Container::value_type value_type;
+		typedef typename Container::size_type size_type;
+		typedef typename Container::reference reference;
+		typedef typename Container::const_reference const_reference;
 
 	private:
 		
@@ -67,7 +67,7 @@ namespace ft
 
 		void		pop(void)
 		{
-			c.pop();
+			c.pop_back();
 		}
 
 	};
@@ -107,8 +107,6 @@ namespace ft
 	{
 		return (lhs.c >= rhs.c);
 	}
-
-
 
 }
 
