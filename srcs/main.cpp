@@ -6,12 +6,13 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/25 11:31:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 14:54:03 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "../inc/stack.hpp"
+#include "../inc/vector.hpp"
 
 int main(void)
 {
