@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/04/25 11:00:33 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/04/25 15:43:18 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,5 +40,13 @@ all			:	$(NAME)
 
 $(NAME)		:	$(OBJS_FILES)
 				$(CXX) $(CXXFLAGS) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
-				
-				
+
+clean		:
+				rm -rf $(OBJS_DIR)
+
+fclean		:	clean
+				rm -f $(NAME)
+
+re			:	fclean all
+
+.PHONY		:	all re clean fclean
