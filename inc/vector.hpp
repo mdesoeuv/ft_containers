@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/25 18:34:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 09:39:32 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ namespace ft
 		
 		/* ---------- constructors + destructor ---------- */
 		
-			vector(void) : size(0), allocated_size(0)
+			vector(void) : c(NULL), size(0), allocated_size(0)
 			{}
 
-			explicit vector(const Allocator& alloc) : size(0), allocated_size(0), alloc(alloc)
+			explicit vector(const Allocator& alloc) : c(NULL), size(0), allocated_size(0), alloc(alloc)
 			{	
 			}
 
@@ -257,6 +257,71 @@ namespace ft
 		
 		/* ---------- element access ---------- */
 
+			reference	at(size_type pos)
+			{
+				if (pos >= size)
+					throw (std::out_of_range);
+				return (c[pos]);
+			}
+			
+			const_reference	at(size_type pos)
+			{		
+				if (pos >= size)
+					throw (std::out_of_range);
+				return (c[pos]);	
+			}
+			
+			reference	operator[](size_type pos)
+			{
+				return (c[pos]);
+			}
+
+			const_reference	operator[](size_type pos)
+			{
+				return (c[pos]);
+			}
+
+			reference	front(void)
+			{
+				if (size == 0)	// to avoid undefined behavior
+					return (0);
+				return (c[0]);
+			}
+
+			const_reference	front(void)
+			{
+				if (size == 0)
+					return (0);
+				return (c[0]);
+			}
+
+			reference	back(void)
+			{
+				if (size == 0)	// to avoid undefined behavior
+					return (0);
+				return (c[size - 1]);
+			}
+
+			const_reference	back(void)
+			{
+				if (size == 0)	// to avoid undefined behavior
+					return (0);
+				return (c[size - 1]);
+			}
+
+			T*	data(void)
+			{
+				return (c);
+			}
+
+			const T*	data(void) const
+			{
+				return (c);
+			}
+
+		/* ---------- Iterators ---------- */
+
+		
 			
 	};
 }

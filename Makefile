@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/04/25 15:43:18 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/04/26 09:20:16 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJS_DIR	:=	objs/
 
 OBJS_FILES	:=	$(addprefix $(OBJS_DIR), $(OBJS))
 
-HEADERS	:= stack.hpp
+HEADERS	:= stack.hpp vector.hpp
 
 INC_DIR		:= inc/
 
