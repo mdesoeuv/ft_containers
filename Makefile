@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/04/26 09:20:16 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/04/26 11:37:57 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CXX		:=	c++
 
 CXXFLAGS	:=	-Wall -Werror -Wextra -std=c++98
 
-SRCS	:=	main.cpp
+SRCS	:=	main_vector.cpp
 
 SRCS_DIR	:=	srcs/
 

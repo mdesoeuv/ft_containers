@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 10:34:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 11:50:23 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft
 		private:
 
 			T*				c;
-			size_type		size;
+			size_type		_size;
 			size_type		allocated_size;
 			allocator_type	alloc;
 		
@@ -90,14 +90,14 @@ namespace ft
 		
 		/* ---------- constructors + destructor ---------- */
 		
-			vector(void) : c(NULL), size(0), allocated_size(0)
+			vector(void) : c(NULL), _size(0), allocated_size(0)
 			{}
 
-			explicit vector(const Allocator& alloc) : c(NULL), size(0), allocated_size(0), alloc(alloc)
+			explicit vector(const Allocator& alloc) : c(NULL), _size(0), allocated_size(0), alloc(alloc)
 			{	
 			}
 
-			explicit vector( size_type count, const T& value = T(), const Allocator& alloc = Allocator()) : size(count), allocated_size(count), alloc(alloc)
+			explicit vector( size_type count, const T& value = T(), const Allocator& alloc = Allocator()) : _size(count), allocated_size(count), alloc(alloc)
 			{
 				try
 				{
@@ -110,7 +110,7 @@ namespace ft
 				catch(const std::bad_alloc& e)
 				{
 					std::cerr << e.what() << std::endl;
-					size = 0;
+					_size = 0;
 					allocated_size = 0;
 				}
 			}
@@ -124,7 +124,7 @@ namespace ft
 				catch(const std::bad_alloc& e)
 				{
 					std::cerr << e.what() << std::endl;
-					size = 0;
+					_size = 0;
 					allocated_size = 0;
 				}
 			}
@@ -139,7 +139,7 @@ namespace ft
 				{
 					range++;
 				}
-				size = range;
+				_size = range;
 				allocated_size = range;
 				try
 				{
@@ -152,18 +152,18 @@ namespace ft
 				catch(const std::bad_alloc& e)
 				{
 					std::cerr << e.what() << '\n';
-					size = 0;
+					_size = 0;
 					allocated_size = 0;
 				}
 				
 			}
 
-			vector(const vector& other) : size(other.size), allocated_size(other.allocated_size)
+			vector(const vector& other) : _size(other._size), allocated_size(other.allocated_size)
 			{
 				try
 				{
 					c = alloc.allocate(allocated_size);
-					for (size_type i = 0; i < size; ++i)
+					for (size_type i = 0; i < _size; ++i)
 					{
 						c[i] = other.c[i];
 					}
@@ -171,7 +171,7 @@ namespace ft
 				catch(const std::bad_alloc& e)
 				{
 					std::cerr << e.what() << std::endl;
-					size = 0;
+					_size = 0;
 					allocated_size = 0;
 				}
 			}
@@ -190,11 +190,11 @@ namespace ft
 				try
 				{
 					c = alloc.allocate(allocated_size);
-					for (size_t i = 0; i < other.size; ++i)
+					for (size_t i = 0; i < other._size; ++i)
 					{
 						c[i] = other.c[i];
 					}
-					size = other.size;
+					_size = other._size;
 					allocated_size = other.allocated_size;
 					alloc.deallocate(old_c, allocated_size);
 				}
@@ -218,7 +218,7 @@ namespace ft
 						c[i] = value;
 					}
 					alloc.deallocate(old_c, allocated_size);
-					size = count;
+					_size = count;
 					allocated_size = count;
 				}
 				catch (const std::bad_alloc& e)
@@ -247,7 +247,7 @@ namespace ft
 						c[i++] = *inc;
 					}
 					alloc.deallocate(old_c, allocated_size);
-					size = range;
+					_size = range;
 					allocated_size = range;
 				}
 				catch (const std::bad_alloc& e)
@@ -266,15 +266,15 @@ namespace ft
 
 			reference	at(size_type pos)
 			{
-				if (pos >= size)
-					throw (std::out_of_range);
+				if (pos >= _size)
+					throw std::out_of_range("position out of vector's range");
 				return (c[pos]);
 			}
 			
-			const_reference	at(size_type pos)
+			const_reference	at(size_type pos) const
 			{		
-				if (pos >= size)
-					throw (std::out_of_range);
+				if (pos >= _size)
+					throw std::out_of_range("position out of vector's range");
 				return (c[pos]);	
 			}
 			
@@ -283,37 +283,37 @@ namespace ft
 				return (c[pos]);
 			}
 
-			const_reference	operator[](size_type pos)
+			const_reference	operator[](size_type pos) const
 			{
 				return (c[pos]);
 			}
 
 			reference	front(void)
 			{
-				if (size == 0)	// to avoid undefined behavior
+				if (_size == 0)	// to avoid undefined behavior
 					return (0);
 				return (c[0]);
 			}
 
-			const_reference	front(void)
+			const_reference	front(void) const
 			{
-				if (size == 0)
+				if (_size == 0)
 					return (0);
 				return (c[0]);
 			}
 
 			reference	back(void)
 			{
-				if (size == 0)	// to avoid undefined behavior
+				if (_size == 0)	// to avoid undefined behavior
 					return (0);
-				return (c[size - 1]);
+				return (c[_size - 1]);
 			}
 
-			const_reference	back(void)
+			const_reference	back(void) const
 			{
-				if (size == 0)	// to avoid undefined behavior
+				if (_size == 0)	// to avoid undefined behavior
 					return (0);
-				return (c[size - 1]);
+				return (c[_size - 1]);
 			}
 
 			T*	data(void)
@@ -330,7 +330,7 @@ namespace ft
 
 			Iterator	begin(void)
 			{
-				Iterator it(*this, size, 0);
+				Iterator it(*this, _size, 0);
 				return (it);
 			}
 			
@@ -342,7 +342,7 @@ namespace ft
 
 			Iterator	end(void)
 			{
-				Iterator it(*this, size, size);
+				Iterator it(*this, _size, _size);
 				return (it);
 			}
 
@@ -380,14 +380,14 @@ namespace ft
 
 			bool	empty(void) const
 			{
-				if (size == 0)
+				if (_size == 0)
 					return (true);
 				return (false);
 			}
 			
 			size_type	size(void) const
 			{
-				return (size);
+				return (_size);
 			}
 			
 			size_type	max_size(void) const
@@ -404,9 +404,9 @@ namespace ft
 				try
 				{
 					if (new_cap > max_size())
-						throw (std::length_error);
+						throw std::length_error("requested capacity exceeds max capacity");
 					c = alloc.allocate(new_cap);
-					for (size_type i = 0; i < size; ++i)
+					for (size_type i = 0; i < _size; ++i)
 					{
 						c[i] = old_c[i];
 					}
@@ -415,7 +415,7 @@ namespace ft
 				}
 				catch (std::length_error& e)
 				{
-					std::cout << "requested capacity exceeds max capacity" << std::endl;
+					std::cout << e.what() << std::endl;
 				}
 				catch  (std::bad_alloc& e)
 				{
@@ -431,6 +431,212 @@ namespace ft
 
 		/* ---------- Modifiers ---------- */
 			
+			void	clear(void)
+			{
+				// for (size_type i = 0; i < size; ++i)
+				// {
+				// 	c[i] = 0;
+				// }
+				_size = 0;
+			}
+
+			Iterator	insert(Iterator pos, const T& value)
+			{
+				T*	old_c = c;
+				size_type	index = 0;
+				
+				if (_size == allocated_size)
+				{
+					try
+					{
+						if (allocated_size != 0)
+							c = alloc.allocate(allocated_size * 2);
+						else
+							c = alloc.allocate(1);
+						for (Iterator iter = this->begin(); iter != pos; ++iter)
+						{
+							index++;
+						}
+						for (size_type i = 0; i < index; ++i)
+						{
+							c[i] = old_c[i];
+						}
+						c[index] = value;
+						for (size_type i = index + 1; i < _size + 1; ++i)
+						{
+							c[i] = old_c[i - 1];
+						}
+						alloc.deallocate(old_c, allocated_size);
+						if (_size != 0)
+							allocated_size = allocated_size * 2;
+						else
+							allocated_size = 1;
+						_size++;
+					}
+					catch (std::bad_alloc& e)
+					{
+						std::cout << e.what() << std::endl;
+						c = old_c;
+						return (pos);
+					}
+				}
+				else
+				{
+					for (Iterator iter = this->begin(); iter != pos; ++iter)
+					{
+						index++;
+					}
+					for (size_type i = 0; i < index; ++i)
+					{
+						c[i] = old_c[i];
+					}
+					c[index] = value;
+					for (size_type i = index + 1; i < _size + 1; ++i)
+					{
+						c[i] = old_c[i - 1];
+					}
+					_size++;
+				}
+				return (--pos);
+			}
+			
+			void insert(Iterator pos, size_type count, const T& value)
+			{
+				T*	old_c = c;
+				size_type	index = 0;
+				
+				if (_size + count < allocated_size)
+				{
+					try
+					{
+						if (allocated_size != 0)
+							c = alloc.allocate(allocated_size + count);
+						else
+							c = alloc.allocate(count);
+						for (Iterator iter = this->begin(); iter != pos; ++iter)
+						{
+							index++;
+						}
+						for (size_type i = 0; i < index; ++i)
+						{
+							c[i] = old_c[i];
+						}
+						for (size_type i = 0; i < count; ++i)
+						{
+							c[index++] = value;
+						}
+						for (size_type i = index; i < _size + count; ++i)
+						{
+							c[i] = old_c[i - count];
+						}
+						alloc.deallocate(old_c, allocated_size);
+						if (_size != 0)
+							allocated_size += count;
+						else
+							allocated_size = count;
+						_size += count;
+					}
+					catch (std::bad_alloc& e)
+					{
+						std::cout << e.what() << std::endl;
+						c = old_c;
+					}
+				}
+				else
+				{
+					for (Iterator iter = this->begin(); iter != pos; ++iter)
+					{
+						index++;
+					}
+					for (size_type i = 0; i < index; ++i)
+					{
+						c[i] = old_c[i];
+					}
+					for (size_type i = 0; i < count; ++i)
+					{
+						c[index++] = value;
+					}
+					for (size_type i = index; i < _size + count; ++i)
+					{
+						c[i] = old_c[i - count];
+					}
+					_size += count;
+				}
+			}
+
+			template< class InputIt >
+			void insert( Iterator pos, InputIt first, InputIt last )
+			{
+				size_type	count = 0;
+				T*			old_c = c;
+				size_type	index = 0;
+
+				for (InputIt iter = first; iter != last; ++iter)
+				{
+					count++;
+				}
+				if (_size + count < allocated_size)
+				{
+					try
+					{
+						if (allocated_size != 0)
+							c = alloc.allocate(allocated_size + count);
+						else
+							c = alloc.allocate(count);
+						for (Iterator iter = this->begin(); iter != pos; ++iter)
+						{
+							index++;
+						}
+						for (size_type i = 0; i < index; ++i)
+						{
+							c[i] = old_c[i];
+						}
+						for (size_type i = 0; i < count; ++i)
+						{
+							c[index++] = *first;
+							first++;
+						}
+						for (size_type i = index; i < _size + count; ++i)
+						{
+							c[i] = old_c[i - count];
+						}
+						alloc.deallocate(old_c, allocated_size);
+						if (_size != 0)
+							allocated_size += count;
+						else
+							allocated_size = count;
+						_size += count;
+					}
+					catch (std::bad_alloc& e)
+					{
+						std::cout << e.what() << std::endl;
+						c = old_c;
+					}
+				}
+				else
+				{
+					for (Iterator iter = this->begin(); iter != pos; ++iter)
+					{
+						index++;
+					}
+					for (size_type i = 0; i < index; ++i)
+					{
+						c[i] = old_c[i];
+					}
+					for (size_type i = 0; i < count; ++i)
+					{
+						c[index++] = *first;
+						first++;
+					}
+					for (size_type i = index; i < _size + count; ++i)
+					{
+						c[i] = old_c[i - count];
+					}
+					_size += count;
+				}
+				
+			}
+
 	};
 }
 
