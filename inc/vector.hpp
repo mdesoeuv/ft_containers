@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 11:50:23 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 15:01:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -635,6 +635,166 @@ namespace ft
 					_size += count;
 				}
 				
+			}
+
+			Iterator erase(Iterator pos)
+			{
+				Iterator	index = this->begin();
+				Iterator	save_pos = pos;
+
+				if (pos == this->end())
+				{
+					std::cout << "invalid iterator pos" << std::endl;
+					return (pos);
+				}
+				while (index != pos)
+					index++;
+				++pos;
+				while (pos != this->end())
+				{
+					*index = *pos;
+					++index;
+					++pos;
+				}
+				_size--;
+				return (save_pos);
+			}
+
+			Iterator erase(Iterator first, Iterator last)
+			{
+				Iterator	index = this->begin();
+				Iterator	save_pos = last;
+				size_type	range = 0;
+
+				if (first == last)
+					return (last);
+				for (Iterator iter = first; iter != last; ++iter)
+				{
+					range++;
+				}
+				if (first == this->end())
+				{
+					std::cout << "invalid iterator pos" << std::endl;
+					return (this->end());
+				}
+				while (index != first)
+					index++;
+				while (last != this->end())
+				{
+					*first = *last;
+					++first;
+					++last;
+				}
+				_size -= range;
+				return (save_pos);
+			}
+
+			void	push_back(const T& value)
+			{
+				T*	old_c = c;
+				
+				if (_size == allocated_size)
+				{
+					try
+					{
+						if (allocated_size != 0)
+						{
+							if (allocated_size * 2 > max_size())
+								throw std::length_error("requested capacity exceeds max capacity");
+							c = alloc.allocate(allocated_size * 2);
+						}
+						else
+							c = alloc.allocate(1);
+						for (size_type i = 0; i < _size; ++i)
+						{
+							c[i] = old_c[i];
+						}
+						alloc.deallocate(old_c, allocated_size);
+						if (_size != 0)
+							allocated_size = allocated_size * 2;
+						else
+							allocated_size = 1;
+					}
+					catch (std::length_error& e)
+					{
+						std::cout << e.what() << std::endl;
+						return ;
+					}
+					catch (std::bad_alloc& e)
+					{
+						std::cout << e.what() << std::endl;
+						c = old_c;
+						return ;
+					}
+				}
+				c[_size] = value;
+				_size++;
+			}
+
+			void	pop_back(void)
+			{
+				if (_size == 0)
+					return ;
+				// c[size - 1] = 0;
+				_size--;
+			}
+
+			void resize(size_type count, T value = T() )
+			{
+				T*	old_c = c;
+				
+				if (_size >= count)
+				{
+					_size = count;
+					return ;
+				}
+				if (allocated_size < count)
+				{
+				try
+					{
+						if (allocated_size != 0)
+						{
+							if (allocated_size * 2 > max_size())
+								throw std::length_error("requested capacity exceeds max capacity");
+							c = alloc.allocate(allocated_size * 2);
+						}
+						else
+							c = alloc.allocate(count);
+						for (size_type i = 0; i < _size; ++i)
+						{
+							c[i] = old_c[i];
+						}
+						alloc.deallocate(old_c, allocated_size);
+						if (_size != 0)
+							allocated_size = allocated_size * 2;
+						else
+							allocated_size = count;
+					}
+					catch (std::length_error& e)
+					{
+						std::cout << e.what() << std::endl;
+						return ;
+					}
+					catch (std::bad_alloc& e)
+					{
+						std::cout << e.what() << std::endl;
+						c = old_c;
+						return ;
+					}
+					for (size_type i = _size; i < count; ++i)
+					{
+						c[i] = value;
+					}
+					_size = count;
+				}
+			}
+
+			void	swap(vector& other)
+			{
+				T*	temp = other.c;
+
+				other.c = this->c;
+				this->c = temp;
 			}
 
 	};

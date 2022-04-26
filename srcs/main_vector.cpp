@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 09:22:54 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 15:03:57 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ int main(void)
 	std::cout << "testing vector implementation :" << std::endl << std::endl;
 	for (int i = 0; i < 10; ++i)
 	{
+		std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
 		test_vector.push_back(i);
+	}
+
+	for (size_t i = 0; i < test_vector.size(); ++i)
+	{
+		std::cout << test_vector[i] << std::endl;
 	}
 
 	return (0);
