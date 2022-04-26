@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 15:12:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 17:05:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,16 @@ namespace ft
 						ptr = rhs.ptr;
 					}
 
-					Iterator	operator++(void)
+					Iterator&	operator++(void)
 					{
 						ptr++;
 						offset++;
 						return (*this);
+					}
+
+					T&	operator*(void)
+					{
+						return (*ptr);
 					}
 				
 			};
@@ -765,7 +770,7 @@ namespace ft
 							c[i] = old_c[i];
 						}
 						alloc.deallocate(old_c, allocated_size);
-						if (_size != 0)
+						if (allocated_size != 0)
 							allocated_size = allocated_size * 2;
 						else
 							allocated_size = count;
@@ -781,12 +786,12 @@ namespace ft
 						c = old_c;
 						return ;
 					}
-					for (size_type i = _size; i < count; ++i)
-					{
-						c[i] = value;
-					}
-					_size = count;
 				}
+				for (size_type i = _size; i < count; ++i)
+				{
+					c[i] = value;
+				}
+				_size = count;
 			}
 
 			void	swap(vector& other)
