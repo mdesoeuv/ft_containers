@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 15:01:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 15:12:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,29 +290,29 @@ namespace ft
 
 			reference	front(void)
 			{
-				if (_size == 0)	// to avoid undefined behavior
-					return (0);
+				// if (_size == 0)	// to avoid undefined behavior
+				// 	return (0);
 				return (c[0]);
 			}
 
 			const_reference	front(void) const
 			{
-				if (_size == 0)
-					return (0);
+				// if (_size == 0)
+				// 	return (0);
 				return (c[0]);
 			}
 
 			reference	back(void)
 			{
-				if (_size == 0)	// to avoid undefined behavior
-					return (0);
+				// if (_size == 0)	// to avoid undefined behavior
+				// 	return (0);
 				return (c[_size - 1]);
 			}
 
 			const_reference	back(void) const
 			{
-				if (_size == 0)	// to avoid undefined behavior
-					return (0);
+				// if (_size == 0)	// to avoid undefined behavior
+				// 	return (0);
 				return (c[_size - 1]);
 			}
 
