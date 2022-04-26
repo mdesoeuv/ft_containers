@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 17:26:52 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 17:30:33 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -697,7 +697,7 @@ namespace ft
 					return (this->end());
 				}
 				while (index != first)
-					index++;
+					++index;
 				while (last != this->end())
 				{
 					*first = *last;
