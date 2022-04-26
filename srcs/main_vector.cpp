@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 17:07:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 17:26:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,16 @@ int main(void)
 	std::cout << *iter << std::endl;
 	++iter;
 	std::cout << *iter << std::endl;
+
+	std::cout << std::endl << "erasing element at index 5 :" << std::endl;
+	ft::vector<int>::Iterator	iter_five(test_vector, test_vector.size(), 5);
+	test_vector.erase(iter_five);
+	for (size_t i = 0; i < test_vector.size(); ++i)
+	{
+		std::cout << test_vector[i] << std::endl;
+	}
+	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
+	
 	
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 17:05:59 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 17:26:52 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,20 @@ namespace ft
 						size = rhs.size;
 						offset = rhs.offset;
 						ptr = rhs.ptr;
+					}
+
+					bool	operator==(const Iterator& rhs)
+					{
+						if (ptr == rhs.ptr)
+							return (true);
+						return (false);
+					}
+
+					bool	operator!=(const Iterator& rhs)
+					{
+						if (ptr != rhs.ptr)
+							return (true);
+						return (false);
 					}
 
 					Iterator&	operator++(void)
@@ -653,7 +667,7 @@ namespace ft
 					return (pos);
 				}
 				while (index != pos)
-					index++;
+					++index;
 				++pos;
 				while (pos != this->end())
 				{
