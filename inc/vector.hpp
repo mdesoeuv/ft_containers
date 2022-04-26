@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 17:30:33 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 17:43:10 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,16 @@ namespace ft
 					{
 						ptr++;
 						offset++;
+						return (*this);
+					}
+
+					Iterator&	operator--(void)
+					{
+						if (offset != 0)
+						{
+							ptr--;
+							offset--;
+						}
 						return (*this);
 					}
 
@@ -463,6 +473,7 @@ namespace ft
 			{
 				T*	old_c = c;
 				size_type	index = 0;
+				T			temp_value;
 				
 				if (_size == allocated_size)
 				{
@@ -509,10 +520,13 @@ namespace ft
 					{
 						c[i] = old_c[i];
 					}
+					temp_value = c[index];
 					c[index] = value;
 					for (size_type i = index + 1; i < _size + 1; ++i)
 					{
-						c[i] = old_c[i - 1];
+						temp_value_bis = c[i];
+						c[i] = temp_value;
+						temp_value = c[i + 1];
 					}
 					_size++;
 				}
