@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 09:39:32 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/26 10:34:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ namespace ft
 			{
 				private:
 
-					vector<T>&					v;
+					vector<T, Allocator>&		v;
 					size_type					size;
 					size_type					offset;
 					T*							ptr;
@@ -55,10 +55,17 @@ namespace ft
 
 				public:
 
-					Iterator(vector<T>& vector, size_type size) : v(vector), size(size), offset(0)
-					{}
+					Iterator(vector<T, Allocator>& vector, size_type size) : v(vector), size(size), offset(0)
+					{
+						ptr = vector.data();
+					}
+
+					Iterator(vector<T, Allocator>& vector, size_type size, size_type offset) : v(vector), size(size), offset(offset)
+					{
+						ptr = vector.data() + offset;
+					}
 					
-					Iterator(const Iterator& other) : v(other.v), size(other.size), offset(other.offset)
+					Iterator(const Iterator& other) : v(other.v), size(other.size), offset(other.offset), ptr(other.ptr)
 					{}
 					
 					~Iterator(void)
@@ -321,7 +328,108 @@ namespace ft
 
 		/* ---------- Iterators ---------- */
 
-		
+			Iterator	begin(void)
+			{
+				Iterator it(*this, size, 0);
+				return (it);
+			}
+			
+			// const_iterator begin(void) const
+			// {
+			// 	Iterator It(*this, size, 0);
+			// 	return (It);
+			// }
+
+			Iterator	end(void)
+			{
+				Iterator it(*this, size, size);
+				return (it);
+			}
+
+			// const_iterator	end(void)
+			// {
+			// 	Iterator It(*this, size, size);
+			// 	return (It);
+			// }
+
+			// reverse_iterator	rbegin(void)
+			// {
+			// 	reverse_iterator	it(*this, size, 0);
+			// 	return (it)
+			// }
+
+			// const_reverse_iterator rbegin() const
+			// {
+			// 	const_reverse_iterator	it(*this, size, 0);
+			// 	return (it)
+			// }
+
+			// reverse_iterator	rend(void)
+			// {
+			// 	reverse_iterator	it(*this, size, size);
+			// 	return (it)
+			// }
+
+			// const_reverse_iterator	rend(void)
+			// {
+			// 	const_reverse_iterator	it(*this, size, size);
+			// 	return (it)
+			// }
+
+		/* ---------- Capacity ---------- */
+
+			bool	empty(void) const
+			{
+				if (size == 0)
+					return (true);
+				return (false);
+			}
+			
+			size_type	size(void) const
+			{
+				return (size);
+			}
+			
+			size_type	max_size(void) const
+			{
+				return (std::numeric_limits<difference_type>::max());
+			}
+
+			void	reserve(size_type new_cap)
+			{
+				T*	old_c = c;
+				
+				if (new_cap <= allocated_size)
+					return ;
+				try
+				{
+					if (new_cap > max_size())
+						throw (std::length_error);
+					c = alloc.allocate(new_cap);
+					for (size_type i = 0; i < size; ++i)
+					{
+						c[i] = old_c[i];
+					}
+					alloc.deallocate(old_c, allocated_size);
+					allocated_size = new_cap;
+				}
+				catch (std::length_error& e)
+				{
+					std::cout << "requested capacity exceeds max capacity" << std::endl;
+				}
+				catch  (std::bad_alloc& e)
+				{
+					std::cout << e.what() << std::endl;
+					c = old_c;
+				}
+			}
+
+			size_type	capacity(void) const
+			{
+				return (allocated_size);
+			}
+
+		/* ---------- Modifiers ---------- */
 			
 	};
 }
