@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 17:33:23 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 13:00:46 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int main(void)
 	std::cout << *iter << std::endl;
 
 	std::cout << std::endl << "erasing element at index 5 :" << std::endl;
-	ft::vector<int>::Iterator	iter_five(test_vector, test_vector.size(), 5);
+	ft::vector<int>::Iterator	iter_five(test_vector, 5);
 	test_vector.erase(iter_five);
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{
@@ -107,7 +107,7 @@ int main(void)
 	
 	
 	std::cout << std::endl << "testing insertion at index 3 :" << std::endl;
-	ft::vector<int>::Iterator	iter_three(test_vector, test_vector.size(), 3);
+	ft::vector<int>::Iterator	iter_three(test_vector, 3);
 	test_vector.insert(iter_three, 1000);
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{

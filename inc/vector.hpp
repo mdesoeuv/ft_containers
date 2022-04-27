@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 11:14:53 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 13:02:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,44 @@ namespace ft
 			size_type		allocated_size;
 			allocator_type	alloc;
 		
+			template <typename BidirectionalItA, typename InputItB>
+			void init(BidirectionalItA start_a, InputItB start_b, InputItB end_b, Allocator alloc) {
+				BidirectionalItA cursor = start_a;
+				try {
+					for (; start_b != end_b; ++cursor, ++start_b)
+						alloc.constuct(&*cursor, *start_b);
+				} catch (...) {
+					while (cursor != start_a)
+						alloc.destroy(*--cursor);
+					throw ;
+				}
+			}
+
 		public:
 
-			// Juste utiliser ptr
 			class Iterator
 			{
 				private:
 
-					vector&						v;
-					size_type					size;
-					size_type					offset;
-					T*							ptr;
+					T*		ptr;
+
+					Iterator(void)
+					{}
 					
 
 				public:
 
-					Iterator(vector& vector, size_type size) : v(vector), size(size), offset(0)
+					Iterator(vector& vector)
 					{
 						ptr = vector.data();
 					}
 
-					Iterator(vector& vector, size_type size, size_type offset) : v(vector), size(size), offset(offset)
+					Iterator(vector& vector, size_type offset)
 					{
 						ptr = vector.data() + offset;
 					}
 					
-					Iterator(const Iterator& other) : v(other.v), size(other.size), offset(other.offset), ptr(other.ptr)
+					Iterator(const Iterator& other) : ptr(other.ptr)
 					{}
 					
 					~Iterator(void)
@@ -74,40 +86,28 @@ namespace ft
 					
 					Iterator&	operator=(const Iterator& rhs)
 					{
-						v = rhs.v;
-						size = rhs.size;
-						offset = rhs.offset;
 						ptr = rhs.ptr;
 					}
 
 					bool	operator==(const Iterator& rhs)
 					{
-						if (ptr == rhs.ptr)
-							return (true);
-						return (false);
+						return (ptr == rhs.ptr);
 					}
 
 					bool	operator!=(const Iterator& rhs)
 					{
-						if (ptr != rhs.ptr)
-							return (true);
-						return (false);
+						return (!(ptr == rhs.ptr));
 					}
 
 					Iterator&	operator++(void)
 					{
 						ptr++;
-						offset++;
 						return (*this);
 					}
 
 					Iterator&	operator--(void)
 					{
-						if (offset != 0)
-						{
-							ptr--;
-							offset--;
-						}
+						ptr--;
 						return (*this);
 					}
 
@@ -188,18 +188,6 @@ namespace ft
 				
 			}
 
-			template <typename BidirectionalItA, typename InputItB>
-			void init(BidirectionalItA start_a, InputItB start_b, InputItB end_b, Allocator alloc) {
-				BidirectionalItA cursor = start_a;
-				try {
-					for (; start_b != end_b; ++cursor, ++start_b)
-						alloc.constuct(&*cursor, *start_b);
-				} catch (...) {
-					while (cursor != start_a)
-						alloc.destroy(*--cursor);
-					throw ;
-				}
-			}
 
 			vector(const vector& other) : _size(0), allocated_size(other.allocated_size), alloc(other.alloc)
 			{
@@ -363,7 +351,7 @@ namespace ft
 
 			Iterator	begin(void)
 			{
-				Iterator it(*this, _size, 0);
+				Iterator it(*this, 0);
 				return (it);
 			}
 			
@@ -375,7 +363,7 @@ namespace ft
 
 			Iterator	end(void)
 			{
-				Iterator it(*this, _size, _size);
+				Iterator it(*this, _size);
 				return (it);
 			}
 
