@@ -8,38 +8,20 @@ namespace ft
 	template <class T, class Container = std::deque<T> > // change the underlying container by ft::vector
 	class stack
 	{
-
-		typedef Container container_type;  //typename or not typename ?
+	public:
+		typedef Container container_type;
 		typedef typename Container::value_type value_type;
 		typedef typename Container::size_type size_type;
 		typedef typename Container::reference reference;
 		typedef typename Container::const_reference const_reference;
 
-	private:
-
 		friend bool operator==(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 		{
 			return (lhs.c == rhs.c);
 		}
-		friend bool operator!=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
-		{
-			return (lhs.c != rhs.c);
-		}
 		friend bool operator<(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 			{
 			return (lhs.c < rhs.c);
-		}
-		friend bool operator<=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
-		{
-			return (lhs.c <= rhs.c);
-		}
-		friend bool operator>(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
-		{
-			return (lhs.c > rhs.c);
-		}
-		friend bool operator>=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
-		{
-			return (lhs.c >= rhs.c);
 		}
 
 	protected:
@@ -96,8 +78,30 @@ namespace ft
 		}
 
 	};
-	
 
+	template <class T, class Container>
+	bool operator!=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
+	{
+		return (lhs.c != rhs.c);
+	}
+	
+	template <class T, class Container>
+	bool operator<=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
+	{
+		return (lhs.c <= rhs.c);
+	}
+
+	template <class T, class Container>
+	bool operator>(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
+	{
+		return (lhs.c > rhs.c);
+	}
+
+	template <class T, class Container>
+	bool operator>=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
+	{
+		return (lhs.c >= rhs.c);
+	}
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/26 17:43:10 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 11:14:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ namespace ft
 		
 		public:
 
+			// Juste utiliser ptr
 			class Iterator
 			{
 				private:
 
-					vector<T, Allocator>&		v;
+					vector&						v;
 					size_type					size;
 					size_type					offset;
 					T*							ptr;
@@ -55,12 +56,12 @@ namespace ft
 
 				public:
 
-					Iterator(vector<T, Allocator>& vector, size_type size) : v(vector), size(size), offset(0)
+					Iterator(vector& vector, size_type size) : v(vector), size(size), offset(0)
 					{
 						ptr = vector.data();
 					}
 
-					Iterator(vector<T, Allocator>& vector, size_type size, size_type offset) : v(vector), size(size), offset(offset)
+					Iterator(vector& vector, size_type size, size_type offset) : v(vector), size(size), offset(offset)
 					{
 						ptr = vector.data() + offset;
 					}
@@ -187,22 +188,29 @@ namespace ft
 				
 			}
 
-			vector(const vector& other) : _size(other._size), allocated_size(other.allocated_size)
+			template <typename BidirectionalItA, typename InputItB>
+			void init(BidirectionalItA start_a, InputItB start_b, InputItB end_b, Allocator alloc) {
+				BidirectionalItA cursor = start_a;
+				try {
+					for (; start_b != end_b; ++cursor, ++start_b)
+						alloc.constuct(&*cursor, *start_b);
+				} catch (...) {
+					while (cursor != start_a)
+						alloc.destroy(*--cursor);
+					throw ;
+				}
+			}
+
+			vector(const vector& other) : _size(0), allocated_size(other.allocated_size), alloc(other.alloc)
 			{
-				try
-				{
-					c = alloc.allocate(allocated_size);
-					for (size_type i = 0; i < _size; ++i)
-					{
-						c[i] = other.c[i];
-					}
+				c = alloc.allocate(allocated_size);
+				try {
+					init(begin(), end(), other.begin(), other.end(), alloc);
+				} catch (...) {
+					alloc.deallocate(c, allocated_size);
+					throw;
 				}
-				catch(const std::bad_alloc& e)
-				{
-					std::cerr << e.what() << std::endl;
-					_size = 0;
-					allocated_size = 0;
-				}
+				_size = other.size();
 			}
 
 			~vector(void)
@@ -214,6 +222,7 @@ namespace ft
 
 			vector&	operator=(const vector& other)
 			{
+				// operator= devrait seulement allouer si besion
 				T*	old_c = c;
 				
 				try
@@ -257,6 +266,9 @@ namespace ft
 				}
 			}
 
+			// Attention dans le cas d'un vector<size_t>
+			// l'appelle de la fonction assign d'au dessus de ne se fera jamais
+			// if faut ruser a coup de enable_if (ou autre astuce....) :^)
 			template <class InputIt>
 			void assign(InputIt first, InputIt last)
 			{
@@ -301,10 +313,10 @@ namespace ft
 			}
 			
 			const_reference	at(size_type pos) const
-			{		
+			{
 				if (pos >= _size)
 					throw std::out_of_range("position out of vector's range");
-				return (c[pos]);	
+				return (c[pos]);
 			}
 			
 			reference	operator[](size_type pos)
@@ -319,29 +331,21 @@ namespace ft
 
 			reference	front(void)
 			{
-				// if (_size == 0)	// to avoid undefined behavior
-				// 	return (0);
 				return (c[0]);
 			}
 
 			const_reference	front(void) const
 			{
-				// if (_size == 0)
-				// 	return (0);
 				return (c[0]);
 			}
 
 			reference	back(void)
 			{
-				// if (_size == 0)	// to avoid undefined behavior
-				// 	return (0);
 				return (c[_size - 1]);
 			}
 
 			const_reference	back(void) const
 			{
-				// if (_size == 0)	// to avoid undefined behavior
-				// 	return (0);
 				return (c[_size - 1]);
 			}
 
@@ -409,9 +413,7 @@ namespace ft
 
 			bool	empty(void) const
 			{
-				if (_size == 0)
-					return (true);
-				return (false);
+				return (_size == 0);
 			}
 			
 			size_type	size(void) const
@@ -421,7 +423,7 @@ namespace ft
 			
 			size_type	max_size(void) const
 			{
-				return (std::numeric_limits<difference_type>::max());
+				return (alloc.max_size());
 			}
 
 			void	reserve(size_type new_cap)
@@ -467,6 +469,8 @@ namespace ft
 				// 	c[i] = 0;
 				// }
 				_size = 0;
+
+				// /!\ Appeller alloc.destruct pour tout les elements
 			}
 
 			Iterator	insert(Iterator pos, const T& value)
@@ -474,6 +478,7 @@ namespace ft
 				T*	old_c = c;
 				size_type	index = 0;
 				T			temp_value;
+				T			temp_value_bis;
 				
 				if (_size == allocated_size)
 				{
@@ -670,7 +675,7 @@ namespace ft
 				
 			}
 
-			Iterator erase(Iterator pos)
+			Iterator erase(Iterator pos) // detruire elements avec alloc.destroy
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = pos;
@@ -722,7 +727,7 @@ namespace ft
 				return (save_pos);
 			}
 
-			void	push_back(const T& value)
+			void	push_back(const T& value) // ne desallouer qu'a la toute fin pour pouvoir revenir en arriere 
 			{
 				T*	old_c = c;
 				
@@ -764,7 +769,7 @@ namespace ft
 				_size++;
 			}
 
-			void	pop_back(void)
+			void	pop_back(void) // alloc.destroy
 			{
 				if (_size == 0)
 					return ;
@@ -772,7 +777,7 @@ namespace ft
 				_size--;
 			}
 
-			void resize(size_type count, T value = T() )
+			void resize(size_type count, T value = T() ) // alloc.construct alloc.destroy catch constructor
 			{
 				T*	old_c = c;
 				
@@ -822,7 +827,7 @@ namespace ft
 				_size = count;
 			}
 
-			void	swap(vector& other)
+			void	swap(vector& other) // pense a swap aussi la capacite et la taille
 			{
 				T*	temp = other.c;
 
