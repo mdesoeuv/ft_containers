@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 16:24:32 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 17:47:21 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,18 @@ namespace ft
 					Iterator&	operator--(void)
 					{
 						ptr--;
+						return (*this);
+					}
+
+					Iterator&	operator+=(size_type n)
+					{
+						ptr += n;
+						return (*this);
+					}
+
+					Iterator&	operator-=(size_type n)
+					{
+						ptr -= n;
 						return (*this);
 					}
 
@@ -514,7 +526,7 @@ namespace ft
 			
 			void	clear(void)
 			{
-				for (size_type i = 0; i < size; ++i)
+				for (size_type i = 0; i < _size; ++i)
 				{
 					alloc.destroy(&c[i]);
 				}

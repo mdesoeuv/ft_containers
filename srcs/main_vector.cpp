@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 16:21:49 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 17:48:21 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,17 @@ int main(void)
 	std::cout << *iter << std::endl;
 	++iter;
 	std::cout << *iter << std::endl;
+	iter += 3;
+	std::cout << *iter << std::endl;
+	iter -= 1;
+	std::cout << *iter << std::endl;
 	
-	//
 	const ft::vector<int>	const_vect(test_vector);
 	ft::vector<int>::Const_Iterator	const_iter = const_vect.begin();
 	std::cout << std::endl << "testing const iterator :" << std::endl;
 	std::cout << *const_iter << std::endl;
 	++const_iter;
+	//*const_iter = 1000; does not compile because const_iterator returns const value_type when dereferenced
 	std::cout << *const_iter << std::endl;
 
 	std::cout << std::endl << "erasing element at index 5 :" << std::endl;
