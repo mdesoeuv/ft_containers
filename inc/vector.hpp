@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 16:13:46 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 16:24:32 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -514,13 +514,12 @@ namespace ft
 			
 			void	clear(void)
 			{
-				// for (size_type i = 0; i < size; ++i)
-				// {
-				// 	c[i] = 0;
-				// }
+				for (size_type i = 0; i < size; ++i)
+				{
+					alloc.destroy(&c[i]);
+				}
 				_size = 0;
 
-				// /!\ Appeller alloc.destruct pour tout les elements
 			}
 
 			Iterator	insert(Iterator pos, const T& value)
@@ -748,7 +747,7 @@ namespace ft
 				return (save_pos);
 			}
 
-			Iterator erase(Iterator first, Iterator last)
+			Iterator erase(Iterator first, Iterator last) // alloc.destroy
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = last;
