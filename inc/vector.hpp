@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 13:50:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 16:13:46 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ namespace ft
 				BidirectionalItA cursor = start_a;
 				try {
 					for (; start_b != end_b; ++cursor, ++start_b)
-						alloc.constuct(&*cursor, *start_b);
+						alloc.construct(&*cursor, *start_b);
 				} catch (...) {
 					while (cursor != start_a)
-						alloc.destroy(*--cursor);
+						alloc.destroy(&*--cursor);
 					throw ;
 				}
 			}
@@ -122,7 +122,7 @@ namespace ft
 			{
 				private:
 
-					T*		ptr;
+					const T*		ptr;
 
 					Const_Iterator(void)
 					{}
@@ -255,7 +255,7 @@ namespace ft
 			{
 				c = alloc.allocate(allocated_size);
 				try {
-					init(begin(), end(), other.begin(), other.end(), alloc);
+					init(begin(), other.begin(), other.end(), alloc);
 				} catch (...) {
 					alloc.deallocate(c, allocated_size);
 					throw;
@@ -417,11 +417,11 @@ namespace ft
 				return (it);
 			}
 			
-			// const_iterator begin(void) const
-			// {
-			// 	Iterator It(*this, size, 0);
-			// 	return (It);
-			// }
+			Const_Iterator begin(void) const
+			{
+				Const_Iterator It(*this, 0);
+				return (It);
+			}
 
 			Iterator	end(void)
 			{
@@ -429,11 +429,11 @@ namespace ft
 				return (it);
 			}
 
-			// const_iterator	end(void)
-			// {
-			// 	Iterator It(*this, size, size);
-			// 	return (It);
-			// }
+			Const_Iterator	end(void) const
+			{
+				Const_Iterator It(*this, _size);
+				return (It);
+			}
 
 			// reverse_iterator	rbegin(void)
 			// {
@@ -877,12 +877,21 @@ namespace ft
 				_size = count;
 			}
 
-			void	swap(vector& other) // pense a swap aussi la capacite et la taille
+			void	swap(vector& other)
 			{
-				T*	temp = other.c;
+				T*	temp_data = other.c;
+				size_type allocated_size_temp = other.allocated_size;
+				size_type size_temp = other._size;
 
+				
 				other.c = this->c;
-				this->c = temp;
+				this->c = temp_data;
+
+				other.allocated_size = this->allocated_size;
+				this->allocated_size = allocated_size_temp;
+
+				other._size = this->_size;
+				this->_size = size_temp;
 			}
 
 	};

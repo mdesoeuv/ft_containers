@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 13:52:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 16:21:49 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,25 @@ int main(void)
 		std::cout << test_vector[i] << std::endl;
 	}
 	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
+	
+	std::cout << std::endl << "testing vector swap :" << std::endl;
+	ft::vector<std::string>	vs1;
+	ft::vector<std::string>	vs2;
+	vs1.reserve(15);
+	vs1.push_back("coucou");
+	vs1.push_back("hello");
+	vs2.push_back("bye");
+	std::cout << "s1 = " << vs1[0] << std::endl;
+	std::cout << "vector size : " << vs1.size() << ", vector capacity : " << vs1.capacity() << std::endl;
+	std::cout << "s2 = " << vs2[0] << std::endl;
+	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
+	std::cout << "--- swapping ---" << std::endl;
+	vs1.swap(vs2);
+	std::cout << "s1 = " << vs1[0] << std::endl;
+	std::cout << "vector size : " << vs1.size() << ", vector capacity : " << vs1.capacity() << std::endl;
+	std::cout << "s2 = " << vs2[0] << std::endl;
+	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
+
 	
 	return (0);
 }
