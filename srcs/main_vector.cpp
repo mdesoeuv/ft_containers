@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 13:00:46 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 13:52:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,14 @@ int main(void)
 	std::cout << *iter << std::endl;
 	++iter;
 	std::cout << *iter << std::endl;
+	
+	//
+	const ft::vector<int>	const_vect(test_vector);
+	ft::vector<int>::Const_Iterator	const_iter = const_vect.begin();
+	std::cout << std::endl << "testing const iterator :" << std::endl;
+	std::cout << *const_iter << std::endl;
+	++const_iter;
+	std::cout << *const_iter << std::endl;
 
 	std::cout << std::endl << "erasing element at index 5 :" << std::endl;
 	ft::vector<int>::Iterator	iter_five(test_vector, 5);

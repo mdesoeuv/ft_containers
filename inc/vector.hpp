@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 13:02:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 13:50:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,68 @@ namespace ft
 					}
 
 					T&	operator*(void)
+					{
+						return (*ptr);
+					}
+				
+			};
+		
+			class Const_Iterator
+			{
+				private:
+
+					T*		ptr;
+
+					Const_Iterator(void)
+					{}
+					
+
+				public:
+
+					Const_Iterator(const vector& vector)
+					{
+						ptr = vector.data();
+					}
+
+					Const_Iterator(const vector& vector, size_type offset)
+					{
+						ptr = vector.data() + offset;
+					}
+					
+					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
+					{}
+					
+					~Const_Iterator(void)
+					{}
+					
+					Const_Iterator&	operator=(const Const_Iterator& rhs)
+					{
+						ptr = rhs.ptr;
+					}
+
+					bool	operator==(const Const_Iterator& rhs)
+					{
+						return (ptr == rhs.ptr);
+					}
+
+					bool	operator!=(const Const_Iterator& rhs)
+					{
+						return (!(ptr == rhs.ptr));
+					}
+
+					Const_Iterator&	operator++(void)
+					{
+						ptr++;
+						return (*this);
+					}
+
+					Const_Iterator&	operator--(void)
+					{
+						ptr--;
+						return (*this);
+					}
+
+					const T&	operator*(void)
 					{
 						return (*ptr);
 					}
