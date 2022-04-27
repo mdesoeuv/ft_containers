@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 17:48:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 18:09:16 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ int main(void)
 	iter += 3;
 	std::cout << *iter << std::endl;
 	iter -= 1;
+	std::cout << *iter << std::endl;
+	iter = test_vector.begin() + 1;
+	std::cout << *iter << std::endl;
+	iter = 1 + test_vector.begin();
 	std::cout << *iter << std::endl;
 	
 	const ft::vector<int>	const_vect(test_vector);

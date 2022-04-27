@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 17:47:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 18:08:42 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ namespace ft
 					Iterator&	operator=(const Iterator& rhs)
 					{
 						ptr = rhs.ptr;
+
+						return (*this);
 					}
 
 					bool	operator==(const Iterator& rhs)
@@ -111,13 +113,34 @@ namespace ft
 						return (*this);
 					}
 
-					Iterator&	operator+=(size_type n)
+					Iterator&	operator+=(difference_type n)
 					{
 						ptr += n;
 						return (*this);
 					}
 
-					Iterator&	operator-=(size_type n)
+					friend Iterator	operator+(const Iterator& lhs, difference_type n)
+					{
+						Iterator	iter(lhs);
+						
+						iter += n;
+						return (iter);
+					}
+
+					friend Iterator	operator+(difference_type n, const Iterator& rhs)
+					{
+						Iterator	iter(rhs);
+						
+						iter += n;
+						return (iter);
+					}
+
+					Iterator	operator-(difference_type n)
+					{
+						return (*this - n);
+					}
+
+					Iterator&	operator-=(difference_type n)
 					{
 						ptr -= n;
 						return (*this);
