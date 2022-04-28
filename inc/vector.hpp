@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 16:13:44 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 17:27:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,10 +423,53 @@ namespace ft
 
 					Iterator	base(void) const
 					{
-						Iterator result = current;
-
-						return (result + 1);
+						return (current);
 					}
+
+					Reverse_Iterator&	operator++(void)
+					{
+						--current;
+						return (*this);
+					}
+
+					Reverse_Iterator	operator++(int)
+					{
+						Reverse_Iterator	temp(*this);
+						
+						--current;
+						return (temp);
+					}
+
+					Reverse_Iterator&	operator--(void)
+					{
+						++current;
+						return (*this);
+					}
+
+					Reverse_Iterator	operator--(int)
+					{
+						Reverse_Iterator	temp(*this);
+						
+						++current;
+						return (temp);
+					}
+
+					T&	operator*(void)
+					{
+						return (*(current - 1));
+					}
+
+					bool	operator==(const Reverse_Iterator& rhs)
+					{
+						return (current == rhs.current);
+					}
+
+					bool	operator!=(const Reverse_Iterator& rhs)
+					{
+						return (!(current == rhs.current));
+					}
+
+					
 
 					
 
@@ -674,28 +717,28 @@ namespace ft
 				return (It);
 			}
 
-			// reverse_iterator	rbegin(void)
-			// {
-			// 	reverse_iterator	it(*this, size, 0);
-			// 	return (it)
-			// }
+			Reverse_Iterator	rbegin(void)
+			{
+				Reverse_Iterator	it(this->end());
+				return (it);
+			}
 
 			// const_reverse_iterator rbegin() const
 			// {
 			// 	const_reverse_iterator	it(*this, size, 0);
-			// 	return (it)
+			// 	return (it);
 			// }
 
-			// reverse_iterator	rend(void)
-			// {
-			// 	reverse_iterator	it(*this, size, size);
-			// 	return (it)
-			// }
+			Reverse_Iterator	rend(void)
+			{
+				Reverse_Iterator	it(this->begin());
+				return (it);
+			}
 
 			// const_reverse_iterator	rend(void)
 			// {
 			// 	const_reverse_iterator	it(*this, size, size);
-			// 	return (it)
+			// 	return (it);
 			// }
 
 		/* ---------- Capacity ---------- */

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 15:01:48 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 17:25:16 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,22 @@ int main(void)
 		std::cout << "true" << std::endl;
 	else
 		std::cout << "false" << std::endl;
+
+	std::cout << std::endl << "testing reverse iterator incrementation:" << std::endl;
+	ft::vector<int>	vectInt;
+	for (int i = 0; i < 5; ++i)
+		vectInt.push_back(i);
+	ft::vector<int>::Reverse_Iterator r_iter = vectInt.rbegin();
+	while (r_iter != vectInt.rend())
+	{
+		std::cout << *r_iter++ << std::endl;
+	}
+	std::cout << std::endl << "testing reverse iterator decrementation:" << std::endl;
+	while (r_iter != vectInt.rbegin())
+	{
+		std::cout << *--r_iter << std::endl;
+	}
+
 	
 	return (0);
 }
