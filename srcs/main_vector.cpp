@@ -6,11 +6,12 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 10:40:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 11:51:41 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <memory>
 #include "../inc/stack.hpp"
 #include "../inc/vector.hpp"
 
@@ -179,6 +180,22 @@ int main(void)
 		std::cout << "true" << std::endl;
 	else
 		std::cout << "false" << std::endl;
+
+	std::cout << std::endl << "testing constructors :" << std::endl;
+	ft::vector<std::string>		strVect(5, "lol");
+	for (size_t i = 0; i < 5; ++i)
+	{
+		std::cout << strVect[i] << std::endl;
+	}
+	ft::vector<std::string>		strVect2(3);
+	for (size_t i = 0; i < 3; ++i)
+	{
+		std::cout << strVect2[i] << std::endl;
+	}
+
+	ft::vector<std::string>		strVect3(strVect.begin(), strVect.end());
+	for (ft::vector<std::string>::Iterator iter = strVect3.begin(); iter != strVect3.end(); ++iter)
+		std::cout << *iter << std::endl;
 	
 	return (0);
 }

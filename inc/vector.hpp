@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 10:30:51 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 11:51:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,29 @@ namespace ft
 						alloc.destroy(&*--cursor);
 					throw ;
 				}
+			}
+		
+			template <typename BidirectionalItA>
+			void init(BidirectionalItA start, BidirectionalItA end, T value = T(), Allocator alloc = Allocator()) {
+				BidirectionalItA cursor = start;
+				try {
+					for (; cursor != end; ++cursor)
+					{
+						alloc.construct(&*cursor, value);
+					}
+				} catch (...) {
+					while (cursor != start)
+						alloc.destroy(&*--cursor);
+					throw ;
+				}
+			}
+		
+			template <typename BidirectionalItA>
+			void destroy(BidirectionalItA start, BidirectionalItA end, Allocator alloc = Allocator())
+			{
+				BidirectionalItA cursor = end;
+				while (cursor != start)
+					alloc.destroy(&*--cursor);
 			}
 
 		public:
@@ -288,29 +311,14 @@ namespace ft
 			{
 				try
 				{
-					c = alloc.allocate(count);
-					for (size_type i = 0; i < count; ++i)
-					{
-						c[i] = value;
-					}
+					c = this->alloc.allocate(count);
+					
+					Iterator	start = this->begin();
+					
+					init(start, start + count, value, alloc);
 				}
-				catch(const std::bad_alloc& e)
+				catch(...)
 				{
-					std::cerr << e.what() << std::endl;
-					_size = 0;
-					allocated_size = 0;
-				}
-			}
-			
-			explicit vector(size_type count) : allocated_size(count)
-			{
-				try
-				{
-					c = alloc.allocate(count);
-				}
-				catch(const std::bad_alloc& e)
-				{
-					std::cerr << e.what() << std::endl;
 					_size = 0;
 					allocated_size = 0;
 				}
@@ -319,39 +327,38 @@ namespace ft
 			template <class InputIt>
 			vector( InputIt first, InputIt last, const Allocator& alloc = Allocator() ) : alloc(alloc)
 			{
-				size_type	range = 0;
-				size_type	i = 0;
+				size_type	count = 0;
 				
 				for (InputIt inc = first; inc != last; ++inc)
 				{
-					range++;
+					count++;
 				}
-				_size = range;
-				allocated_size = range;
 				try
 				{
-					c = alloc.allocate(range);
-					for (InputIt inc = first; inc != last; ++inc)
-					{
-						c[i++] = *inc;
-					}
+					c = this->alloc.allocate(count);
+					Iterator start = this->begin();
+					init(start, first, last, this->alloc);
 				}
-				catch(const std::bad_alloc& e)
+				catch(...)
 				{
-					std::cerr << e.what() << '\n';
 					_size = 0;
 					allocated_size = 0;
 				}
+				allocated_size = count;
+				_size = count;
 				
 			}
 
 
 			vector(const vector& other) : _size(0), allocated_size(other.allocated_size), alloc(other.alloc)
 			{
-				c = alloc.allocate(allocated_size);
-				try {
+				try
+				{
+					c = alloc.allocate(allocated_size);
 					init(begin(), other.begin(), other.end(), alloc);
-				} catch (...) {
+				} 
+				catch (...)
+				{
 					alloc.deallocate(c, allocated_size);
 					throw;
 				}
@@ -360,6 +367,9 @@ namespace ft
 
 			~vector(void)
 			{
+				Iterator	start = this->begin();
+				Iterator	end = this->end();
+				destroy(start, end, alloc);
 				alloc.deallocate(c, allocated_size);
 			}
 
