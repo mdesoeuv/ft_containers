@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 11:51:53 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 11:53:16 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,7 @@ namespace ft
 				catch (...)
 				{
 					alloc.deallocate(c, allocated_size);
-					throw;
+					throw ;
 				}
 				_size = other.size();
 			}
