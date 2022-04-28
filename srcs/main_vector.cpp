@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 10:35:38 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 10:40:01 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ int main(void)
 	std::cout << *iter << std::endl;
 	iter = 1 + test_vector.begin();
 	std::cout << *iter << std::endl;
+	std::cout << *iter++ << std::endl;
+	std::cout << *--iter << std::endl;
+	std::cout << *iter-- << std::endl;
+	std::cout << *iter << std::endl;
+	std::cout << iter[3] << std::endl;
 	
 	const ft::vector<int>	const_vect(test_vector);
 	ft::vector<int>::Const_Iterator	const_iter = const_vect.begin();
@@ -151,7 +156,8 @@ int main(void)
 	ft::vector<std::string>::Iterator	stringIter = vs1.begin();
 	stringIter->push_back('t');
 	std::cout << "s1 = " << stringIter[0] << std::endl;
-	ft::vector<std::string>::Iterator	iterBegin = vs2.begin();
+	ft::vector<std::string>::Iterator	iterBegin;
+	iterBegin = vs2.begin();
 	ft::vector<std::string>::Iterator	iterEnd = vs2.end();
 	std::cout << "testing if begin iterator < end iterator : ";
 	if (iterBegin < iterEnd)
