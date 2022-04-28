@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 15:12:35 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 15:23:35 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1100,18 +1100,16 @@ namespace ft
 		typename ft::vector<T, Alloc>::Const_Iterator	start_l = lhs.begin();
 		typename ft::vector<T, Alloc>::Const_Iterator	start_r = rhs.begin();
 		typename ft::vector<T, Alloc>::Const_Iterator	end_l = lhs.end();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_r = rhs.end();
 		
-		
-		while (start_l != end_l && start_r != end_r)
+		if (lhs.size() != rhs.size())
+			return (false);
+		while (start_l != end_l)
 		{
-			if (*start_l != *start_r)
+			if (!(*start_l == *start_r))
 				return (false);
 			++start_l;
 			++start_r;
 		}
-		if (start_l != end_l || start_r != end_r)
-			return (false);
 		return (true);
 	}
 
@@ -1146,6 +1144,18 @@ namespace ft
   	bool	operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
 		return (!(rhs < lhs));
+	}
+
+	template <class T, class Alloc>
+  	bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+  	bool	operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs < rhs));
 	}
 }
 
