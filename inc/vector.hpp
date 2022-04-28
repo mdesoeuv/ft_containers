@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 18:05:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 18:09:12 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -547,6 +547,10 @@ namespace ft
 						return (rhs.current - lhs.current);
 					}
 
+					reference	operator[](difference_type n) const
+					{
+						return (*(current - n - 1));
+					}
 					
 
 			};
