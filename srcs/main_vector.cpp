@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 18:09:16 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 10:20:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,9 @@ int main(void)
 	std::cout << "vector size : " << vs1.size() << ", vector capacity : " << vs1.capacity() << std::endl;
 	std::cout << "s2 = " << vs2[0] << std::endl;
 	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
-
+	ft::vector<std::string>::Iterator	stringIter = vs1.begin();
+	stringIter->push_back('t');
+	std::cout << "s1 = " << vs1[0] << std::endl;
 	
 	return (0);
 }

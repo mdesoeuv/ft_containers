@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/27 18:08:42 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 10:18:41 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ namespace ft
 				private:
 
 					T*		ptr;
-
-					Iterator(void)
-					{}
 					
 
 				public:
+
+					Iterator(void)
+					{
+						ptr = NULL;
+					}
 
 					Iterator(vector& vector)
 					{
@@ -107,10 +109,26 @@ namespace ft
 						return (*this);
 					}
 
+					Iterator	operator++(int)
+					{
+						Iterator	it_temp = *this;
+						
+						ptr++;
+						return (it_temp);
+					}
+
 					Iterator&	operator--(void)
 					{
 						ptr--;
 						return (*this);
+					}
+
+					Iterator	operator--(int)
+					{
+						Iterator	it_temp = *this;
+
+						ptr--;
+						return (it_temp);
 					}
 
 					Iterator&	operator+=(difference_type n)
@@ -150,6 +168,13 @@ namespace ft
 					{
 						return (*ptr);
 					}
+
+					T*	operator->(void)
+					{
+						return (ptr);
+					}
+
+					
 				
 			};
 		
