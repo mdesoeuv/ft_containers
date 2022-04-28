@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 18:09:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 18:20:04 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,6 +551,38 @@ namespace ft
 					{
 						return (*(current - n - 1));
 					}
+
+					// a templater ??
+					friend	bool operator== (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (lhs.current == rhs.current);
+					}
+
+					friend	bool operator!= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (lhs.current != rhs.current);
+					}
+
+					friend	bool operator< (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (lhs.current > rhs.current);
+					}
+
+					friend	bool operator<= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (lhs.current >= rhs.current);
+					}
+
+					friend	bool operator> (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (lhs.current < rhs.current);
+					}
+
+					friend	bool operator>= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (lhs.current <= rhs.current);
+					}
+					
 					
 
 			};
