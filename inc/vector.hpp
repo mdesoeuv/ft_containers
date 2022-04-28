@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 15:23:35 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 16:13:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ namespace ft
 
 			class Iterator
 			{
-				private:
+				protected:
 
 					T*		ptr;
 					
@@ -238,15 +238,17 @@ namespace ft
 		
 			class Const_Iterator
 			{
-				private:
+				protected:
 
 					const T*		ptr;
-
-					Const_Iterator(void)
-					{}
 					
 
 				public:
+
+					Const_Iterator(void)
+					{
+						ptr = NULL;
+					}
 
 					Const_Iterator(const vector& vector)
 					{
@@ -389,6 +391,44 @@ namespace ft
 					{
 						return (*(ptr + n));
 					}
+
+			};
+
+			class	Reverse_Iterator : public Iterator
+			{
+				protected:
+
+					Iterator	current;
+
+				public:
+
+					Reverse_Iterator(void) : Iterator()
+					{}
+
+					Reverse_Iterator(Iterator iter) : Iterator(iter), current(iter)
+					{}
+
+					Reverse_Iterator(const Reverse_Iterator& other) : Iterator(other), current(other.current)
+					{}
+
+					~Reverse_Iterator(void)
+					{}
+
+					Reverse_Iterator&	operator=(const Reverse_Iterator& rhs)
+					{
+						current = rhs.current;
+						
+						return (*this);
+					}
+
+					Iterator	base(void) const
+					{
+						Iterator result = current;
+
+						return (result + 1);
+					}
+
+					
 
 			};
 		
@@ -1157,6 +1197,7 @@ namespace ft
 	{
 		return (!(lhs < rhs));
 	}
+	
 }
 
 #endif
