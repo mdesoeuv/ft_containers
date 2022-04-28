@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 17:25:16 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 17:52:03 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ int main(void)
 	{
 		std::cout << *--r_iter << std::endl;
 	}
-
+	std::cout << "distance between rbegin() and rend(): " << vectInt.rend() - vectInt.rbegin() << std::endl;
 	
 	return (0);
 }

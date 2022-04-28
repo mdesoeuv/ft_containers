@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 17:27:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 18:05:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,12 +190,31 @@ namespace ft
 						return (iter);
 					}
 
-					friend Iterator	operator-(const Iterator& lhs, const Iterator& rhs)
+					friend difference_type	operator-(const Iterator& lhs, const Iterator& rhs)
 					{
-						Iterator	iter(lhs);
+						difference_type	n = 0;
+						Iterator lhs_iter(lhs);
+						Iterator rhs_iter(rhs);
 						
-						iter.ptr -= rhs.ptr;
-						return (iter);
+						if (lhs_iter.ptr == rhs_iter.ptr)
+							return (0);
+						if (lhs_iter.ptr < rhs_iter.ptr)
+						{
+							while (lhs_iter.ptr != rhs_iter.ptr)
+							{
+								lhs_iter.ptr++;
+								n++;
+							}
+						}
+						else
+						{
+							while (lhs_iter.ptr != rhs_iter.ptr)
+							{
+								lhs_iter.ptr--;
+								n++;
+							}
+						}
+						return (n);
 					}
 
 					T&	operator*(void)
@@ -358,12 +377,31 @@ namespace ft
 						return (iter);
 					}
 
-					friend Const_Iterator	operator-(const Const_Iterator& lhs, const Const_Iterator& rhs)
+					friend difference_type	operator-(const Const_Iterator& lhs, const Const_Iterator& rhs)
 					{
-						Const_Iterator	iter(lhs);
+						difference_type	n = 0;
+						Const_Iterator	lhs_iter(lhs);
+						Const_Iterator	rhs_iter(rhs);
 						
-						iter.ptr -= rhs.ptr;
-						return (iter);
+						if (lhs_iter.ptr == rhs_iter.ptr)
+							return (0);
+						if (lhs_iter.ptr < rhs_iter.ptr)
+						{
+							while (lhs_iter.ptr != rhs_iter.ptr)
+							{
+								lhs_iter.ptr++;
+								n++;
+							}
+						}
+						else
+						{
+							while (lhs_iter.ptr != rhs_iter.ptr)
+							{
+								lhs_iter.ptr--;
+								n++;
+							}
+						}
+						return (n);
 					}
 
 
@@ -459,7 +497,13 @@ namespace ft
 						return (*(current - 1));
 					}
 
-					bool	operator==(const Reverse_Iterator& rhs)
+
+					T*	operator->(void)
+					{
+						return (&(operator*()));
+					}
+
+					bool	operator==(const Reverse_Iterator& rhs) // non-member functions ??
 					{
 						return (current == rhs.current);
 					}
@@ -469,7 +513,39 @@ namespace ft
 						return (!(current == rhs.current));
 					}
 
-					
+					Reverse_Iterator operator+ (difference_type n) const
+					{
+						Reverse_Iterator	iter(current - n);
+						return (iter);
+					}
+
+					friend Reverse_Iterator operator+ (difference_type n, const Reverse_Iterator& rhs)
+					{
+						return (rhs + n);
+					}
+
+					Reverse_Iterator&	operator+=(difference_type n)
+					{
+						current -= n;
+						return (*this);
+					}
+
+					Reverse_Iterator&	operator-=(difference_type n)
+					{
+						current += n;
+						return (*this);
+					}
+
+					Reverse_Iterator	operator-(difference_type n) const
+					{
+						Reverse_Iterator	iter(current + n);
+						return (iter);
+					}
+
+					friend difference_type	operator-(const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+					{
+						return (rhs.current - lhs.current);
+					}
 
 					
 
