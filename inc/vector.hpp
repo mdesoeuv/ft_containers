@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 11:53:16 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 14:27:46 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,8 @@ namespace ft
 					Const_Iterator&	operator=(const Const_Iterator& rhs)
 					{
 						ptr = rhs.ptr;
+
+						return (*this);
 					}
 
 					bool	operator==(const Const_Iterator& rhs)
@@ -284,18 +286,110 @@ namespace ft
 						ptr++;
 						return (*this);
 					}
+					
+					Const_Iterator	operator++(int)
+					{
+						Const_Iterator	it_temp = *this;
+						
+						ptr++;
+						return (it_temp);
+					}
 
 					Const_Iterator&	operator--(void)
 					{
 						ptr--;
 						return (*this);
 					}
+					
+					Const_Iterator	operator--(int)
+					{
+						Const_Iterator	it_temp = *this;
+						
+						ptr--;
+						return (it_temp);
+					}
 
 					const T&	operator*(void)
 					{
 						return (*ptr);
 					}
-				
+
+					const T*	operator->(void)
+					{
+						return (ptr);
+					}
+					
+					Const_Iterator&	operator+=(difference_type n)
+					{
+						ptr += n;
+						return (*this);
+					}
+
+					Const_Iterator&	operator-=(difference_type n)
+					{
+						ptr -= n;
+						return (*this);
+					}
+
+					friend Const_Iterator	operator+(const Const_Iterator& lhs, difference_type n)
+					{
+						Const_Iterator	iter(lhs);
+						
+						iter += n;
+						return (iter);
+					}
+
+					friend Const_Iterator	operator+(difference_type n, const Const_Iterator& rhs)
+					{
+						Const_Iterator	iter(rhs);
+						
+						iter += n;
+						return (iter);
+					}
+
+
+					friend Const_Iterator	operator-(const Const_Iterator& lhs, difference_type n)
+					{
+						Const_Iterator	iter(lhs);
+						
+						iter -= n;
+						return (iter);
+					}
+
+					friend Const_Iterator	operator-(const Const_Iterator& lhs, const Const_Iterator& rhs)
+					{
+						Const_Iterator	iter(lhs);
+						
+						iter.ptr -= rhs.ptr;
+						return (iter);
+					}
+
+
+					bool	operator<(const Const_Iterator& rhs)
+					{
+						return (ptr < rhs.ptr);
+					}
+
+					bool	operator<=(const Const_Iterator& rhs)
+					{
+						return (ptr <= rhs.ptr);
+					}
+
+					bool	operator>(const Const_Iterator& rhs)
+					{
+						return (ptr > rhs.ptr);
+					}
+
+					bool	operator>=(const Const_Iterator& rhs)
+					{
+						return (ptr >= rhs.ptr);
+					}
+
+					const T&	operator[](difference_type	n)
+					{
+						return (*(ptr + n));
+					}
+
 			};
 		
 		/* ---------- constructors + destructor ---------- */
