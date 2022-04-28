@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 14:46:33 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 14:48:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1113,6 +1113,12 @@ namespace ft
 		if (start_l != end_l || start_r != end_r)
 			return (false);
 		return (true);
+	}
+
+	template <class T, class Alloc>
+  	bool	operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs == rhs));
 	}
 }
 

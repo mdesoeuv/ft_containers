@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 14:47:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 14:49:17 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,9 +202,21 @@ int main(void)
 		std::cout << "true" << std::endl;
 	else
 		std::cout << "false" << std::endl;
+
+	std::cout << std::endl << "is it different ? " << std::endl;
+	if (strVect != strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 	std::cout << std::endl << "removing last element of copy and comparing, is it equal ? " << std::endl;
 	strVect3.pop_back();
 	if (strVect == strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
+
+	std::cout << std::endl << "is it different ? " << std::endl;
+	if (strVect != strVect3)
 		std::cout << "true" << std::endl;
 	else
 		std::cout << "false" << std::endl;
