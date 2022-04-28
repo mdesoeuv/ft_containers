@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 10:20:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 10:35:38 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,29 @@ int main(void)
 	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
 	ft::vector<std::string>::Iterator	stringIter = vs1.begin();
 	stringIter->push_back('t');
-	std::cout << "s1 = " << vs1[0] << std::endl;
+	std::cout << "s1 = " << stringIter[0] << std::endl;
+	ft::vector<std::string>::Iterator	iterBegin = vs2.begin();
+	ft::vector<std::string>::Iterator	iterEnd = vs2.end();
+	std::cout << "testing if begin iterator < end iterator : ";
+	if (iterBegin < iterEnd)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
+	std::cout << "testing if end iterator > begin iterator : ";
+	if (iterEnd > iterBegin)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
+	std::cout << "testing if end iterator == begin iterator : ";
+	if (iterEnd == iterBegin)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
+	std::cout << "testing if end iterator != begin iterator : ";
+	if (iterEnd != iterBegin)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 	
 	return (0);
 }

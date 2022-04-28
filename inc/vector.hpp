@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 10:18:41 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/28 10:30:51 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,12 @@ namespace ft
 						return (*this);
 					}
 
+					Iterator&	operator-=(difference_type n)
+					{
+						ptr -= n;
+						return (*this);
+					}
+
 					friend Iterator	operator+(const Iterator& lhs, difference_type n)
 					{
 						Iterator	iter(lhs);
@@ -153,15 +159,20 @@ namespace ft
 						return (iter);
 					}
 
-					Iterator	operator-(difference_type n)
+					friend Iterator	operator-(const Iterator& lhs, difference_type n)
 					{
-						return (*this - n);
+						Iterator	iter(lhs);
+						
+						iter -= n;
+						return (iter);
 					}
 
-					Iterator&	operator-=(difference_type n)
+					friend Iterator	operator-(const Iterator& lhs, const Iterator& rhs)
 					{
-						ptr -= n;
-						return (*this);
+						Iterator	iter(lhs);
+						
+						iter.ptr -= rhs.ptr;
+						return (iter);
 					}
 
 					T&	operator*(void)
@@ -174,6 +185,30 @@ namespace ft
 						return (ptr);
 					}
 
+					bool	operator<(const Iterator& rhs)
+					{
+						return (ptr < rhs.ptr);
+					}
+
+					bool	operator<=(const Iterator& rhs)
+					{
+						return (ptr <= rhs.ptr);
+					}
+
+					bool	operator>(const Iterator& rhs)
+					{
+						return (ptr > rhs.ptr);
+					}
+
+					bool	operator>=(const Iterator& rhs)
+					{
+						return (ptr >= rhs.ptr);
+					}
+
+					T&		operator[](difference_type	n)
+					{
+						return (*(ptr + n));
+					}
 					
 				
 			};
