@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 15:32:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 15:39:47 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -966,15 +966,8 @@ namespace ft
 						}
 						alloc.destroy(&c[index]);
 						alloc.construct(&c[index], value);
-						for (size_type i = index + 1; i < _size + 1; ++i)
-						{
-							c[i] = old_c[i - 1];
-						}
 						alloc.deallocate(old_c, allocated_size);
-						if (_size != 0)
-							allocated_size = allocated_size * 2;
-						else
-							allocated_size = 1;
+						allocated_size = count;
 					}
 					catch (...)
 					{
@@ -996,7 +989,8 @@ namespace ft
 					alloc.construct(&c[index], value);
 				}
 				_size++;
-				return (--pos);
+				Iterator insert_pos(*this, index);
+				return (insert_pos);
 			}
 			
 			void insert(Iterator pos, size_type count, const T& value)
