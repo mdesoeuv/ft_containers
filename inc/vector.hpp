@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 18:20:04 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 10:31:12 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,13 @@ namespace ft
 				BidirectionalItA cursor = end;
 				while (cursor != start)
 					alloc.destroy(&*--cursor);
+			}
+		
+			void destroy(T* start, T* end, Allocator alloc = Allocator())
+			{
+				T* cursor = end;
+				while (cursor != start)
+					alloc.destroy(--cursor);
 			}
 
 		public:
@@ -608,8 +615,10 @@ namespace ft
 				}
 				catch(...)
 				{
+					this->alloc.deallocate(c, count);
 					_size = 0;
 					allocated_size = 0;
+					throw ;
 				}
 			}
 			
@@ -630,8 +639,10 @@ namespace ft
 				}
 				catch(...)
 				{
+					this->alloc.deallocate(c, count);
 					_size = 0;
 					allocated_size = 0;
+					throw ;
 				}
 				allocated_size = count;
 				_size = count;
@@ -643,12 +654,12 @@ namespace ft
 			{
 				try
 				{
-					c = alloc.allocate(allocated_size);
+					c = this->alloc.allocate(allocated_size);
 					init(begin(), other.begin(), other.end(), alloc);
 				} 
 				catch (...)
 				{
-					alloc.deallocate(c, allocated_size);
+					this->alloc.deallocate(c, allocated_size);
 					throw ;
 				}
 				_size = other.size();
@@ -666,25 +677,31 @@ namespace ft
 
 			vector&	operator=(const vector& other)
 			{
-				// operator= devrait seulement allouer si besion
 				T*	old_c = c;
 				
-				try
+				if (allocated_size < other.allocated_size)
 				{
-					c = alloc.allocate(allocated_size);
-					for (size_t i = 0; i < other._size; ++i)
+					try
 					{
-						c[i] = other.c[i];
+						c = alloc.allocate(other.allocated_size);
+						destroy(old_c, old_c + _size, alloc);
+						alloc.deallocate(old_c, allocated_size);
 					}
-					_size = other._size;
+					catch (...)
+					{
+						c = old_c;
+						throw ;
+						return (*this);
+					}
 					allocated_size = other.allocated_size;
-					alloc.deallocate(old_c, allocated_size);
 				}
-				catch (const std::bad_alloc& e)
+				else
 				{
-					std::cerr << e.what() << std::endl;
-					c = old_c;
+					destroy(this->begin(), this->end(), alloc);
 				}
+				alloc = other.alloc;
+				init(this->begin(), other.begin(), other.end(), alloc);
+				_size = other._size;
 				return (*this);
 			}
 

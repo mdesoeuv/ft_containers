@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/28 18:10:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 10:31:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,5 +262,22 @@ int main(void)
 	}
 	std::cout << "distance between rbegin() and rend(): " << vectInt.rend() - vectInt.rbegin() << std::endl;
 	std::cout << "accessing element at index 1 : " << r_iter[1] << std::endl;
+
+	std::cout << std::endl << "testing operator=, displaying copy :" << std::endl;
+	ft::vector<int>	copyInt;
+	copyInt = vectInt;
+	std::cout << "vector size : " << vectInt.size() << ", vector capacity : " << vectInt.capacity() << std::endl;
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
+	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+		std::cout << *iter << std::endl;
+	std::cout << "assigning a smaller vector without reallocation :" << std::endl;
+	ft::vector<int> smallInt;
+	smallInt.push_back(1000);
+	copyInt = smallInt;
+	std::cout << "vector size : " << smallInt.size() << ", vector capacity : " << smallInt.capacity() << std::endl;
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
+	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+		std::cout << *iter << std::endl;
+	
 	return (0);
 }
