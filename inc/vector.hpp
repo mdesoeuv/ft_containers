@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 10:31:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 10:53:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -699,7 +699,7 @@ namespace ft
 				{
 					destroy(this->begin(), this->end(), alloc);
 				}
-				alloc = other.alloc;
+				// alloc = other.alloc; allocator is preserved 
 				init(this->begin(), other.begin(), other.end(), alloc);
 				_size = other._size;
 				return (*this);
@@ -708,56 +708,69 @@ namespace ft
 			void	assign(size_type count, const T& value)
 			{
 				T*	old_c = c;
-
-				try
+				
+				if (allocated_size < count)
 				{
-					c = alloc.allocate(count);
-					for (size_t i = 0; i < count; ++i)
+					try
 					{
-						c[i] = value;
+						c = alloc.allocate(count);
+						destroy(old_c, old_c + _size, alloc);
+						alloc.deallocate(old_c, allocated_size);
 					}
-					alloc.deallocate(old_c, allocated_size);
-					_size = count;
+					catch (...)
+					{
+						c = old_c;
+						throw ;
+						return ;
+					}
 					allocated_size = count;
 				}
-				catch (const std::bad_alloc& e)
+				else
 				{
-					std::cerr << e.what() << std::endl;
-					c = old_c;
+					destroy(this->begin(), this->end(), alloc);
 				}
+				init(this->begin(), this->begin() + count, value);
+				_size = count;
+				return ;
 			}
 
 			// Attention dans le cas d'un vector<size_t>
 			// l'appelle de la fonction assign d'au dessus de ne se fera jamais
 			// if faut ruser a coup de enable_if (ou autre astuce....) :^)
-			template <class InputIt>
-			void assign(InputIt first, InputIt last)
-			{
-				size_type	range = 0;
-				size_type	i = 0;
-				T*			old_c = c;
+			// template <class InputIt>
+			// void assign(InputIt first, InputIt last)
+			// {
+			// 	size_type	count = 0;
+			// 	T*			old_c = c;
 				
-				try
-				{
-					for (InputIt inc = first; inc != last; ++inc)
-					{
-						range++;
-					}
-					c = alloc.allocate(range);
-					for (InputIt inc = first; inc != last; ++inc)
-					{
-						c[i++] = *inc;
-					}
-					alloc.deallocate(old_c, allocated_size);
-					_size = range;
-					allocated_size = range;
-				}
-				catch (const std::bad_alloc& e)
-				{
-					std::cerr << e.what() << std::endl;
-					c = old_c;
-				}
-			}
+			// 	for (InputIt inc = first; inc != last; ++inc)
+			// 	{
+			// 		count++;
+			// 	}
+			// 	if (allocated_size < count)
+			// 	{
+			// 		try
+			// 		{
+			// 			c = alloc.allocate(count);
+			// 			destroy(old_c, old_c + _size, alloc);
+			// 			alloc.deallocate(old_c, allocated_size);
+			// 		}
+			// 		catch (...)
+			// 		{
+			// 			c = old_c;
+			// 			throw ;
+			// 			return ;
+			// 		}
+			// 		allocated_size = count;
+			// 	}
+			// 	else
+			// 	{
+			// 		destroy(this->begin(), this->end(), alloc);
+			// 	}
+			// 	init(this->begin(), first, last, alloc);
+			// 	_size = count;
+			// 	return ;
+			// }
 
 			allocator_type get_allocator(void) const
 			{

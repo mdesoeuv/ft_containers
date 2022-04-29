@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 10:31:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 10:44:13 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,17 @@ int main(void)
 	smallInt.push_back(1000);
 	copyInt = smallInt;
 	std::cout << "vector size : " << smallInt.size() << ", vector capacity : " << smallInt.capacity() << std::endl;
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
+	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+		std::cout << *iter << std::endl;
+	
+	std::cout << std::endl << "testing assign basic function with higher capacity assignement:" << std::endl;
+	copyInt.assign(10, 7);
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
+	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+		std::cout << *iter << std::endl;
+	std::cout << "lower capacity assignement :" << std::endl;
+	copyInt.assign(1, 5);
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
