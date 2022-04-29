@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 14:34:50 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 15:28:37 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,28 @@ int main(void)
 	std::cout << std::endl << "testing insertion at index 3 :" << std::endl;
 	ft::vector<int>::Iterator	iter_three(test_vector, 3);
 	test_vector.insert(iter_three, 1000);
+	
+	std::cout << std::endl << "testing insertion at index 0 :" << std::endl;
+	ft::vector<int>::Iterator	iter_zero(test_vector, 0);
+	test_vector.insert(iter_zero, 999);
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{
 		std::cout << test_vector[i] << std::endl;
 	}
-	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
+	std::cout << std::endl << "testing insertion at end :" << std::endl;
+	test_vector.insert(test_vector.end(), 999);
+	for (size_t i = 0; i < test_vector.size(); ++i)
+	{
+		std::cout << test_vector[i] << std::endl;
+	}
+	std::cout << std::endl << "testing insertion at begining of empty vector :" << std::endl;
+	ft::vector<int> emptyVect;
+	emptyVect.insert(emptyVect.begin(), 999);
+	for (size_t i = 0; i < emptyVect.size(); ++i)
+	{
+		std::cout << emptyVect[i] << std::endl;
+	}
+	std::cout << "vector size : " << emptyVect.size() << ", vector capacity : " << emptyVect.capacity() << std::endl;
 	
 	std::cout << std::endl << "testing vector swap :" << std::endl;
 	ft::vector<std::string>	vs1;

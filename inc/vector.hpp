@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 14:35:07 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 15:26:41 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -940,28 +940,29 @@ namespace ft
 
 			Iterator	insert(Iterator pos, const T& value)
 			{
-				T*	old_c = c;
+				T*			old_c = c;
 				size_type	index = 0;
-				T			temp_value;
-				T			temp_value_bis;
+				size_type	count;
 				
+				for (Iterator iter = this->begin(); iter != pos; ++iter)
+				{
+					index++;
+				}
 				if (_size == allocated_size)
 				{
 					try
 					{
 						if (allocated_size != 0)
-							c = alloc.allocate(allocated_size * 2);
+							count = allocated_size * 2;
 						else
-							c = alloc.allocate(1);
-						for (Iterator iter = this->begin(); iter != pos; ++iter)
+							count = 1;
+						c = alloc.allocate(count);
+						init(c, old_c, old_c + index, alloc);
+						for (size_type end = _size; end != index; --end)
 						{
-							index++;
+							alloc.construct(&c[end], c[end - 1]);
 						}
-						for (size_type i = 0; i < index; ++i)
-						{
-							c[i] = old_c[i];
-						}
-						c[index] = value;
+						alloc.construct(&c[index], value);
 						for (size_type i = index + 1; i < _size + 1; ++i)
 						{
 							c[i] = old_c[i - 1];
@@ -971,35 +972,24 @@ namespace ft
 							allocated_size = allocated_size * 2;
 						else
 							allocated_size = 1;
-						_size++;
 					}
-					catch (std::bad_alloc& e)
+					catch (...)
 					{
-						std::cout << e.what() << std::endl;
+						alloc.deallocate(c, count);
 						c = old_c;
+						throw ;
 						return (pos);
 					}
 				}
 				else
 				{
-					for (Iterator iter = this->begin(); iter != pos; ++iter)
+					for (size_type end = _size; end != index; --end)
 					{
-						index++;
+						alloc.construct(&c[end], c[end - 1]);
 					}
-					for (size_type i = 0; i < index; ++i)
-					{
-						c[i] = old_c[i];
-					}
-					temp_value = c[index];
-					c[index] = value;
-					for (size_type i = index + 1; i < _size + 1; ++i)
-					{
-						temp_value_bis = c[i];
-						c[i] = temp_value;
-						temp_value = c[i + 1];
-					}
-					_size++;
+					alloc.construct(&c[index], value);
 				}
+				_size++;
 				return (--pos);
 			}
 			
