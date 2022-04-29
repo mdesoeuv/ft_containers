@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 15:39:47 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 15:57:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -995,139 +995,126 @@ namespace ft
 			
 			void insert(Iterator pos, size_type count, const T& value)
 			{
-				T*	old_c = c;
+				T*			old_c = c;
 				size_type	index = 0;
+				size_type	count_alloc;
 				
-				if (_size + count < allocated_size)
+				for (Iterator iter = this->begin(); iter != pos; ++iter)
+				{
+					index++;
+				}
+				if (_size + count > allocated_size)
 				{
 					try
 					{
 						if (allocated_size != 0)
-							c = alloc.allocate(allocated_size + count);
+							count_alloc = allocated_size + count;
 						else
-							c = alloc.allocate(count);
-						for (Iterator iter = this->begin(); iter != pos; ++iter)
+							count_alloc = count;
+						c = alloc.allocate(count_alloc);
+						init(c, old_c, old_c + index, alloc);
+						for (size_type end = _size + count; end != index + count; --end)
 						{
-							index++;
-						}
-						for (size_type i = 0; i < index; ++i)
-						{
-							c[i] = old_c[i];
+							if (end != _size)
+								alloc.destroy(&c[end]);
+							alloc.construct(&c[end], c[end - 1]);
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
-							c[index++] = value;
-						}
-						for (size_type i = index; i < _size + count; ++i)
-						{
-							c[i] = old_c[i - count];
+							alloc.destroy(&c[index]);
+							alloc.construct(&c[index], value);
+							index++;
 						}
 						alloc.deallocate(old_c, allocated_size);
-						if (_size != 0)
-							allocated_size += count;
-						else
-							allocated_size = count;
-						_size += count;
+						allocated_size = count_alloc;
 					}
-					catch (std::bad_alloc& e)
+					catch (...)
 					{
-						std::cout << e.what() << std::endl;
+						alloc.deallocate(c, count_alloc);
 						c = old_c;
+						throw ;
 					}
 				}
 				else
 				{
-					for (Iterator iter = this->begin(); iter != pos; ++iter)
+					for (size_type end = _size + count; end != index + count; --end)
 					{
-						index++;
+						if (end != _size)
+							alloc.destroy(&c[end]);
+						alloc.construct(&c[end], c[end - 1]);
 					}
-					for (size_type i = 0; i < index; ++i)
-					{
-						c[i] = old_c[i];
-					}
-					for (size_type i = 0; i < count; ++i)
-					{
-						c[index++] = value;
-					}
-					for (size_type i = index; i < _size + count; ++i)
-					{
-						c[i] = old_c[i - count];
-					}
-					_size += count;
+						for (size_type i = 0; i < count; ++i)
+						{
+							alloc.destroy(&c[index]);
+							alloc.construct(&c[index], value);
+							index++;
+						}
 				}
+				_size += count;
 			}
 
 			template< class InputIt >
 			void insert( Iterator pos, InputIt first, InputIt last )
 			{
-				size_type	count = 0;
 				T*			old_c = c;
 				size_type	index = 0;
-
-				for (InputIt iter = first; iter != last; ++iter)
-				{
+				size_type	count = 0;
+				size_type	count_alloc;
+				
+				for (Iterator iter = this->begin(); iter != pos; ++iter)
+					index++;
+				for (InputIt cursor = first; cursor != last; ++cursor)
 					count++;
-				}
-				if (_size + count < allocated_size)
+				if (_size + count > allocated_size)
 				{
 					try
 					{
 						if (allocated_size != 0)
-							c = alloc.allocate(allocated_size + count);
+							count_alloc = allocated_size + count;
 						else
-							c = alloc.allocate(count);
-						for (Iterator iter = this->begin(); iter != pos; ++iter)
+							count_alloc = count;
+						c = alloc.allocate(count_alloc);
+						init(c, old_c, old_c + index, alloc);
+						for (size_type end = _size + count; end != index + count; --end)
 						{
-							index++;
-						}
-						for (size_type i = 0; i < index; ++i)
-						{
-							c[i] = old_c[i];
+							if (end != _size)
+								alloc.destroy(&c[end]);
+							alloc.construct(&c[end], c[end - 1]);
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
-							c[index++] = *first;
-							first++;
-						}
-						for (size_type i = index; i < _size + count; ++i)
-						{
-							c[i] = old_c[i - count];
+							alloc.destroy(&c[index]);
+							alloc.construct(&c[index], *first);
+							++first;
+							index++;
 						}
 						alloc.deallocate(old_c, allocated_size);
-						if (_size != 0)
-							allocated_size += count;
-						else
-							allocated_size = count;
-						_size += count;
+						allocated_size = count_alloc;
 					}
-					catch (std::bad_alloc& e)
+					catch (...)
 					{
-						std::cout << e.what() << std::endl;
+						alloc.deallocate(c, count_alloc);
 						c = old_c;
+						throw ;
 					}
 				}
 				else
 				{
-					for (Iterator iter = this->begin(); iter != pos; ++iter)
+					for (size_type end = _size + count; end != index + count; --end)
 					{
-						index++;
+						if (end != _size)
+							alloc.destroy(&c[end]);
+						alloc.construct(&c[end], c[end - 1]);
 					}
-					for (size_type i = 0; i < index; ++i)
-					{
-						c[i] = old_c[i];
-					}
-					for (size_type i = 0; i < count; ++i)
-					{
-						c[index++] = *first;
-						first++;
-					}
-					for (size_type i = index; i < _size + count; ++i)
-					{
-						c[i] = old_c[i - count];
-					}
-					_size += count;
+						for (size_type i = 0; i < count; ++i)
+						{
+							alloc.destroy(&c[index]);
+							alloc.construct(&c[index], *first);
+							++first;
+							index++;
+						}
 				}
-				
+				_size += count;
 			}
 
 			Iterator erase(Iterator pos)

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 15:42:35 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 16:03:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,24 @@ int main(void)
 	{
 		std::cout << test_vector[i] << std::endl;
 	}
+	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
+
 	std::cout << std::endl << "testing insertion at end :" << std::endl;
 	test_vector.insert(test_vector.end(), 999);
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{
 		std::cout << test_vector[i] << std::endl;
 	}
+	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
+
+	std::cout << std::endl << "testing range insertion at index 3 :" << std::endl;
+	test_vector.insert(test_vector.begin() + 3, (size_t)5, 777);
+	for (size_t i = 0; i < test_vector.size(); ++i)
+	{
+		std::cout << test_vector[i] << std::endl;
+	}
+	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
+
 	std::cout << std::endl << "testing insertion at begining of empty vector :" << std::endl;
 	ft::vector<int> emptyVect;
 	emptyVect.insert(emptyVect.begin(), 999);
@@ -156,7 +168,22 @@ int main(void)
 	{
 		std::cout << emptyVect[i] << std::endl;
 	}
-	std::cout << "vector size : " << emptyVect.size() << ", vector capacity : " << emptyVect.capacity() << std::endl;
+
+	std::cout << std::endl << "testing insertion with iterators :" << std::endl;
+	std::vector<std::string> str_temp;
+	str_temp.push_back("bonjour");
+	str_temp.push_back("au revoir");
+	std::vector<std::string> filler;
+	for (int i = 0; i < 5; ++i)
+		filler.push_back("comment ça va ?");
+	std::cout << "before insertion :" << std::endl;
+	for (size_t i = 0; i < str_temp.size(); ++i)
+		std::cout << str_temp[i] << std::endl;
+	str_temp.insert(str_temp.begin() + 1, filler.begin(), filler.end());
+	std::cout << "after insertion :" << std::endl;
+	for (size_t i = 0; i < str_temp.size(); ++i)
+		std::cout << str_temp[i] << std::endl;
+	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	
 	std::cout << std::endl << "testing vector swap :" << std::endl;
 	ft::vector<std::string>	vs1;
