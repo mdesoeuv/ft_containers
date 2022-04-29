@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 15:57:27 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 19:34:43 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -686,6 +686,7 @@ namespace ft
 						c = alloc.allocate(other.allocated_size);
 						destroy(old_c, old_c + _size, alloc);
 						alloc.deallocate(old_c, allocated_size);
+						allocated_size = other.allocated_size;
 					}
 					catch (...)
 					{
@@ -693,7 +694,6 @@ namespace ft
 						throw ;
 						return (*this);
 					}
-					allocated_size = other.allocated_size;
 				}
 				else
 				{
@@ -964,7 +964,8 @@ namespace ft
 								alloc.destroy(&c[end]);
 							alloc.construct(&c[end], c[end - 1]);
 						}
-						alloc.destroy(&c[index]);
+						if (index != _size)
+							alloc.destroy(&c[index]);
 						alloc.construct(&c[index], value);
 						alloc.deallocate(old_c, allocated_size);
 						allocated_size = count;
@@ -985,7 +986,8 @@ namespace ft
 							alloc.destroy(&c[end]);
 						alloc.construct(&c[end], c[end - 1]);
 					}
-					alloc.destroy(&c[index]);
+					if (index != _size)
+						alloc.destroy(&c[index]);
 					alloc.construct(&c[index], value);
 				}
 				_size++;
@@ -1015,13 +1017,12 @@ namespace ft
 						init(c, old_c, old_c + index, alloc);
 						for (size_type end = _size + count; end != index + count; --end)
 						{
-							if (end != _size)
-								alloc.destroy(&c[end]);
 							alloc.construct(&c[end], c[end - 1]);
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
-							alloc.destroy(&c[index]);
+							if (index != _size)
+								alloc.destroy(&c[index]);
 							alloc.construct(&c[index], value);
 							index++;
 						}
@@ -1039,13 +1040,12 @@ namespace ft
 				{
 					for (size_type end = _size + count; end != index + count; --end)
 					{
-						if (end != _size)
-							alloc.destroy(&c[end]);
 						alloc.construct(&c[end], c[end - 1]);
 					}
 						for (size_type i = 0; i < count; ++i)
 						{
-							alloc.destroy(&c[index]);
+							if (index != _size)
+								alloc.destroy(&c[index]);
 							alloc.construct(&c[index], value);
 							index++;
 						}
@@ -1083,7 +1083,8 @@ namespace ft
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
-							alloc.destroy(&c[index]);
+							if (index != _size)
+								alloc.destroy(&c[index]);
 							alloc.construct(&c[index], *first);
 							++first;
 							index++;
@@ -1108,7 +1109,8 @@ namespace ft
 					}
 						for (size_type i = 0; i < count; ++i)
 						{
-							alloc.destroy(&c[index]);
+							if (index != _size)
+								alloc.destroy(&c[index]);
 							alloc.construct(&c[index], *first);
 							++first;
 							index++;

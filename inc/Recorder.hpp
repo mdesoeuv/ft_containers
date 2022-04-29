@@ -50,6 +50,16 @@ public:
         return inner;
     }
 
+    T&	operator*(void)
+    {
+        return (*inner);
+    }
+
+    T*	operator->(void)
+    {
+        return (&(operator*()));
+    }
+
     static void reset() {
         assert(instance_count == 0);
         constructor_calls = 0;
@@ -99,6 +109,13 @@ bool operator<=(const Recorder<T>& a, const Recorder<T>& b) {
 template <typename T>
 bool operator>=(const Recorder<T>& a, const Recorder<T>& b) {
     return a.inner >= b.inner;
+}
+
+
+template <typename T>
+std::ostream&   operator<<(std::ostream& out, const Recorder<T>& rec) {
+    out << rec.inner << std::endl;
+    return (out);
 }
 
 template <typename T>
