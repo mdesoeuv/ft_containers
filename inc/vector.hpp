@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 10:53:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 11:59:39 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -902,30 +902,22 @@ namespace ft
 
 			void	reserve(size_type new_cap)
 			{
-				T*	old_c = c;
+				vector<T, Allocator>	old_vect(*this);
 				
 				if (new_cap <= allocated_size)
 					return ;
 				try
 				{
-					if (new_cap > max_size())
-						throw std::length_error("requested capacity exceeds max capacity");
+					destroy(this->begin(), this->end(), alloc);
+					alloc.deallocate(c, allocated_size);
 					c = alloc.allocate(new_cap);
-					for (size_type i = 0; i < _size; ++i)
-					{
-						c[i] = old_c[i];
-					}
-					alloc.deallocate(old_c, allocated_size);
+					init(this->begin(), old_vect.begin(), old_vect.end(), alloc);
 					allocated_size = new_cap;
 				}
-				catch (std::length_error& e)
+				catch  (...)
 				{
-					std::cout << e.what() << std::endl;
-				}
-				catch  (std::bad_alloc& e)
-				{
-					std::cout << e.what() << std::endl;
-					c = old_c;
+					*this = old_vect;
+					throw ;
 				}
 			}
 
@@ -1148,14 +1140,13 @@ namespace ft
 				
 			}
 
-			Iterator erase(Iterator pos) // detruire elements avec alloc.destroy
+			Iterator erase(Iterator pos)
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = pos;
 
 				if (pos == this->end())
 				{
-					std::cout << "invalid iterator pos" << std::endl;
 					return (pos);
 				}
 				while (index != pos)
@@ -1163,10 +1154,12 @@ namespace ft
 				++pos;
 				while (pos != this->end())
 				{
-					*index = *pos;
+					alloc.destroy(&(*index));
+					alloc.construct(&(*index), *pos);
 					++index;
 					++pos;
 				}
+				alloc.destroy(&(*index));
 				_size--;
 				return (save_pos);
 			}
@@ -1185,16 +1178,21 @@ namespace ft
 				}
 				if (first == this->end())
 				{
-					std::cout << "invalid iterator pos" << std::endl;
 					return (this->end());
 				}
 				while (index != first)
 					++index;
 				while (last != this->end())
 				{
-					*first = *last;
-					++first;
+					alloc.destroy(&(*index));
+					alloc.construct(&(*index), *last);
+					++index;
 					++last;
+				}
+				while (index != this->end())
+				{
+					alloc.destroy(&(*index));
+					++index;
 				}
 				_size -= range;
 				return (save_pos);

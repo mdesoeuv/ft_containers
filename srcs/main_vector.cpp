@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 10:44:13 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 11:15:48 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,17 @@ int main(void)
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
-	
+
+	std::cout << std::endl << "testing reserve function with precedent vector :" << std::endl;
+	std::cout << "reserving smaller space :" << std::endl;
+	copyInt.reserve(1);
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
+	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+		std::cout << *iter << std::endl;
+	std::cout << "reserving larger space :" << std::endl;
+	copyInt.reserve(100);
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
+	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+		std::cout << *iter << std::endl;
 	return (0);
 }
