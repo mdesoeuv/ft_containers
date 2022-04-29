@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 11:59:39 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 14:35:07 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1198,7 +1198,7 @@ namespace ft
 				return (save_pos);
 			}
 
-			void	push_back(const T& value) // ne desallouer qu'a la toute fin pour pouvoir revenir en arriere 
+			void	push_back(const T& value)
 			{
 				T*	old_c = c;
 				
@@ -1208,52 +1208,45 @@ namespace ft
 					{
 						if (allocated_size != 0)
 						{
-							if (allocated_size * 2 > max_size())
-								throw std::length_error("requested capacity exceeds max capacity");
 							c = alloc.allocate(allocated_size * 2);
 						}
 						else
 							c = alloc.allocate(1);
-						for (size_type i = 0; i < _size; ++i)
-						{
-							c[i] = old_c[i];
-						}
+						init(c, old_c, old_c + _size, alloc);
+						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
 						if (_size != 0)
 							allocated_size = allocated_size * 2;
 						else
 							allocated_size = 1;
 					}
-					catch (std::length_error& e)
+					catch (...)
 					{
-						std::cout << e.what() << std::endl;
-						return ;
-					}
-					catch (std::bad_alloc& e)
-					{
-						std::cout << e.what() << std::endl;
 						c = old_c;
+						throw ;
 						return ;
 					}
 				}
-				c[_size] = value;
+				alloc.construct(&c[_size], value);
 				_size++;
 			}
 
-			void	pop_back(void) // alloc.destroy
+			void	pop_back(void)
 			{
 				if (_size == 0)
 					return ;
-				// c[size - 1] = 0;
+				alloc.destroy(&c[_size - 1]);
 				_size--;
 			}
 
-			void resize(size_type count, T value = T() ) // alloc.construct alloc.destroy catch constructor
+			void resize(size_type count, T value = T() )
 			{
 				T*	old_c = c;
 				
 				if (_size >= count)
 				{
+					for (size_type i = count; i < _size; ++i)
+						alloc.destroy(&c[i]);
 					_size = count;
 					return ;
 				}
@@ -1263,37 +1256,28 @@ namespace ft
 					{
 						if (allocated_size != 0)
 						{
-							if (allocated_size * 2 > max_size())
-								throw std::length_error("requested capacity exceeds max capacity");
 							c = alloc.allocate(allocated_size * 2);
 						}
 						else
 							c = alloc.allocate(count);
-						for (size_type i = 0; i < _size; ++i)
-						{
-							c[i] = old_c[i];
-						}
+						init(c, old_c, old_c + _size, alloc);
+						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
 						if (allocated_size != 0)
 							allocated_size = allocated_size * 2;
 						else
 							allocated_size = count;
 					}
-					catch (std::length_error& e)
-					{
-						std::cout << e.what() << std::endl;
-						return ;
-					}
 					catch (std::bad_alloc& e)
 					{
-						std::cout << e.what() << std::endl;
 						c = old_c;
+						throw ;
 						return ;
 					}
 				}
 				for (size_type i = _size; i < count; ++i)
 				{
-					c[i] = value;
+					alloc.construct(&c[i], value);
 				}
 				_size = count;
 			}

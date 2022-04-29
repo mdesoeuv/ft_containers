@@ -6,12 +6,13 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 11:15:48 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/04/29 14:34:50 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <memory>
+#include <vector> // for comparison
 #include "../inc/stack.hpp"
 #include "../inc/vector.hpp"
 
@@ -301,5 +302,15 @@ int main(void)
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	for (ft::vector<int>::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
+
+	// std::vector<int> testvect;
+	// for (int i = 0; i < 5; ++i)
+	// 	testvect.push_back(i);
+	// for (int i = 0; i < 5; ++i)
+	// 	std::cout << testvect[i] << std::endl;
+	// testvect.resize(10, 10);
+	// for (int i = 0; i < 10; ++i)
+	// 	std::cout << testvect[i] << std::endl;
+	
 	return (0);
 }
