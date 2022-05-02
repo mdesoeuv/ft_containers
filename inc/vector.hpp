@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:04:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 10:28:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -997,7 +997,7 @@ namespace ft
 			
 			void insert(Iterator pos, size_type count, const T& value)
 			{
-							T*			old_c = c;
+				T*			old_c = c;
 				size_type	index = 0;
 				size_type	count_alloc;
 				
@@ -1017,16 +1017,17 @@ namespace ft
 						init(c, old_c, old_c + index, alloc);
 						for (size_type end = _size + count - 1; end != _size - 1; --end)
 						{
-							alloc.destroy(c + end - count);
-							alloc.construct(&c[end], c[end - count]);
+							// alloc.destroy(c + end - count);
+							alloc.construct(&c[end], old_c[end - count]);
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], value);
 							index++;
 						}
-							alloc.deallocate(old_c, allocated_size);
-							allocated_size = count_alloc;
+						destroy(old_c, old_c + _size);
+						alloc.deallocate(old_c, allocated_size);
+						allocated_size = count_alloc;
 						}
 					catch (...)
 					{
@@ -1073,20 +1074,17 @@ namespace ft
 							count_alloc = count;
 						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
-						for (size_type end = _size + count; end != index + count; --end)
+						for (size_type end = _size + count - 1; end != _size - 1; --end)
 						{
-							if (end != _size)
-								alloc.destroy(&c[end]);
-							alloc.construct(&c[end], c[end - 1]);
+							alloc.construct(&c[end], old_c[end - count]);
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
-							if (index != _size)
-								alloc.destroy(&c[index]);
 							alloc.construct(&c[index], *first);
-							++first;
 							index++;
+							++first;
 						}
+						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
 						allocated_size = count_alloc;
 					}
