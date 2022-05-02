@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 17:51:11 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 17:57:08 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -677,6 +677,7 @@ namespace ft
 
 		/* ---------- basic functions ---------- */
 
+			/* original alloc is preserved */
 			vector&	operator=(const vector& other)
 			{
 				T*	old_c = c;
@@ -701,7 +702,6 @@ namespace ft
 				{
 					destroy(this->begin(), this->end(), alloc);
 				}
-				// alloc = other.alloc; allocator is preserved 
 				init(this->begin(), other.begin(), other.end(), alloc);
 				_size = other._size;
 				return (*this);
