@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:23:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 15:47:18 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../inc/stack.hpp"
 #include "../inc/vector.hpp"
 #include "../inc/Recorder.hpp"
+#include "../inc/is_integral.hpp"
 
 
 int main(void)
@@ -370,6 +371,9 @@ int main(void)
 {
 	Recorder<int>::show_stats();
 	Recorder<std::string>::show_stats();
+
+	std::cout << ft::is_integral<std::string>::value << std::endl;
+	std::cout << ft::is_integral<int>::value << std::endl;
 }
 	return (0);
 }
