@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 19:34:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 10:03:24 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1015,20 +1015,19 @@ namespace ft
 							count_alloc = count;
 						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
-						for (size_type end = _size + count; end != index + count; --end)
+						for (size_type end = _size + count - 1; end != _size - 1; --end)
 						{
-							alloc.construct(&c[end], c[end - 1]);
+							alloc.destroy(c + end - count);
+							alloc.construct(&c[end], c[end - count]);
 						}
 						for (size_type i = 0; i < count; ++i)
 						{
-							if (index != _size)
-								alloc.destroy(&c[index]);
 							alloc.construct(&c[index], value);
 							index++;
 						}
-						alloc.deallocate(old_c, allocated_size);
-						allocated_size = count_alloc;
-					}
+							alloc.deallocate(old_c, allocated_size);
+							allocated_size = count_alloc;
+						}
 					catch (...)
 					{
 						alloc.deallocate(c, count_alloc);
@@ -1038,17 +1037,16 @@ namespace ft
 				}
 				else
 				{
-					for (size_type end = _size + count; end != index + count; --end)
+					for (size_type end = _size + count - 1; end != _size - 1; --end)
 					{
-						alloc.construct(&c[end], c[end - 1]);
+						alloc.destroy(c + end - count);
+						alloc.construct(&c[end], c[end - count]);
 					}
-						for (size_type i = 0; i < count; ++i)
-						{
-							if (index != _size)
-								alloc.destroy(&c[index]);
-							alloc.construct(&c[index], value);
-							index++;
-						}
+					for (size_type i = 0; i < count; ++i)
+					{
+						alloc.construct(&c[index], value);
+						index++;
+					}
 				}
 				_size += count;
 			}

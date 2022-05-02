@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 19:46:20 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 09:32:52 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(void)
 {
 
 {
-	ft::vector<Recorder<int> > test_vector;
+	ft::vector<int > test_vector;
 
 	std::cout << "testing vector implementation :" << std::endl << std::endl;
 	for (int i = 0; i < 10; ++i)
@@ -89,7 +89,7 @@ int main(void)
 		std::cout << test_vector[i] << std::endl;
 	}
 	
-	ft::vector<Recorder<int> >::Iterator	iter = test_vector.begin();
+	ft::vector<int >::Iterator	iter = test_vector.begin();
 	std::cout << std::endl << "testing basic iterator :" << std::endl;
 	std::cout << *iter << std::endl;
 	++iter;
@@ -108,8 +108,8 @@ int main(void)
 	std::cout << *iter << std::endl;
 	std::cout << iter[3] << std::endl;
 	
-	const ft::vector<Recorder<int> >	const_vect(test_vector);
-	ft::vector<Recorder<int> >::Const_Iterator	const_iter = const_vect.begin();
+	const ft::vector<int >	const_vect(test_vector);
+	ft::vector<int >::Const_Iterator	const_iter = const_vect.begin();
 	std::cout << std::endl << "testing const iterator :" << std::endl;
 	// std::cout << *const_iter << std::endl;
 	++const_iter;
@@ -117,7 +117,7 @@ int main(void)
 	// std::cout << *const_iter << std::endl;
 
 	std::cout << std::endl << "erasing element at index 5 :" << std::endl;
-	ft::vector<Recorder<int> >::Iterator	iter_five(test_vector, 5);
+	ft::vector<int >::Iterator	iter_five(test_vector, 5);
 	test_vector.erase(iter_five);
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{
@@ -135,14 +135,14 @@ int main(void)
 	
 	
 	std::cout << std::endl << "testing insertion at index 3 with first return value test :" << std::endl;
-	ft::vector<Recorder<int> >::Iterator	iter_three(test_vector, 3);
+	ft::vector<int >::Iterator	iter_three(test_vector, 3);
 	std::cout << *(test_vector.insert(iter_three, 1000)) << std::endl << std::endl;
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{
 		std::cout << test_vector[i] << std::endl;
 	}
 	std::cout << std::endl << "testing insertion at index 0 :" << std::endl;
-	ft::vector<Recorder<int> >::Iterator	iter_zero(test_vector, 0);
+	ft::vector<int >::Iterator	iter_zero(test_vector, 0);
 	test_vector.insert(iter_zero, 999);
 	for (size_t i = 0; i < test_vector.size(); ++i)
 	{
@@ -167,7 +167,7 @@ int main(void)
 	std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
 
 	std::cout << std::endl << "testing insertion at begining of empty vector :" << std::endl;
-	ft::vector<Recorder<int> > emptyVect;
+	ft::vector<int > emptyVect;
 	emptyVect.insert(emptyVect.begin(), 999);
 	for (size_t i = 0; i < emptyVect.size(); ++i)
 	{
@@ -175,24 +175,24 @@ int main(void)
 	}
 
 	std::cout << std::endl << "testing insertion with iterators :" << std::endl;
-	ft::vector<Recorder<std::string> > str_temp;
-	str_temp.push_back(std::string("bonjour"));
-	str_temp.push_back(std::string("au revoir"));
-	ft::vector<Recorder<std::string> > filler;
+	ft::vector<std::string> str_temp;
+	str_temp.push_back("bonjour");
+	str_temp.push_back("au revoir");
+	ft::vector<std::string> filler;
 	for (int i = 0; i < 5; ++i)
-		filler.push_back(std::string("comment ça va ?"));
+		filler.push_back("comment ça va ?");
 	std::cout << "before insertion :" << std::endl;
 	for (size_t i = 0; i < str_temp.size(); ++i)
 		std::cout << str_temp[i] << std::endl;
 	str_temp.insert(str_temp.begin() + 1, filler.begin(), filler.end());
 	std::cout << "after insertion :" << std::endl;
+	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	for (size_t i = 0; i < str_temp.size(); ++i)
 		std::cout << str_temp[i] << std::endl;
-	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	
 	std::cout << std::endl << "testing vector swap :" << std::endl;
-	ft::vector<Recorder<std::string> >	vs1;
-	ft::vector<Recorder<std::string> >	vs2;
+	ft::vector<std::string>	vs1;
+	ft::vector<std::string>	vs2;
 	vs1.reserve(15);
 	vs1.push_back(std::string("coucou"));
 	vs1.push_back(std::string("hello"));
@@ -207,12 +207,12 @@ int main(void)
 	std::cout << "vector size : " << vs1.size() << ", vector capacity : " << vs1.capacity() << std::endl;
 	std::cout << "s2 = " << vs2[0] << std::endl;
 	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
-	ft::vector<Recorder<std::string> >::Iterator	stringIter = vs1.begin();
+	ft::vector<std::string>::Iterator	stringIter = vs1.begin();
 	stringIter->push_back('t');
 	std::cout << "s1 = " << stringIter[0] << std::endl;
-	ft::vector<Recorder<std::string> >::Iterator	iterBegin;
+	ft::vector<std::string>::Iterator	iterBegin;
 	iterBegin = vs2.begin();
-	ft::vector<Recorder<std::string> >::Iterator	iterEnd = vs2.end();
+	ft::vector<std::string>::Iterator	iterEnd = vs2.end();
 	std::cout << "testing if begin iterator < end iterator : ";
 	if (iterBegin < iterEnd)
 		std::cout << "true" << std::endl;
@@ -235,19 +235,19 @@ int main(void)
 		std::cout << "false" << std::endl;
 
 	std::cout << std::endl << "testing constructors :" << std::endl;
-	ft::vector<Recorder<std::string> >		strVect(5, std::string("lol"));
+	ft::vector<std::string>		strVect(5, std::string("lol"));
 	for (size_t i = 0; i < 5; ++i)
 	{
 		std::cout << strVect[i] << std::endl;
 	}
-	ft::vector<Recorder<std::string> >		strVect2(3);
+	ft::vector<std::string>		strVect2(3);
 	for (size_t i = 0; i < 3; ++i)
 	{
 		std::cout << strVect2[i] << std::endl;
 	}
 
-	// ft::vector<Recorder<std::string> >		strVect3(strVect.begin(), strVect.end());
-	// for (ft::vector<Recorder<std::string> >::Iterator iter = strVect3.begin(); iter != strVect3.end(); ++iter)
+	// ft::vector<std::string> >		strVect3(strVect.begin(), strVect.end());
+	// for (ft::vector<std::string> >::Iterator iter = strVect3.begin(); iter != strVect3.end(); ++iter)
 	// 	std::cout << *iter << std::endl;
 
 	// std::cout << std::endl << "comparing two identical vectors, is it equal ? " << std::endl;
@@ -300,10 +300,10 @@ int main(void)
 	// 	std::cout << "false" << std::endl;
 
 	std::cout << std::endl << "testing reverse iterator incrementation:" << std::endl;
-	ft::vector<Recorder<int> >	vectInt;
+	ft::vector<int >	vectInt;
 	for (int i = 0; i < 5; ++i)
 		vectInt.push_back(i);
-	ft::vector<Recorder<int> >::Reverse_Iterator r_iter = vectInt.rbegin();
+	ft::vector<int >::Reverse_Iterator r_iter = vectInt.rbegin();
 	while (r_iter != vectInt.rend())
 	{
 		std::cout << *r_iter++ << std::endl;
@@ -317,42 +317,42 @@ int main(void)
 	std::cout << "accessing element at index 1 : " << r_iter[1] << std::endl;
 
 	std::cout << std::endl << "testing operator=, displaying copy :" << std::endl;
-	ft::vector<Recorder<int> >	copyInt;
+	ft::vector<int >	copyInt;
 	copyInt = vectInt;
 	std::cout << "vector size : " << vectInt.size() << ", vector capacity : " << vectInt.capacity() << std::endl;
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
-	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 	std::cout << "assigning a smaller vector without reallocation :" << std::endl;
-	ft::vector<Recorder<int> > smallInt;
+	ft::vector<int > smallInt;
 	smallInt.push_back(1000);
 	copyInt = smallInt;
 	std::cout << "vector size : " << smallInt.size() << ", vector capacity : " << smallInt.capacity() << std::endl;
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
-	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 	
 	std::cout << std::endl << "testing assign basic function with higher capacity assignement:" << std::endl;
 	copyInt.assign(10, 7);
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
-	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 	std::cout << "lower capacity assignement :" << std::endl;
 	copyInt.assign(1, 5);
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
-	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 
 	std::cout << std::endl << "testing reserve function with precedent vector :" << std::endl;
 	std::cout << "reserving smaller space :" << std::endl;
 	copyInt.reserve(1);
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
-	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 	std::cout << "reserving larger space :" << std::endl;
 	copyInt.reserve(100);
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
-	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
+	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 
 	// std::vector<int> testvect;
