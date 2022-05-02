@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:25:38 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 13:25:34 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1005,6 +1005,7 @@ namespace ft
 				{
 					index++;
 				}
+				size_type	nb_to_move = _size - index;		
 				if (_size + count > allocated_size)
 				{
 					try
@@ -1015,15 +1016,15 @@ namespace ft
 							count_alloc = count;
 						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
-						for (size_type end = _size + count - 1; end != _size - 1; --end)
-						{
-							// alloc.destroy(c + end - count);
-							alloc.construct(&c[end], old_c[end - count]);
-						}
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], value);
 							index++;
+						}
+						for (size_type end = _size + count - 1; nb_to_move > 0; --end)
+						{
+							alloc.construct(&c[end], old_c[end - count]);
+							nb_to_move--;
 						}
 						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
@@ -1038,10 +1039,11 @@ namespace ft
 				}
 				else
 				{
-					for (size_type end = _size + count - 1; end != _size - 1; --end)
+					for (size_type end = _size + count - 1; nb_to_move > 0; --end)
 					{
 						alloc.destroy(c + end - count);
 						alloc.construct(&c[end], c[end - count]);
+						nb_to_move--;
 					}
 					for (size_type i = 0; i < count; ++i)
 					{
@@ -1059,9 +1061,11 @@ namespace ft
 				size_type	index = 0;
 				size_type	count = 0;
 				size_type	count_alloc;
+				size_type	nb_to_move;
 				
 				for (Iterator iter = this->begin(); iter != pos; ++iter)
 					index++;
+				nb_to_move = _size - index;
 				for (InputIt cursor = first; cursor != last; ++cursor)
 					count++;
 				if (_size + count > allocated_size)
@@ -1074,15 +1078,16 @@ namespace ft
 							count_alloc = count;
 						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
-						for (size_type end = _size + count - 1; end != _size - 1; --end)
-						{
-							alloc.construct(&c[end], old_c[end - count]);
-						}
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], *first);
 							index++;
 							++first;
+						}
+						for (size_type end = _size + count - 1; nb_to_move > 0; --end)
+						{
+							alloc.construct(&c[end], old_c[end - count]);
+							nb_to_move--;
 						}
 						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
@@ -1097,11 +1102,12 @@ namespace ft
 				}
 				else
 				{
-					for (size_type end = _size + count; end != index + count; --end)
+					for (size_type end = _size + count; nb_to_move > 0; --end)
 					{
 						if (end != _size)
 							alloc.destroy(&c[end]);
 						alloc.construct(&c[end], c[end - 1]);
+						nb_to_move--;
 					}
 						for (size_type i = 0; i < count; ++i)
 						{
