@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 09:32:52 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 10:23:12 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,10 @@ int main(void)
 	std::cout << "before insertion :" << std::endl;
 	for (size_t i = 0; i < str_temp.size(); ++i)
 		std::cout << str_temp[i] << std::endl;
+	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	str_temp.insert(str_temp.begin() + 1, filler.begin(), filler.end());
 	std::cout << "after insertion :" << std::endl;
+
 	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	for (size_t i = 0; i < str_temp.size(); ++i)
 		std::cout << str_temp[i] << std::endl;

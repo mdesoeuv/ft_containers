@@ -114,7 +114,7 @@ bool operator>=(const Recorder<T>& a, const Recorder<T>& b) {
 
 template <typename T>
 std::ostream&   operator<<(std::ostream& out, const Recorder<T>& rec) {
-    out << rec.inner << std::endl;
+    out << rec.inner;
     return (out);
 }
 
