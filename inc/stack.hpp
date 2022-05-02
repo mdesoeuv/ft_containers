@@ -1,11 +1,11 @@
 #ifndef STACK_HPP
 # define STACK_HPP
 
-# include <deque> // to remove for use with ft::vector
+#include "../inc/vector.hpp"
 
 namespace ft
 {
-	template <class T, class Container = std::deque<T> > // change the underlying container by ft::vector
+	template <class T, class Container = ft::vector<T> >
 	class stack
 	{
 	public:
