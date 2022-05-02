@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 09:28:29 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 10:05:04 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,21 +174,21 @@ int main(void)
 		std::cout << emptyVect[i] << std::endl;
 	}
 
-	std::cout << std::endl << "testing insertion with iterators :" << std::endl;
-	ft::vector<Recorder<std::string> > str_temp;
-	str_temp.push_back(std::string("bonjour"));
-	str_temp.push_back(std::string("au revoir"));
-	ft::vector<Recorder<std::string> > filler;
-	for (int i = 0; i < 5; ++i)
-		filler.push_back(std::string("comment ça va ?"));
-	std::cout << "before insertion :" << std::endl;
-	for (size_t i = 0; i < str_temp.size(); ++i)
-		std::cout << str_temp[i] << std::endl;
-	str_temp.insert(str_temp.begin() + 1, filler.begin(), filler.end());
-	std::cout << "after insertion :" << std::endl;
-	for (size_t i = 0; i < str_temp.size(); ++i)
-		std::cout << str_temp[i] << std::endl;
-	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
+	// std::cout << std::endl << "testing insertion with iterators :" << std::endl;
+	// ft::vector<Recorder<std::string> > str_temp;
+	// str_temp.push_back(std::string("bonjour"));
+	// str_temp.push_back(std::string("au revoir"));
+	// ft::vector<Recorder<std::string> > filler;
+	// for (int i = 0; i < 5; ++i)
+	// 	filler.push_back(std::string("comment ça va ?"));
+	// std::cout << "before insertion :" << std::endl;
+	// for (size_t i = 0; i < str_temp.size(); ++i)
+	// 	std::cout << str_temp[i] << std::endl;
+	// str_temp.insert(str_temp.begin() + 1, filler.begin(), filler.end());
+	// std::cout << "after insertion :" << std::endl;
+	// for (size_t i = 0; i < str_temp.size(); ++i)
+	// 	std::cout << str_temp[i] << std::endl;
+	// std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	
 	std::cout << std::endl << "testing vector swap :" << std::endl;
 	ft::vector<Recorder<std::string> >	vs1;
@@ -208,7 +208,7 @@ int main(void)
 	std::cout << "s2 = " << vs2[0] << std::endl;
 	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
 	ft::vector<Recorder<std::string> >::Iterator	stringIter = vs1.begin();
-	stringIter->push_back('t');
+	// stringIter->push_back('t');
 	std::cout << "s1 = " << stringIter[0] << std::endl;
 	ft::vector<Recorder<std::string> >::Iterator	iterBegin;
 	iterBegin = vs2.begin();
@@ -234,17 +234,17 @@ int main(void)
 	else
 		std::cout << "false" << std::endl;
 
-	std::cout << std::endl << "testing constructors :" << std::endl;
-	ft::vector<Recorder<std::string> >		strVect(5, std::string("lol"));
-	for (size_t i = 0; i < 5; ++i)
-	{
-		std::cout << strVect[i] << std::endl;
-	}
-	ft::vector<Recorder<std::string> >		strVect2(3);
-	for (size_t i = 0; i < 3; ++i)
-	{
-		std::cout << strVect2[i] << std::endl;
-	}
+	// std::cout << std::endl << "testing constructors :" << std::endl;
+	// ft::vector<Recorder<std::string> >		strVect(5, std::string("lol"));
+	// for (size_t i = 0; i < 5; ++i)
+	// {
+	// 	std::cout << strVect[i] << std::endl;
+	// }
+	// ft::vector<Recorder<std::string> >		strVect2(3);
+	// for (size_t i = 0; i < 3; ++i)
+	// {
+	// 	std::cout << strVect2[i] << std::endl;
+	// }
 
 	// ft::vector<Recorder<std::string> >		strVect3(strVect.begin(), strVect.end());
 	// for (ft::vector<Recorder<std::string> >::Iterator iter = strVect3.begin(); iter != strVect3.end(); ++iter)
