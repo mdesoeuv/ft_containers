@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 17:57:08 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 18:02:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -902,21 +902,21 @@ namespace ft
 
 			void	reserve(size_type new_cap)
 			{
-				vector<T, Allocator>	old_vect(*this);
+				T*	old_c = c;
 				
 				if (new_cap <= allocated_size)
 					return ;
 				try
 				{
-					destroy(this->begin(), this->end(), alloc);
-					alloc.deallocate(c, allocated_size);
 					c = alloc.allocate(new_cap);
-					init(this->begin(), old_vect.begin(), old_vect.end(), alloc);
+					init(c, old_c, old_c + _size, alloc);
+					destroy(old_c, old_c + _size, alloc);
+					alloc.deallocate(old_c, allocated_size);
 					allocated_size = new_cap;
 				}
 				catch  (...)
 				{
-					*this = old_vect;
+					c = old_c;
 					throw ;
 				}
 			}
