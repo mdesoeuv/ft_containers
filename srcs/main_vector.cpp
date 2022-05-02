@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/04/29 19:46:20 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 09:28:29 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,14 +355,14 @@ int main(void)
 	for (ft::vector<Recorder<int> >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 
-	// std::vector<int> testvect;
-	// for (int i = 0; i < 5; ++i)
-	// 	testvect.push_back(i);
-	// for (int i = 0; i < 5; ++i)
-	// 	std::cout << testvect[i] << std::endl;
-	// testvect.resize(10, 10);
-	// for (int i = 0; i < 10; ++i)
-	// 	std::cout << testvect[i] << std::endl;
+	std::vector<int> testvect;
+	for (int i = 0; i < 5; ++i)
+		testvect.push_back(i);
+	for (int i = 0; i < 5; ++i)
+		std::cout << testvect[i] << std::endl;
+	testvect.resize(10, 10);
+	for (int i = 0; i < 10; ++i)
+		std::cout << testvect[i] << std::endl;
 	
 }
 {
