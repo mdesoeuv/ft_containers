@@ -6,12 +6,16 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:25:38 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 11:37:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
+
+# include "Iterator.hpp"
+# include "Const_Iterator.hpp"
+# include "Reverse_Iterator.hpp"
 
 namespace ft
 {
@@ -86,513 +90,10 @@ namespace ft
 
 		public:
 
-			class Iterator
-			{
-				protected:
-
-					T*		ptr;
-					
-
-				public:
-
-					Iterator(void)
-					{
-						ptr = NULL;
-					}
-
-					Iterator(vector& vector)
-					{
-						ptr = vector.data();
-					}
-
-					Iterator(vector& vector, size_type offset)
-					{
-						ptr = vector.data() + offset;
-					}
-					
-					Iterator(const Iterator& other) : ptr(other.ptr)
-					{}
-					
-					~Iterator(void)
-					{}
-					
-					Iterator&	operator=(const Iterator& rhs)
-					{
-						ptr = rhs.ptr;
-
-						return (*this);
-					}
-
-					bool	operator==(const Iterator& rhs)
-					{
-						return (ptr == rhs.ptr);
-					}
-
-					bool	operator!=(const Iterator& rhs)
-					{
-						return (!(ptr == rhs.ptr));
-					}
-
-					Iterator&	operator++(void)
-					{
-						ptr++;
-						return (*this);
-					}
-
-					Iterator	operator++(int)
-					{
-						Iterator	it_temp = *this;
-						
-						ptr++;
-						return (it_temp);
-					}
-
-					Iterator&	operator--(void)
-					{
-						ptr--;
-						return (*this);
-					}
-
-					Iterator	operator--(int)
-					{
-						Iterator	it_temp = *this;
-
-						ptr--;
-						return (it_temp);
-					}
-
-					Iterator&	operator+=(difference_type n)
-					{
-						ptr += n;
-						return (*this);
-					}
-
-					Iterator&	operator-=(difference_type n)
-					{
-						ptr -= n;
-						return (*this);
-					}
-
-					friend Iterator	operator+(const Iterator& lhs, difference_type n)
-					{
-						Iterator	iter(lhs);
-						
-						iter += n;
-						return (iter);
-					}
-
-					friend Iterator	operator+(difference_type n, const Iterator& rhs)
-					{
-						Iterator	iter(rhs);
-						
-						iter += n;
-						return (iter);
-					}
-
-					friend Iterator	operator-(const Iterator& lhs, difference_type n)
-					{
-						Iterator	iter(lhs);
-						
-						iter -= n;
-						return (iter);
-					}
-
-					friend difference_type	operator-(const Iterator& lhs, const Iterator& rhs)
-					{
-						difference_type	n = 0;
-						Iterator lhs_iter(lhs);
-						Iterator rhs_iter(rhs);
-						
-						if (lhs_iter.ptr == rhs_iter.ptr)
-							return (0);
-						if (lhs_iter.ptr < rhs_iter.ptr)
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr++;
-								n++;
-							}
-						}
-						else
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr--;
-								n++;
-							}
-						}
-						return (n);
-					}
-
-					T&	operator*(void)
-					{
-						return (*ptr);
-					}
-
-					T*	operator->(void)
-					{
-						return (ptr);
-					}
-
-					bool	operator<(const Iterator& rhs)
-					{
-						return (ptr < rhs.ptr);
-					}
-
-					bool	operator<=(const Iterator& rhs)
-					{
-						return (ptr <= rhs.ptr);
-					}
-
-					bool	operator>(const Iterator& rhs)
-					{
-						return (ptr > rhs.ptr);
-					}
-
-					bool	operator>=(const Iterator& rhs)
-					{
-						return (ptr >= rhs.ptr);
-					}
-
-					T&		operator[](difference_type	n)
-					{
-						return (*(ptr + n));
-					}
-					
-				
-			};
+			
 		
-			class Const_Iterator
-			{
-				protected:
-
-					const T*		ptr;
-					
-
-				public:
-
-					Const_Iterator(void)
-					{
-						ptr = NULL;
-					}
-
-					Const_Iterator(const vector& vector)
-					{
-						ptr = vector.data();
-					}
-
-					Const_Iterator(const vector& vector, size_type offset)
-					{
-						ptr = vector.data() + offset;
-					}
-					
-					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
-					{}
-					
-					~Const_Iterator(void)
-					{}
-					
-					Const_Iterator&	operator=(const Const_Iterator& rhs)
-					{
-						ptr = rhs.ptr;
-
-						return (*this);
-					}
-
-					bool	operator==(const Const_Iterator& rhs)
-					{
-						return (ptr == rhs.ptr);
-					}
-
-					bool	operator!=(const Const_Iterator& rhs)
-					{
-						return (!(ptr == rhs.ptr));
-					}
-
-					Const_Iterator&	operator++(void)
-					{
-						ptr++;
-						return (*this);
-					}
-					
-					Const_Iterator	operator++(int)
-					{
-						Const_Iterator	it_temp = *this;
-						
-						ptr++;
-						return (it_temp);
-					}
-
-					Const_Iterator&	operator--(void)
-					{
-						ptr--;
-						return (*this);
-					}
-					
-					Const_Iterator	operator--(int)
-					{
-						Const_Iterator	it_temp = *this;
-						
-						ptr--;
-						return (it_temp);
-					}
-
-					const T&	operator*(void)
-					{
-						return (*ptr);
-					}
-
-					const T*	operator->(void)
-					{
-						return (ptr);
-					}
-					
-					Const_Iterator&	operator+=(difference_type n)
-					{
-						ptr += n;
-						return (*this);
-					}
-
-					Const_Iterator&	operator-=(difference_type n)
-					{
-						ptr -= n;
-						return (*this);
-					}
-
-					friend Const_Iterator	operator+(const Const_Iterator& lhs, difference_type n)
-					{
-						Const_Iterator	iter(lhs);
-						
-						iter += n;
-						return (iter);
-					}
-
-					friend Const_Iterator	operator+(difference_type n, const Const_Iterator& rhs)
-					{
-						Const_Iterator	iter(rhs);
-						
-						iter += n;
-						return (iter);
-					}
-
-
-					friend Const_Iterator	operator-(const Const_Iterator& lhs, difference_type n)
-					{
-						Const_Iterator	iter(lhs);
-						
-						iter -= n;
-						return (iter);
-					}
-
-					friend difference_type	operator-(const Const_Iterator& lhs, const Const_Iterator& rhs)
-					{
-						difference_type	n = 0;
-						Const_Iterator	lhs_iter(lhs);
-						Const_Iterator	rhs_iter(rhs);
-						
-						if (lhs_iter.ptr == rhs_iter.ptr)
-							return (0);
-						if (lhs_iter.ptr < rhs_iter.ptr)
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr++;
-								n++;
-							}
-						}
-						else
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr--;
-								n++;
-							}
-						}
-						return (n);
-					}
-
-
-					bool	operator<(const Const_Iterator& rhs)
-					{
-						return (ptr < rhs.ptr);
-					}
-
-					bool	operator<=(const Const_Iterator& rhs)
-					{
-						return (ptr <= rhs.ptr);
-					}
-
-					bool	operator>(const Const_Iterator& rhs)
-					{
-						return (ptr > rhs.ptr);
-					}
-
-					bool	operator>=(const Const_Iterator& rhs)
-					{
-						return (ptr >= rhs.ptr);
-					}
-
-					const T&	operator[](difference_type	n)
-					{
-						return (*(ptr + n));
-					}
-
-			};
-
-			class	Reverse_Iterator : public Iterator
-			{
-				protected:
-
-					Iterator	current;
-
-				public:
-
-					Reverse_Iterator(void) : Iterator()
-					{}
-
-					Reverse_Iterator(Iterator iter) : Iterator(iter), current(iter)
-					{}
-
-					Reverse_Iterator(const Reverse_Iterator& other) : Iterator(other), current(other.current)
-					{}
-
-					~Reverse_Iterator(void)
-					{}
-
-					Reverse_Iterator&	operator=(const Reverse_Iterator& rhs)
-					{
-						current = rhs.current;
-						
-						return (*this);
-					}
-
-					Iterator	base(void) const
-					{
-						return (current);
-					}
-
-					Reverse_Iterator&	operator++(void)
-					{
-						--current;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator++(int)
-					{
-						Reverse_Iterator	temp(*this);
-						
-						--current;
-						return (temp);
-					}
-
-					Reverse_Iterator&	operator--(void)
-					{
-						++current;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator--(int)
-					{
-						Reverse_Iterator	temp(*this);
-						
-						++current;
-						return (temp);
-					}
-
-					T&	operator*(void)
-					{
-						return (*(current - 1));
-					}
-
-
-					T*	operator->(void)
-					{
-						return (&(operator*()));
-					}
-
-					bool	operator==(const Reverse_Iterator& rhs) // non-member functions ??
-					{
-						return (current == rhs.current);
-					}
-
-					bool	operator!=(const Reverse_Iterator& rhs)
-					{
-						return (!(current == rhs.current));
-					}
-
-					Reverse_Iterator operator+ (difference_type n) const
-					{
-						Reverse_Iterator	iter(current - n);
-						return (iter);
-					}
-
-					friend Reverse_Iterator operator+ (difference_type n, const Reverse_Iterator& rhs)
-					{
-						return (rhs + n);
-					}
-
-					Reverse_Iterator&	operator+=(difference_type n)
-					{
-						current -= n;
-						return (*this);
-					}
-
-					Reverse_Iterator&	operator-=(difference_type n)
-					{
-						current += n;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator-(difference_type n) const
-					{
-						Reverse_Iterator	iter(current + n);
-						return (iter);
-					}
-
-					friend difference_type	operator-(const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (rhs.current - lhs.current);
-					}
-
-					reference	operator[](difference_type n) const
-					{
-						return (*(current - n - 1));
-					}
-
-					// a templater ??
-					friend	bool operator== (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current == rhs.current);
-					}
-
-					friend	bool operator!= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current != rhs.current);
-					}
-
-					friend	bool operator< (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current > rhs.current);
-					}
-
-					friend	bool operator<= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current >= rhs.current);
-					}
-
-					friend	bool operator> (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current < rhs.current);
-					}
-
-					friend	bool operator>= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current <= rhs.current);
-					}
-					
-					
-
-			};
+			
+			
 		
 		/* ---------- constructors + destructor ---------- */
 		
@@ -609,7 +110,7 @@ namespace ft
 				{
 					c = this->alloc.allocate(count);
 					
-					Iterator	start = this->begin();
+					Iterator<Container, T>	start = this->begin();
 					
 					init(start, start + count, value, alloc);
 				}
@@ -835,31 +336,31 @@ namespace ft
 
 		/* ---------- Iterators ---------- */
 
-			Iterator	begin(void)
+			Iterator<vector<T>, T>	begin(void)
 			{
 				Iterator it(*this, 0);
 				return (it);
 			}
 			
-			Const_Iterator begin(void) const
+			Const_Iterator<vector<T>, T> begin(void) const
 			{
 				Const_Iterator It(*this, 0);
 				return (It);
 			}
 
-			Iterator	end(void)
+			Iterator<vector<T>, T>	end(void)
 			{
 				Iterator it(*this, _size);
 				return (it);
 			}
 
-			Const_Iterator	end(void) const
+			Const_Iterator<vector<T>, T>	end(void) const
 			{
 				Const_Iterator It(*this, _size);
 				return (It);
 			}
 
-			Reverse_Iterator	rbegin(void)
+			Reverse_Iterator<vector<T>, T>	rbegin(void)
 			{
 				Reverse_Iterator	it(this->end());
 				return (it);
@@ -871,7 +372,7 @@ namespace ft
 			// 	return (it);
 			// }
 
-			Reverse_Iterator	rend(void)
+			Reverse_Iterator<vector<T>, T>	rend(void)
 			{
 				Reverse_Iterator	it(this->begin());
 				return (it);
@@ -938,7 +439,7 @@ namespace ft
 
 			}
 
-			Iterator	insert(Iterator pos, const T& value)
+			Iterator<vector<T>, T>	insert(Iterator<vector<T>, T> pos, const T& value)
 			{
 				T*			old_c = c;
 				size_type	index = 0;
@@ -995,7 +496,7 @@ namespace ft
 				return (insert_pos);
 			}
 			
-			void insert(Iterator pos, size_type count, const T& value)
+			void insert(Iterator<vector<T>, T> pos, size_type count, const T& value)
 			{
 				T*			old_c = c;
 				size_type	index = 0;
@@ -1053,7 +554,7 @@ namespace ft
 			}
 
 			template< class InputIt >
-			void insert( Iterator pos, InputIt first, InputIt last )
+			void insert( Iterator<vector<T>, T> pos, InputIt first, InputIt last )
 			{
 				T*			old_c = c;
 				size_type	index = 0;
@@ -1115,7 +616,7 @@ namespace ft
 				_size += count;
 			}
 
-			Iterator erase(Iterator pos)
+			Iterator<vector<T>, T> erase(Iterator<vector<T>, T> pos)
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = pos;
@@ -1139,10 +640,10 @@ namespace ft
 				return (save_pos);
 			}
 
-			Iterator erase(Iterator first, Iterator last) // alloc.destroy
+			Iterator<vector<T>, T> erase(Iterator<vector<T>, T> first, Iterator<vector<T>, T> last) // alloc.destroy
 			{
-				Iterator	index = this->begin();
-				Iterator	save_pos = last;
+				Iterator<Container, T>	index = this->begin();
+				Iterator<Container, T>	save_pos = last;
 				size_type	range = 0;
 
 				if (first == last)

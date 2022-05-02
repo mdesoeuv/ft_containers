@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:23:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 11:04:19 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,22 @@ int main(void)
 {
 
 {
+	std::cout << std::endl << "testing constructor with value and copy constructor :" << std::endl;
+	ft::vector<std::string>	vectStrInit(5, "Hello !");
+	ft::vector<std::string>	vectStrInitCopy(vectStrInit);
+
+	for (size_t i = 0; i < vectStrInit.size(); ++i)
+	{
+		std::cout << vectStrInit[i] << std::endl;
+	}
+	std::cout << std::endl;
+	for (size_t i = 0; i < vectStrInitCopy.size(); ++i)
+	{
+		std::cout << vectStrInitCopy[i] << std::endl;
+	}
 	ft::vector<int > test_vector;
 
-	std::cout << "testing vector implementation :" << std::endl << std::endl;
+	std::cout << std::endl << "testing vector implementation :" << std::endl << std::endl;
 	for (int i = 0; i < 10; ++i)
 	{
 		std::cout << "vector size : " << test_vector.size() << ", vector capacity : " << test_vector.capacity() << std::endl;
