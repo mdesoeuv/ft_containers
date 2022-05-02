@@ -6,12 +6,13 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 13:25:34 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 17:51:11 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
+# include "enable_if.hpp"
 
 namespace ft
 {
@@ -83,6 +84,7 @@ namespace ft
 				while (cursor != start)
 					alloc.destroy(--cursor);
 			}
+
 
 		public:
 
@@ -734,43 +736,41 @@ namespace ft
 				return ;
 			}
 
-			// Attention dans le cas d'un vector<size_t>
-			// l'appelle de la fonction assign d'au dessus de ne se fera jamais
-			// if faut ruser a coup de enable_if (ou autre astuce....) :^)
-			// template <class InputIt>
-			// void assign(InputIt first, InputIt last)
-			// {
-			// 	size_type	count = 0;
-			// 	T*			old_c = c;
+			/* enable_if to prevent mistaking InputIt with int or size_t */
+			template <class InputIt>
+			void assign(typename ft::enable_if<!ft::is_same<InputIt, int>::value, InputIt>::type first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
+			{
+				size_type	count = 0;
+				T*			old_c = c;
 				
-			// 	for (InputIt inc = first; inc != last; ++inc)
-			// 	{
-			// 		count++;
-			// 	}
-			// 	if (allocated_size < count)
-			// 	{
-			// 		try
-			// 		{
-			// 			c = alloc.allocate(count);
-			// 			destroy(old_c, old_c + _size, alloc);
-			// 			alloc.deallocate(old_c, allocated_size);
-			// 		}
-			// 		catch (...)
-			// 		{
-			// 			c = old_c;
-			// 			throw ;
-			// 			return ;
-			// 		}
-			// 		allocated_size = count;
-			// 	}
-			// 	else
-			// 	{
-			// 		destroy(this->begin(), this->end(), alloc);
-			// 	}
-			// 	init(this->begin(), first, last, alloc);
-			// 	_size = count;
-			// 	return ;
-			// }
+				for (InputIt inc = first; inc != last; ++inc)
+				{
+					count++;
+				}
+				if (allocated_size < count)
+				{
+					try
+					{
+						c = this->alloc.allocate(count);
+						destroy(old_c, old_c + _size, alloc);
+						this->alloc.deallocate(old_c, allocated_size);
+					}
+					catch (...)
+					{
+						c = old_c;
+						throw ;
+						return ;
+					}
+					allocated_size = count;
+				}
+				else
+				{
+					destroy(this->begin(), this->end(), alloc);
+				}
+				init(this->begin(), first, last, alloc);
+				_size = count;
+				return ;
+			}
 
 			allocator_type get_allocator(void) const
 			{
@@ -1145,7 +1145,7 @@ namespace ft
 				return (save_pos);
 			}
 
-			Iterator erase(Iterator first, Iterator last) // alloc.destroy
+			Iterator erase(Iterator first, Iterator last) // try catch ?
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = last;

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 15:47:18 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/02 17:42:22 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,7 @@ int main(void)
 	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 	std::cout << "lower capacity assignement :" << std::endl;
-	copyInt.assign(1, 5);
+	copyInt.assign((size_t)1, (size_t)5);
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	for (ft::vector<int >::Iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
@@ -374,6 +374,7 @@ int main(void)
 
 	std::cout << ft::is_integral<std::string>::value << std::endl;
 	std::cout << ft::is_integral<int>::value << std::endl;
+	std::cout << ft::is_same<size_t, size_t>::value << std::endl;
 }
 	return (0);
 }
