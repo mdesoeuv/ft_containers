@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 13:25:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 13:32:12 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ namespace ft
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
+		/* ---------- forward declarations ---------- */
+		
 		class Iterator;
 		class Const_Iterator;
 		
 		/* ---------- member types ---------- */
+		
 		public:
 		
 		typedef	T value_type;
