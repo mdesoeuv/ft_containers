@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:05:04 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 10:41:47 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int main(void)
 	std::cout << "s2 = " << vs2[0] << std::endl;
 	std::cout << "vector size : " << vs2.size() << ", vector capacity : " << vs2.capacity() << std::endl;
 	ft::vector<Recorder<std::string> >::Iterator	stringIter = vs1.begin();
-	// stringIter->push_back('t');
+	stringIter->inner.push_back('t');
 	std::cout << "s1 = " << stringIter[0] << std::endl;
 	ft::vector<Recorder<std::string> >::Iterator	iterBegin;
 	iterBegin = vs2.begin();
