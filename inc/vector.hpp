@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 11:22:57 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 11:47:24 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 
 namespace ft
 {
+	class Iterator;
+	class Const_Iterator;
+	
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
 		
 		/* ---------- member types ---------- */
+		public:
 		
 		typedef	T value_type;
 		typedef Allocator allocator_type;
@@ -31,10 +35,10 @@ namespace ft
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		typedef Iterator iterator;
-		typedef Const_Iterator const_iterator;
-		typedef ft::Reverse_Iterator<iterator> reverse_iterator;
-		typedef ft::Reverse_Iterator<const_iterator> const_reverse_iterator;
+		// typedef Iterator iterator;
+		// typedef Const_Iterator const_iterator;
+		typedef typename ft::Reverse_Iterator<Iterator> reverse_iterator;
+		typedef typename ft::Reverse_Iterator<Const_Iterator> const_reverse_iterator;
 		
 		private:
 
@@ -101,7 +105,7 @@ namespace ft
 					typedef T	value_type;
 					typedef T&	reference_type;
 					typedef T*	pointer;
-					typedef random_access_iterator_tag iterator_category;
+					typedef std::random_access_iterator_tag iterator_category;
 					typedef typename vector::difference_type difference_type;
 
 					Iterator(void)
@@ -283,7 +287,7 @@ namespace ft
 					typedef T	value_type;
 					typedef T&	reference_type;
 					typedef T*	pointer;
-					typedef random_access_iterator_tag iterator_category;
+					typedef std::random_access_iterator_tag iterator_category;
 
 					Const_Iterator(void)
 					{
@@ -720,7 +724,7 @@ namespace ft
 
 			reverse_iterator	rbegin(void)
 			{
-				reverse_iterator<	it(this->end());
+				reverse_iterator	it(this->end());
 				return (it);
 			}
 
