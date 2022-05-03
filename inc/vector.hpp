@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 11:00:47 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 11:22:57 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ namespace ft
 					
 
 				public:
+
+					typedef T	value_type;
+					typedef T&	reference_type;
+					typedef T*	pointer;
+					typedef random_access_iterator_tag iterator_category;
+					typedef typename vector::difference_type difference_type;
 
 					Iterator(void)
 					{
@@ -273,6 +279,11 @@ namespace ft
 					
 
 				public:
+
+					typedef T	value_type;
+					typedef T&	reference_type;
+					typedef T*	pointer;
+					typedef random_access_iterator_tag iterator_category;
 
 					Const_Iterator(void)
 					{
@@ -707,9 +718,9 @@ namespace ft
 				return (It);
 			}
 
-			Reverse_Iterator	rbegin(void)
+			reverse_iterator	rbegin(void)
 			{
-				Reverse_Iterator	it(this->end());
+				reverse_iterator<	it(this->end());
 				return (it);
 			}
 
@@ -719,9 +730,9 @@ namespace ft
 			// 	return (it);
 			// }
 
-			Reverse_Iterator	rend(void)
+			reverse_iterator	rend(void)
 			{
-				Reverse_Iterator	it(this->begin());
+				reverse_iterator	it(this->begin());
 				return (it);
 			}
 

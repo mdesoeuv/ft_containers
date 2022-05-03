@@ -12,6 +12,9 @@ namespace ft
 		public:
 
 			typedef typename Iterator::difference_type difference_type;
+			typedef typename Iterator::reference_type reference_type;
+			typedef typename Iterator::value_type value_type;
+			typedef typename Iterator::pointer_type pointer_type;
 
 			Reverse_Iterator(void)
 			{}
@@ -65,13 +68,13 @@ namespace ft
 				return (temp);
 			}
 
-			T&	operator*(void)
+			reference_type	operator*(void)
 			{
 				return (*(current - 1));
 			}
 
 
-			T*	operator->(void)
+			pointer_type	operator->(void)
 			{
 				return (&(operator*()));
 			}
@@ -120,7 +123,7 @@ namespace ft
 				return (rhs.current - lhs.current);
 			}
 
-			reference	operator[](difference_type n) const
+			reference_type	operator[](difference_type n) const
 			{
 				return (*(current - n - 1));
 			}
