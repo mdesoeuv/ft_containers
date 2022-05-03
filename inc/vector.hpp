@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 13:32:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 15:28:11 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_HPP
 # include "enable_if.hpp"
 # include "Reverse_Iterator.hpp"
+# include "is_integral.hpp"
 
 namespace ft
 {
@@ -604,7 +605,7 @@ namespace ft
 
 			/* enable_if to prevent mistaking InputIt with int or size_t */
 			template <class InputIt>
-			void assign(typename ft::enable_if<!ft::is_same<InputIt, int>::value, InputIt>::type first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
+			void assign(typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last)
 			{
 				size_type	count = 0;
 				T*			old_c = c;
