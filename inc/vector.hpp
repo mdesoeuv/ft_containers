@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 16:08:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:26:21 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,11 +566,12 @@ namespace ft
 						return (*this);
 					}
 				}
-				else
+				Iterator start = this->begin();
+				for (Const_Iterator cursor = other.begin(); cursor != other.end(); ++cursor)
 				{
-					destroy(this->begin(), this->end(), alloc);
+					*start = *cursor;
+					++start;
 				}
-				init(this->begin(), other.begin(), other.end(), alloc);
 				_size = other._size;
 				return (*this);
 			}

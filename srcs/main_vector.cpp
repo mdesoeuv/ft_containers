@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 13:23:04 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:31:49 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,6 +367,26 @@ int main(void)
 	testvect.resize(10, 10);
 	for (int i = 0; i < 10; ++i)
 		std::cout << testvect[i] << std::endl;
+
+	std::cout << std::endl << "testing operator= of vector :" << std::endl;
+	ft::vector<std::string>	vect_1;
+	vect_1.push_back("yo");
+	vect_1.push_back("bye");
+	ft::vector<std::string> vect_2;
+	std::cout << "vector size : " << vect_2.size() << ", vector capacity : " << vect_2.capacity() << std::endl;
+	vect_2 = vect_1;
+	for (size_t i = 0; i < vect_2.size(); ++i)
+	{
+		std::cout << vect_2[i] << std::endl;
+	}
+	std::cout << "vector size : " << vect_2.size() << ", vector capacity : " << vect_2.capacity() << std::endl;
+	vect_1.pop_back();
+	vect_2 = vect_1;
+	for (size_t i = 0; i < vect_2.size(); ++i)
+	{
+		std::cout << vect_2[i] << std::endl;
+	}
+	std::cout << "vector size : " << vect_2.size() << ", vector capacity : " << vect_2.capacity() << std::endl;
 	
 }
 {
