@@ -1,84 +1,49 @@
 #pragma once
 
+#define IS_INTEGRAL(TYPE)             \
+	template <>                       \
+	struct is_integral<TYPE>          \
+	{                                 \
+		enum { value = true };        \
+		typedef std::true_type type;  \
+	}
+
 namespace ft
 {
 	template <class T>
-	struct is_integral : std::false_type
+	struct is_integral
 	{
+		enum { value = false }
+		typedef std::false_type type; 
 	};
 
-	template <>
-	struct is_integral<bool> : std::true_type
-	{
-	};
+	IS_INTEGRAL(bool);
+	
+	IS_INTEGRAL(char);
+	
+	IS_INTEGRAL(char16_t);
 
-	template <>
-	struct is_integral<char> : std::true_type
-	{
-	};
+	IS_INTEGRAL(char32_t);
 
-	template <>
-	struct is_integral<char16_t> : std::true_type
-	{
-	};
+	IS_INTEGRAL(wchar_t);
 
-	template <>
-	struct is_integral<char32_t> : std::true_type
-	{
-	};
+	IS_INTEGRAL(signed char);
 
-	template <>
-	struct is_integral<wchar_t> : std::true_type
-	{
-	};
+	IS_INTEGRAL(short int);
 
-	template <>
-	struct is_integral<signed char> : std::true_type
-	{
-	};
+	IS_INTEGRAL(int);
 
-	template <>
-	struct is_integral<short int> : std::true_type
-	{
-	};
+	IS_INTEGRAL(long int);
 
-	template <>
-	struct is_integral<int> : std::true_type
-	{
-	};
+	IS_INTEGRAL(long long);
 
-	template <>
-	struct is_integral<long int> : std::true_type
-	{
-	};
+	IS_INTEGRAL(unsigned char);
 
-	template <>
-	struct is_integral<long long> : std::true_type
-	{
-	};
+	IS_INTEGRAL(unsigned short int);
 
-	template <>
-	struct is_integral<unsigned char> : std::true_type
-	{
-	};
+	IS_INTEGRAL(unsigned int);
 
-	template <>
-	struct is_integral<unsigned short int> : std::true_type
-	{
-	};
+	IS_INTEGRAL(unsigned long int);
 
-	template <>
-	struct is_integral<unsigned int> : std::true_type
-	{
-	};
-
-	template <>
-	struct is_integral<unsigned long int> : std::true_type
-	{
-	};
-
-	template <>
-	struct is_integral<unsigned long long int> : std::true_type
-	{
-	};
+	IS_INTEGRAL(unsigned long long int);
 }

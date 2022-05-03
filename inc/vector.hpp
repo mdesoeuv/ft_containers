@@ -6,13 +6,14 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 18:06:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 10:07:40 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include "enable_if.hpp"
+# include "Reverse_Iterator.hpp"
 
 namespace ft
 {
@@ -30,10 +31,10 @@ namespace ft
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		// typedef std::iterator_traits<std::iterator<std::random_access_iterator_tag, value_type> > iterator; // to replace by ft::iterator_traits<It>
-		// typedef std::iterator_traits<std::iterator<std::random_access_iterator_tag, const value_type> > const_iterator; // to replace by ft::iterator_traits<It>
-		// typedef std::reverse_iterator<std::iterator> reverse_iterator;
-		// typedef std::reverse_iterator<std::const_iterator> const_reverse_iterator;
+		typedef Iterator iterator;
+		typedef Const_Iterator const_iterator;
+		typedef ft::Reverse_Iterator<iterator> reverse_iterator;
+		typedef ft::Reverse_Iterator<const_iterator> const_reverse_iterator;
 		
 		private:
 
@@ -441,160 +442,7 @@ namespace ft
 
 			};
 
-			class	Reverse_Iterator : public Iterator
-			{
-				protected:
 
-					Iterator	current;
-
-				public:
-
-					Reverse_Iterator(void) : Iterator()
-					{}
-
-					Reverse_Iterator(Iterator iter) : Iterator(iter), current(iter)
-					{}
-
-					Reverse_Iterator(const Reverse_Iterator& other) : Iterator(other), current(other.current)
-					{}
-
-					~Reverse_Iterator(void)
-					{}
-
-					Reverse_Iterator&	operator=(const Reverse_Iterator& rhs)
-					{
-						current = rhs.current;
-						
-						return (*this);
-					}
-
-					Iterator	base(void) const
-					{
-						return (current);
-					}
-
-					Reverse_Iterator&	operator++(void)
-					{
-						--current;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator++(int)
-					{
-						Reverse_Iterator	temp(*this);
-						
-						--current;
-						return (temp);
-					}
-
-					Reverse_Iterator&	operator--(void)
-					{
-						++current;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator--(int)
-					{
-						Reverse_Iterator	temp(*this);
-						
-						++current;
-						return (temp);
-					}
-
-					T&	operator*(void)
-					{
-						return (*(current - 1));
-					}
-
-
-					T*	operator->(void)
-					{
-						return (&(operator*()));
-					}
-
-					bool	operator==(const Reverse_Iterator& rhs) // non-member functions ??
-					{
-						return (current == rhs.current);
-					}
-
-					bool	operator!=(const Reverse_Iterator& rhs)
-					{
-						return (!(current == rhs.current));
-					}
-
-					Reverse_Iterator operator+ (difference_type n) const
-					{
-						Reverse_Iterator	iter(current - n);
-						return (iter);
-					}
-
-					friend Reverse_Iterator operator+ (difference_type n, const Reverse_Iterator& rhs)
-					{
-						return (rhs + n);
-					}
-
-					Reverse_Iterator&	operator+=(difference_type n)
-					{
-						current -= n;
-						return (*this);
-					}
-
-					Reverse_Iterator&	operator-=(difference_type n)
-					{
-						current += n;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator-(difference_type n) const
-					{
-						Reverse_Iterator	iter(current + n);
-						return (iter);
-					}
-
-					friend difference_type	operator-(const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (rhs.current - lhs.current);
-					}
-
-					reference	operator[](difference_type n) const
-					{
-						return (*(current - n - 1));
-					}
-
-					// a templater ??
-					friend	bool operator== (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current == rhs.current);
-					}
-
-					friend	bool operator!= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current != rhs.current);
-					}
-
-					friend	bool operator< (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current > rhs.current);
-					}
-
-					friend	bool operator<= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current >= rhs.current);
-					}
-
-					friend	bool operator> (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current < rhs.current);
-					}
-
-					friend	bool operator>= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current <= rhs.current);
-					}
-					
-					
-
-			};
 		
 		/* ---------- constructors + destructor ---------- */
 		
@@ -738,7 +586,7 @@ namespace ft
 
 			/* enable_if to prevent mistaking InputIt with int or size_t */
 			template <class InputIt>
-			void assign(typename ft::enable_if<!ft::is_same<InputIt, int>::value, InputIt>::type first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
+			void assign(InputIt first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
 			{
 				size_type	count = 0;
 				T*			old_c = c;
