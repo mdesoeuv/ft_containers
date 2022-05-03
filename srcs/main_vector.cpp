@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 16:55:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 17:49:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,22 @@ int main(void)
 	{
 		std::cout << *cr_iter++ << std::endl;
 	}
+	std::cout << "comparing reverse iterator : " << std::endl;
+	std::cout << "vector.rbegin() == vector.rend() ? : ";
+	if (constVectInt.rbegin() == constVectInt.rend())
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl; 
+	std::cout << "vector.rbegin() == vector.rend() - vector.size() ? : ";
+	if (constVectInt.rbegin() == constVectInt.rend() - constVectInt.size())
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl; 
+	std::cout << "vector.rbegin() < vector.rend() ? : ";
+	if (constVectInt.rbegin() < constVectInt.rend())
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl; 
 
 	std::cout << std::endl << "testing reverse iterator decrementation:" << std::endl;
 	while (r_iter != vectInt.rbegin())

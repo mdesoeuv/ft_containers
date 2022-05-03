@@ -127,35 +127,40 @@ namespace ft
 				return (*(current - n - 1));
 			}
 
-			// a templater ??
-			friend	bool operator== (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			template< class Iterator1, class Iterator2 >
+			friend	bool operator== (const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs)
 			{
-				return (lhs.current == rhs.current);
+				return (lhs.base() == rhs.base());
 			}
 
-			friend	bool operator!= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			template< class Iterator1, class Iterator2 >
+			friend	bool operator!= (const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs)
 			{
-				return (lhs.current != rhs.current);
+				return (lhs.base() != rhs.base());
 			}
 
-			friend	bool operator< (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			template< class Iterator1, class Iterator2 >
+			friend	bool operator< (const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs)
 			{
-				return (lhs.current > rhs.current);
+				return (lhs.base() > rhs.base());
 			}
 
-			friend	bool operator<= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			template< class Iterator1, class Iterator2 >
+			friend	bool operator<= (const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs)
 			{
-				return (lhs.current >= rhs.current);
+				return (lhs.base() >= rhs.base());
 			}
 
-			friend	bool operator> (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			template< class Iterator1, class Iterator2 >
+			friend	bool operator> (const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs)
 			{
-				return (lhs.current < rhs.current);
+				return (lhs.base() < rhs.base());
 			}
 
-			friend	bool operator>= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			template< class Iterator1, class Iterator2 >
+			friend	bool operator>= (const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs)
 			{
-				return (lhs.current <= rhs.current);
+				return (lhs.base() <= rhs.base());
 			}
 			
 			
