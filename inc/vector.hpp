@@ -6,20 +6,26 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 10:28:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 13:25:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
+# include "enable_if.hpp"
+# include "Reverse_Iterator.hpp"
 
 namespace ft
 {
+	
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
+		class Iterator;
+		class Const_Iterator;
 		
 		/* ---------- member types ---------- */
+		public:
 		
 		typedef	T value_type;
 		typedef Allocator allocator_type;
@@ -29,10 +35,10 @@ namespace ft
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		// typedef std::iterator_traits<std::iterator<std::random_access_iterator_tag, value_type> > iterator; // to replace by ft::iterator_traits<It>
-		// typedef std::iterator_traits<std::iterator<std::random_access_iterator_tag, const value_type> > const_iterator; // to replace by ft::iterator_traits<It>
-		// typedef std::reverse_iterator<std::iterator> reverse_iterator;
-		// typedef std::reverse_iterator<std::const_iterator> const_reverse_iterator;
+		typedef Iterator iterator;
+		typedef Const_Iterator const_iterator;
+		typedef typename ft::Reverse_Iterator<Iterator> reverse_iterator;
+		typedef typename ft::Reverse_Iterator<Const_Iterator> const_reverse_iterator;
 		
 		private:
 
@@ -84,7 +90,8 @@ namespace ft
 					alloc.destroy(--cursor);
 			}
 
-		public:
+
+		private:
 
 			class Iterator
 			{
@@ -94,6 +101,12 @@ namespace ft
 					
 
 				public:
+
+					typedef T	value_type;
+					typedef T&	reference_type;
+					typedef T*	pointer;
+					typedef std::random_access_iterator_tag iterator_category;
+					typedef typename vector::difference_type difference_type;
 
 					Iterator(void)
 					{
@@ -271,6 +284,11 @@ namespace ft
 
 				public:
 
+					typedef T	value_type;
+					typedef T&	reference_type;
+					typedef T*	pointer;
+					typedef std::random_access_iterator_tag iterator_category;
+
 					Const_Iterator(void)
 					{
 						ptr = NULL;
@@ -439,160 +457,7 @@ namespace ft
 
 			};
 
-			class	Reverse_Iterator : public Iterator
-			{
-				protected:
-
-					Iterator	current;
-
-				public:
-
-					Reverse_Iterator(void) : Iterator()
-					{}
-
-					Reverse_Iterator(Iterator iter) : Iterator(iter), current(iter)
-					{}
-
-					Reverse_Iterator(const Reverse_Iterator& other) : Iterator(other), current(other.current)
-					{}
-
-					~Reverse_Iterator(void)
-					{}
-
-					Reverse_Iterator&	operator=(const Reverse_Iterator& rhs)
-					{
-						current = rhs.current;
-						
-						return (*this);
-					}
-
-					Iterator	base(void) const
-					{
-						return (current);
-					}
-
-					Reverse_Iterator&	operator++(void)
-					{
-						--current;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator++(int)
-					{
-						Reverse_Iterator	temp(*this);
-						
-						--current;
-						return (temp);
-					}
-
-					Reverse_Iterator&	operator--(void)
-					{
-						++current;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator--(int)
-					{
-						Reverse_Iterator	temp(*this);
-						
-						++current;
-						return (temp);
-					}
-
-					T&	operator*(void)
-					{
-						return (*(current - 1));
-					}
-
-
-					T*	operator->(void)
-					{
-						return (&(operator*()));
-					}
-
-					bool	operator==(const Reverse_Iterator& rhs) // non-member functions ??
-					{
-						return (current == rhs.current);
-					}
-
-					bool	operator!=(const Reverse_Iterator& rhs)
-					{
-						return (!(current == rhs.current));
-					}
-
-					Reverse_Iterator operator+ (difference_type n) const
-					{
-						Reverse_Iterator	iter(current - n);
-						return (iter);
-					}
-
-					friend Reverse_Iterator operator+ (difference_type n, const Reverse_Iterator& rhs)
-					{
-						return (rhs + n);
-					}
-
-					Reverse_Iterator&	operator+=(difference_type n)
-					{
-						current -= n;
-						return (*this);
-					}
-
-					Reverse_Iterator&	operator-=(difference_type n)
-					{
-						current += n;
-						return (*this);
-					}
-
-					Reverse_Iterator	operator-(difference_type n) const
-					{
-						Reverse_Iterator	iter(current + n);
-						return (iter);
-					}
-
-					friend difference_type	operator-(const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (rhs.current - lhs.current);
-					}
-
-					reference	operator[](difference_type n) const
-					{
-						return (*(current - n - 1));
-					}
-
-					// a templater ??
-					friend	bool operator== (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current == rhs.current);
-					}
-
-					friend	bool operator!= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current != rhs.current);
-					}
-
-					friend	bool operator< (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current > rhs.current);
-					}
-
-					friend	bool operator<= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current >= rhs.current);
-					}
-
-					friend	bool operator> (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current < rhs.current);
-					}
-
-					friend	bool operator>= (const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
-					{
-						return (lhs.current <= rhs.current);
-					}
-					
-					
-
-			};
+	public:
 		
 		/* ---------- constructors + destructor ---------- */
 		
@@ -675,6 +540,7 @@ namespace ft
 
 		/* ---------- basic functions ---------- */
 
+			/* original alloc is preserved */
 			vector&	operator=(const vector& other)
 			{
 				T*	old_c = c;
@@ -699,7 +565,6 @@ namespace ft
 				{
 					destroy(this->begin(), this->end(), alloc);
 				}
-				// alloc = other.alloc; allocator is preserved 
 				init(this->begin(), other.begin(), other.end(), alloc);
 				_size = other._size;
 				return (*this);
@@ -734,43 +599,41 @@ namespace ft
 				return ;
 			}
 
-			// Attention dans le cas d'un vector<size_t>
-			// l'appelle de la fonction assign d'au dessus de ne se fera jamais
-			// if faut ruser a coup de enable_if (ou autre astuce....) :^)
-			// template <class InputIt>
-			// void assign(InputIt first, InputIt last)
-			// {
-			// 	size_type	count = 0;
-			// 	T*			old_c = c;
+			/* enable_if to prevent mistaking InputIt with int or size_t */
+			template <class InputIt>
+			void assign(typename ft::enable_if<!ft::is_same<InputIt, int>::value, InputIt>::type first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
+			{
+				size_type	count = 0;
+				T*			old_c = c;
 				
-			// 	for (InputIt inc = first; inc != last; ++inc)
-			// 	{
-			// 		count++;
-			// 	}
-			// 	if (allocated_size < count)
-			// 	{
-			// 		try
-			// 		{
-			// 			c = alloc.allocate(count);
-			// 			destroy(old_c, old_c + _size, alloc);
-			// 			alloc.deallocate(old_c, allocated_size);
-			// 		}
-			// 		catch (...)
-			// 		{
-			// 			c = old_c;
-			// 			throw ;
-			// 			return ;
-			// 		}
-			// 		allocated_size = count;
-			// 	}
-			// 	else
-			// 	{
-			// 		destroy(this->begin(), this->end(), alloc);
-			// 	}
-			// 	init(this->begin(), first, last, alloc);
-			// 	_size = count;
-			// 	return ;
-			// }
+				for (InputIt inc = first; inc != last; ++inc)
+				{
+					count++;
+				}
+				if (allocated_size < count)
+				{
+					try
+					{
+						c = this->alloc.allocate(count);
+						destroy(old_c, old_c + _size, alloc);
+						this->alloc.deallocate(old_c, allocated_size);
+					}
+					catch (...)
+					{
+						c = old_c;
+						throw ;
+						return ;
+					}
+					allocated_size = count;
+				}
+				else
+				{
+					destroy(this->begin(), this->end(), alloc);
+				}
+				init(this->begin(), first, last, alloc);
+				_size = count;
+				return ;
+			}
 
 			allocator_type get_allocator(void) const
 			{
@@ -859,29 +722,29 @@ namespace ft
 				return (It);
 			}
 
-			Reverse_Iterator	rbegin(void)
+			reverse_iterator	rbegin(void)
 			{
-				Reverse_Iterator	it(this->end());
+				reverse_iterator	it(this->end());
 				return (it);
 			}
 
-			// const_reverse_iterator rbegin() const
-			// {
-			// 	const_reverse_iterator	it(*this, size, 0);
-			// 	return (it);
-			// }
-
-			Reverse_Iterator	rend(void)
+			const_reverse_iterator rbegin() const
 			{
-				Reverse_Iterator	it(this->begin());
+				const_reverse_iterator	it(*this, _size, 0);
 				return (it);
 			}
 
-			// const_reverse_iterator	rend(void)
-			// {
-			// 	const_reverse_iterator	it(*this, size, size);
-			// 	return (it);
-			// }
+			reverse_iterator	rend(void)
+			{
+				reverse_iterator	it(this->begin());
+				return (it);
+			}
+
+			const_reverse_iterator	rend(void) const
+			{
+				const_reverse_iterator	it(*this, _size, _size);
+				return (it);
+			}
 
 		/* ---------- Capacity ---------- */
 
@@ -902,21 +765,21 @@ namespace ft
 
 			void	reserve(size_type new_cap)
 			{
-				vector<T, Allocator>	old_vect(*this);
+				T*	old_c = c;
 				
 				if (new_cap <= allocated_size)
 					return ;
 				try
 				{
-					destroy(this->begin(), this->end(), alloc);
-					alloc.deallocate(c, allocated_size);
 					c = alloc.allocate(new_cap);
-					init(this->begin(), old_vect.begin(), old_vect.end(), alloc);
+					init(c, old_c, old_c + _size, alloc);
+					destroy(old_c, old_c + _size, alloc);
+					alloc.deallocate(old_c, allocated_size);
 					allocated_size = new_cap;
 				}
 				catch  (...)
 				{
-					*this = old_vect;
+					c = old_c;
 					throw ;
 				}
 			}
@@ -1005,6 +868,7 @@ namespace ft
 				{
 					index++;
 				}
+				size_type	nb_to_move = _size - index;		
 				if (_size + count > allocated_size)
 				{
 					try
@@ -1015,15 +879,15 @@ namespace ft
 							count_alloc = count;
 						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
-						for (size_type end = _size + count - 1; end != _size - 1; --end)
-						{
-							// alloc.destroy(c + end - count);
-							alloc.construct(&c[end], old_c[end - count]);
-						}
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], value);
 							index++;
+						}
+						for (size_type end = _size + count - 1; nb_to_move > 0; --end)
+						{
+							alloc.construct(&c[end], old_c[end - count]);
+							nb_to_move--;
 						}
 						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
@@ -1038,10 +902,11 @@ namespace ft
 				}
 				else
 				{
-					for (size_type end = _size + count - 1; end != _size - 1; --end)
+					for (size_type end = _size + count - 1; nb_to_move > 0; --end)
 					{
 						alloc.destroy(c + end - count);
 						alloc.construct(&c[end], c[end - count]);
+						nb_to_move--;
 					}
 					for (size_type i = 0; i < count; ++i)
 					{
@@ -1052,16 +917,18 @@ namespace ft
 				_size += count;
 			}
 
-			template< class InputIt >
-			void insert( Iterator pos, InputIt first, InputIt last )
+			template <class InputIt>
+			void insert(Iterator pos, InputIt first, InputIt last)
 			{
 				T*			old_c = c;
 				size_type	index = 0;
 				size_type	count = 0;
 				size_type	count_alloc;
+				size_type	nb_to_move;
 				
 				for (Iterator iter = this->begin(); iter != pos; ++iter)
 					index++;
+				nb_to_move = _size - index;
 				for (InputIt cursor = first; cursor != last; ++cursor)
 					count++;
 				if (_size + count > allocated_size)
@@ -1074,15 +941,16 @@ namespace ft
 							count_alloc = count;
 						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
-						for (size_type end = _size + count - 1; end != _size - 1; --end)
-						{
-							alloc.construct(&c[end], old_c[end - count]);
-						}
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], *first);
 							index++;
 							++first;
+						}
+						for (size_type end = _size + count - 1; nb_to_move > 0; --end)
+						{
+							alloc.construct(&c[end], old_c[end - count]);
+							nb_to_move--;
 						}
 						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
@@ -1097,11 +965,12 @@ namespace ft
 				}
 				else
 				{
-					for (size_type end = _size + count; end != index + count; --end)
+					for (size_type end = _size + count; nb_to_move > 0; --end)
 					{
 						if (end != _size)
 							alloc.destroy(&c[end]);
 						alloc.construct(&c[end], c[end - 1]);
+						nb_to_move--;
 					}
 						for (size_type i = 0; i < count; ++i)
 						{
@@ -1139,7 +1008,7 @@ namespace ft
 				return (save_pos);
 			}
 
-			Iterator erase(Iterator first, Iterator last) // alloc.destroy
+			Iterator erase(Iterator first, Iterator last) // try catch ?
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = last;
@@ -1279,9 +1148,9 @@ namespace ft
 	template <class T, class Alloc>
   	bool	operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		typename ft::vector<T, Alloc>::Const_Iterator	start_l = lhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	start_r = rhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_l = lhs.end();
+		typename ft::vector<T, Alloc>::const_iterator	start_l = lhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	start_r = rhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	end_l = lhs.end();
 		
 		if (lhs.size() != rhs.size())
 			return (false);
@@ -1304,10 +1173,10 @@ namespace ft
 	template <class T, class Alloc>
   	bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		typename ft::vector<T, Alloc>::Const_Iterator	start_l = lhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	start_r = rhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_l = lhs.end();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_r = rhs.end();
+		typename ft::vector<T, Alloc>::const_iterator	start_l = lhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	start_r = rhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	end_l = lhs.end();
+		typename ft::vector<T, Alloc>::const_iterator	end_r = rhs.end();
 		
 		
 		while (start_l != end_l && start_r != end_r)
