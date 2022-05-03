@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 16:31:49 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:47:00 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,9 +362,11 @@ int main(void)
 	std::vector<int> testvect;
 	for (int i = 0; i < 5; ++i)
 		testvect.push_back(i);
+	std::cout << "initial vector :" << std::endl;
 	for (int i = 0; i < 5; ++i)
 		std::cout << testvect[i] << std::endl;
 	testvect.resize(10, 10);
+	std::cout << "resized 10, 10 vector :" << std::endl;
 	for (int i = 0; i < 10; ++i)
 		std::cout << testvect[i] << std::endl;
 

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 16:26:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:45:01 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -576,6 +576,7 @@ namespace ft
 				return (*this);
 			}
 
+			/* old elements are always destroyed by assign */
 			void	assign(size_type count, const T& value)
 			{
 				T*	old_c = c;
@@ -1004,8 +1005,9 @@ namespace ft
 				++pos;
 				while (pos != this->end())
 				{
-					alloc.destroy(&(*index));
-					alloc.construct(&(*index), *pos);
+					*index = *pos;
+					// alloc.destroy(&(*index));
+					// alloc.construct(&(*index), *pos);
 					++index;
 					++pos;
 				}
@@ -1034,8 +1036,9 @@ namespace ft
 					++index;
 				while (last != this->end())
 				{
-					alloc.destroy(&(*index));
-					alloc.construct(&(*index), *last);
+					*index = *last;
+					// alloc.destroy(&(*index));
+					// alloc.construct(&(*index), *last);
 					++index;
 					++last;
 				}
@@ -1118,7 +1121,7 @@ namespace ft
 						else
 							allocated_size = count;
 					}
-					catch (std::bad_alloc& e)
+					catch (...)
 					{
 						c = old_c;
 						throw ;
