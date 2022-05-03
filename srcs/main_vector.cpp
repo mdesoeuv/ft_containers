@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 16:47:00 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:55:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,14 +304,22 @@ int main(void)
 		std::cout << "false" << std::endl;
 
 	std::cout << std::endl << "testing reverse iterator incrementation:" << std::endl;
-	ft::vector<int >	vectInt;
+	ft::vector<int>	vectInt;
 	for (int i = 0; i < 5; ++i)
 		vectInt.push_back(i);
+	const ft::vector<int> constVectInt(vectInt);
 	ft::vector<int >::reverse_iterator r_iter = vectInt.rbegin();
 	while (r_iter != vectInt.rend())
 	{
 		std::cout << *r_iter++ << std::endl;
 	}
+	ft::vector<int>::const_reverse_iterator cr_iter = constVectInt.rbegin();
+	std::cout << std::endl << "testing const reverse iterator incrementation:" << std::endl;
+	while (cr_iter != constVectInt.rend())
+	{
+		std::cout << *cr_iter++ << std::endl;
+	}
+
 	std::cout << std::endl << "testing reverse iterator decrementation:" << std::endl;
 	while (r_iter != vectInt.rbegin())
 	{

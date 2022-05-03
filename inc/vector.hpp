@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 16:45:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 17:24:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ namespace ft
 
 					typedef T	value_type;
 					typedef T&	reference_type;
+					typedef const T& const_reference;
 					typedef T*	pointer;
 					typedef std::random_access_iterator_tag iterator_category;
 					typedef typename vector::difference_type difference_type;
@@ -288,9 +289,9 @@ namespace ft
 
 				public:
 
-					typedef T	value_type;
-					typedef T&	reference_type;
-					typedef T*	pointer;
+					typedef const T		value_type;
+					typedef const T&	reference_type;
+					typedef const T*	pointer;
 					typedef std::random_access_iterator_tag iterator_category;
 					typedef typename vector::difference_type difference_type;
 
@@ -737,7 +738,7 @@ namespace ft
 
 			const_reverse_iterator rbegin() const
 			{
-				const_reverse_iterator	it(*this, _size, 0);
+				const_reverse_iterator	it(this->end());
 				return (it);
 			}
 
@@ -749,7 +750,7 @@ namespace ft
 
 			const_reverse_iterator	rend(void) const
 			{
-				const_reverse_iterator	it(*this, _size, _size);
+				const_reverse_iterator	it(this->begin());
 				return (it);
 			}
 

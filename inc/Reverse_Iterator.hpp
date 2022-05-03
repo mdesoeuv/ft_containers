@@ -73,7 +73,6 @@ namespace ft
 				return (*(current - 1));
 			}
 
-
 			pointer	operator->(void)
 			{
 				return (&(operator*()));
