@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 15:28:11 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:08:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,7 @@ namespace ft
 					typedef T&	reference_type;
 					typedef T*	pointer;
 					typedef std::random_access_iterator_tag iterator_category;
+					typedef typename vector::difference_type difference_type;
 
 					Const_Iterator(void)
 					{
