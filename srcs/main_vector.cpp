@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/02 17:42:22 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 11:01:33 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../inc/vector.hpp"
 #include "../inc/Recorder.hpp"
 #include "../inc/is_integral.hpp"
+#include "../inc/Reverse_Iterator.hpp"
 
 
 int main(void)
