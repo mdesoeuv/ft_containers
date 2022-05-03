@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 11:47:24 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 13:19:00 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 namespace ft
 {
-	class Iterator;
-	class Const_Iterator;
 	
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
+		class Iterator;
+		class Const_Iterator;
 		
 		/* ---------- member types ---------- */
 		public:
@@ -35,8 +35,8 @@ namespace ft
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		// typedef Iterator iterator;
-		// typedef Const_Iterator const_iterator;
+		typedef Iterator iterator;
+		typedef Const_Iterator const_iterator;
 		typedef typename ft::Reverse_Iterator<Iterator> reverse_iterator;
 		typedef typename ft::Reverse_Iterator<Const_Iterator> const_reverse_iterator;
 		
@@ -91,7 +91,7 @@ namespace ft
 			}
 
 
-		public:
+		private:
 
 			class Iterator
 			{
@@ -457,7 +457,7 @@ namespace ft
 
 			};
 
-
+	public:
 		
 		/* ---------- constructors + destructor ---------- */
 		
@@ -601,7 +601,7 @@ namespace ft
 
 			/* enable_if to prevent mistaking InputIt with int or size_t */
 			template <class InputIt>
-			void assign(InputIt first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
+			void assign(typename ft::enable_if<!ft::is_same<InputIt, int>::value, InputIt>::type first, typename ft::enable_if<!ft::is_same<InputIt, size_type>::value, InputIt>::type last)
 			{
 				size_type	count = 0;
 				T*			old_c = c;

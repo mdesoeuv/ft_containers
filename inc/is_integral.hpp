@@ -13,7 +13,7 @@ namespace ft
 	template <class T>
 	struct is_integral
 	{
-		enum { value = false }
+		enum { value = false };
 		typedef std::false_type type; 
 	};
 

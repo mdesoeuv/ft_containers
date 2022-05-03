@@ -14,7 +14,7 @@ namespace ft
 			typedef typename Iterator::difference_type difference_type;
 			typedef typename Iterator::reference_type reference_type;
 			typedef typename Iterator::value_type value_type;
-			typedef typename Iterator::pointer_type pointer_type;
+			typedef typename Iterator::pointer pointer;
 
 			Reverse_Iterator(void)
 			{}
@@ -74,7 +74,7 @@ namespace ft
 			}
 
 
-			pointer_type	operator->(void)
+			pointer	operator->(void)
 			{
 				return (&(operator*()));
 			}
