@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 13:15:42 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 13:23:04 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ int main(void)
 	const ft::vector<int >	const_vect(test_vector);
 	ft::vector<int >::const_iterator	const_iter = const_vect.begin();
 	std::cout << std::endl << "testing const iterator :" << std::endl;
-	// std::cout << *const_iter << std::endl;
+	std::cout << *const_iter << std::endl;
 	++const_iter;
 	//*const_iter = 1000; does not compile because const_iterator returns const value_type when dereferenced
-	// std::cout << *const_iter << std::endl;
+	std::cout << *const_iter << std::endl;
 
 	std::cout << std::endl << "erasing element at index 5 :" << std::endl;
 	ft::vector<int >::iterator	iter_five(test_vector, 5);
@@ -250,58 +250,58 @@ int main(void)
 		std::cout << strVect2[i] << std::endl;
 	}
 
-	// ft::vector<std::string> >		strVect3(strVect.begin(), strVect.end());
-	// for (ft::vector<std::string> >::iterator iter = strVect3.begin(); iter != strVect3.end(); ++iter)
-	// 	std::cout << *iter << std::endl;
+	ft::vector<std::string>		strVect3(strVect.begin(), strVect.end());
+	for (ft::vector<std::string>::iterator iter = strVect3.begin(); iter != strVect3.end(); ++iter)
+		std::cout << *iter << std::endl;
 
-	// std::cout << std::endl << "comparing two identical vectors, is it equal ? " << std::endl;
-	// if (strVect == strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	std::cout << std::endl << "comparing two identical vectors, is it equal ? " << std::endl;
+	if (strVect == strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 
-	// std::cout << std::endl << "is it different ? " << std::endl;
-	// if (strVect != strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	std::cout << std::endl << "is it different ? " << std::endl;
+	if (strVect != strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 
-	// std::cout << std::endl << "is it inferior ? " << std::endl;
-	// if (strVect < strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	std::cout << std::endl << "is it inferior ? " << std::endl;
+	if (strVect < strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 
-	// std::cout << std::endl << "is it inferior or equal ? " << std::endl;
-	// if (strVect <= strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
-	// std::cout << std::endl << "removing last element of copy and comparing, is it equal ? " << std::endl;
-	// strVect3.pop_back();
+	std::cout << std::endl << "is it inferior or equal ? " << std::endl;
+	if (strVect <= strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
+	std::cout << std::endl << "removing last element of copy and comparing, is it equal ? " << std::endl;
+	strVect3.pop_back();
 	
-	// if (strVect == strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	if (strVect == strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 
-	// std::cout << std::endl << "is it different ? " << std::endl;
-	// if (strVect != strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	std::cout << std::endl << "is it different ? " << std::endl;
+	if (strVect != strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 	
-	// std::cout << std::endl << "is it inferior ? " << std::endl;
-	// if (strVect < strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	std::cout << std::endl << "is it inferior ? " << std::endl;
+	if (strVect < strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 	
-	// std::cout << std::endl << "is it inferior or equal ? " << std::endl;
-	// if (strVect <= strVect3)
-	// 	std::cout << "true" << std::endl;
-	// else
-	// 	std::cout << "false" << std::endl;
+	std::cout << std::endl << "is it inferior or equal ? " << std::endl;
+	if (strVect <= strVect3)
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 
 	std::cout << std::endl << "testing reverse iterator incrementation:" << std::endl;
 	ft::vector<int >	vectInt;
@@ -359,14 +359,14 @@ int main(void)
 	for (ft::vector<int >::iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 
-	// std::vector<int> testvect;
-	// for (int i = 0; i < 5; ++i)
-	// 	testvect.push_back(i);
-	// for (int i = 0; i < 5; ++i)
-	// 	std::cout << testvect[i] << std::endl;
-	// testvect.resize(10, 10);
-	// for (int i = 0; i < 10; ++i)
-	// 	std::cout << testvect[i] << std::endl;
+	std::vector<int> testvect;
+	for (int i = 0; i < 5; ++i)
+		testvect.push_back(i);
+	for (int i = 0; i < 5; ++i)
+		std::cout << testvect[i] << std::endl;
+	testvect.resize(10, 10);
+	for (int i = 0; i < 10; ++i)
+		std::cout << testvect[i] << std::endl;
 	
 }
 {

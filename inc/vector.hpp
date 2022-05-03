@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 13:19:00 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 13:25:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -728,11 +728,11 @@ namespace ft
 				return (it);
 			}
 
-			// const_reverse_iterator rbegin() const
-			// {
-			// 	const_reverse_iterator	it(*this, size, 0);
-			// 	return (it);
-			// }
+			const_reverse_iterator rbegin() const
+			{
+				const_reverse_iterator	it(*this, _size, 0);
+				return (it);
+			}
 
 			reverse_iterator	rend(void)
 			{
@@ -740,11 +740,11 @@ namespace ft
 				return (it);
 			}
 
-			// const_reverse_iterator	rend(void)
-			// {
-			// 	const_reverse_iterator	it(*this, size, size);
-			// 	return (it);
-			// }
+			const_reverse_iterator	rend(void) const
+			{
+				const_reverse_iterator	it(*this, _size, _size);
+				return (it);
+			}
 
 		/* ---------- Capacity ---------- */
 
@@ -1148,9 +1148,9 @@ namespace ft
 	template <class T, class Alloc>
   	bool	operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		typename ft::vector<T, Alloc>::Const_Iterator	start_l = lhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	start_r = rhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_l = lhs.end();
+		typename ft::vector<T, Alloc>::const_iterator	start_l = lhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	start_r = rhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	end_l = lhs.end();
 		
 		if (lhs.size() != rhs.size())
 			return (false);
@@ -1173,10 +1173,10 @@ namespace ft
 	template <class T, class Alloc>
   	bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		typename ft::vector<T, Alloc>::Const_Iterator	start_l = lhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	start_r = rhs.begin();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_l = lhs.end();
-		typename ft::vector<T, Alloc>::Const_Iterator	end_r = rhs.end();
+		typename ft::vector<T, Alloc>::const_iterator	start_l = lhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	start_r = rhs.begin();
+		typename ft::vector<T, Alloc>::const_iterator	end_l = lhs.end();
+		typename ft::vector<T, Alloc>::const_iterator	end_r = rhs.end();
 		
 		
 		while (start_l != end_l && start_r != end_r)
