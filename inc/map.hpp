@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 17:23:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 17:40:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ namespace ft
 			
 			};
 
-			/* ----- constructors ----- */
+			/* ----- member functions ----- */
 
 			explicit map(const Compare& comp, const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc)
 			{
@@ -137,11 +137,35 @@ namespace ft
 				clear();
 			}
 			
-			map&	operator=(const map& other)
+			// map&	operator=(const map& other)
+			// {
+				
+				
+			// 	return (*this);
+			// }
+
+			allocator_type	get_allocator(void) const
 			{
-				
-				
-				return (*this);
+				return (alloc);
+			}
+
+			/* ----- element access ----- */
+
+			T& at(const Key& key)
+			{
+				Iterator	it = find(key);
+				if (it == end())
+					throw (std::out_of_range("key not found"));
+				return (it->second);
+			}
+
+			T& operator[](const Key& key)
+			{
+				Iterator	it = find(key);
+				if (it != end())
+					return ((*it).second);
+				else
+					return (insert(value_type(key, T())).first->second);
 			}
 	};
 }
