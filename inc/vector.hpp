@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/03 17:24:44 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 09:13:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1007,8 +1007,6 @@ namespace ft
 				while (pos != this->end())
 				{
 					*index = *pos;
-					// alloc.destroy(&(*index));
-					// alloc.construct(&(*index), *pos);
 					++index;
 					++pos;
 				}
@@ -1017,7 +1015,7 @@ namespace ft
 				return (save_pos);
 			}
 
-			Iterator erase(Iterator first, Iterator last) // try catch ?
+			Iterator erase(Iterator first, Iterator last)
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = last;
@@ -1038,8 +1036,6 @@ namespace ft
 				while (last != this->end())
 				{
 					*index = *last;
-					// alloc.destroy(&(*index));
-					// alloc.construct(&(*index), *last);
 					++index;
 					++last;
 				}
