@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 15:57:00 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 17:23:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ namespace ft
 			
 			class Iterator;
 			class Const_Iterator;
+			class TreeNode;
 			
 			/* ----- member types ----- */
 
@@ -46,6 +47,44 @@ namespace ft
 			typedef Const_Iterator									const_iterator;
 			typedef typename ft::Reverse_Iterator<Iterator>			reverse_iterator;
 			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
+			
+		private:
+
+			key_compare		comp;
+			allocator_type	alloc;
+			TreeNode*		root;
+
+			struct TreeNode
+			{
+				value_type	pr;
+				TreeNode*	left;
+				TreeNode*	right;
+
+				TreeNode(value_type pair) : pr(pair), left(NULL), right(NULL)
+				{}
+				
+				TreeNode(const TreeNode& other)
+				{
+					pr = other.pr;
+					left = other.left;
+					right = other.right;
+				}
+				
+				~TreeNode(void)
+				{}
+
+				TreeNode&	operator=(const TreeNode& rhs)
+				{
+					pr = rhs.pr;
+					left = rhs.left;
+					right = rhs.right;
+
+					return (*this);
+				}
+
+			};
+		
+		public:
 		
 			/* ----- member classes ----- */
 
@@ -69,6 +108,40 @@ namespace ft
 						return (comp(lhs.first, rhs.first));
 					}
 
+					// ~value_compare(void) is there a destructor for this class ?
+					// {}
+			
 			};
+
+			/* ----- constructors ----- */
+
+			explicit map(const Compare& comp, const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc)
+			{
+				root = NULL;
+			}
+
+			template< class InputIt >
+			map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc)
+			{
+				insert(first, last);
+			}
+			
+			map(const map& other) : comp(other.comp), alloc(other.alloc)
+			{
+				*this = other;
+			}
+			
+			// unclear if destructor must clear the tree itself
+			~map(void)
+			{
+				clear();
+			}
+			
+			map&	operator=(const map& other)
+			{
+				
+				
+				return (*this);
+			}
 	};
 }
