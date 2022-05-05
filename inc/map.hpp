@@ -6,13 +6,14 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/05 13:35:26 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/05 17:41:43 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "pair.hpp"
+#include "Reverse_Iterator.hpp"
 
 namespace ft
 {
@@ -24,7 +25,7 @@ namespace ft
 	>
 	class map
 	{
-		public:
+		public: ////////////// change to private
 
 			/* ----- forward declarations ----- */
 			
@@ -32,6 +33,8 @@ namespace ft
 			class Const_Iterator;
 			class TreeNode;
 			
+		public:
+		
 			/* ----- member types ----- */
 
 			typedef Key 											key_type;
@@ -50,22 +53,29 @@ namespace ft
 			typedef typename ft::Reverse_Iterator<Iterator>			reverse_iterator;
 			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
 			
-		private:
+		public: //////////////// change to private
 
 			key_compare		comp;
 			allocator_type	alloc;
 			TreeNode*		root;
 			size_type		_size;
 
-			struct TreeNode
+			class TreeNode
 			{
+				public:				// a voir
 				value_type	pr;
 				TreeNode*	left;
 				TreeNode*	right;
 				TreeNode*	parent;
+				// allocator_type	alloc;
+
+				// TreeNode(void) : pr(value_type()), left(NULL), right(NULL), parent(NULL)
+				// {}
 
 				TreeNode(value_type pair) : pr(pair), left(NULL), right(NULL), parent(NULL)
-				{}
+				{
+					
+				}
 				
 				TreeNode(const TreeNode& other)
 				{
@@ -88,15 +98,17 @@ namespace ft
 					return (*this);
 				}
 
-				TreeNode*	create(value_type pr)
+				TreeNode*	create(value_type pr, TreeNode* parent)
 				{
 					TreeNode*	new_node;
 
 
 					try
 					{
-						new_node = alloc.allocate(1);
-						alloc.construct(new_node, TreeNode(pr));
+						// new_node = this->alloc.allocate(1);
+						// this->alloc.construct(new_node, TreeNode(pr));
+						new_node = new TreeNode(pr);
+						new_node->parent = parent;
 					}
 					catch(...)
 					{
@@ -145,8 +157,26 @@ namespace ft
 						return ;
 					clear(node->left);
 					clear(node->right);
-					alloc.destroy(node);
-					alloc.deallocate(node, 1);
+					delete node;
+					// this->alloc.destroy(node);
+					// this->alloc.deallocate(node, 1);
+				}
+
+				TreeNode*	insert(TreeNode** node, value_type pr)
+				{
+					if (*node == NULL)
+					{
+						std::cout << "here" << std::endl;
+						*node = create(pr, node->parent);
+						return (*node);
+					}
+					if (pr.first == node->pr.first)
+						return (node);
+					if (pr.first < node->pr.first)
+						node->left = insert(node->left, pr);
+					else
+						node->right = insert(node->right, pr);
+					return (node);
 				}
 
 			};
@@ -182,6 +212,11 @@ namespace ft
 
 			/* ----- member functions ----- */
 
+			map(void) : comp(std::less<Key>()), alloc(std::allocator<std::pair<const Key, T> >()), _size(0)
+			{
+				root = NULL;
+			}
+
 			explicit map(const Compare& comp, const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc), _size(0)
 			{
 				root = NULL;
@@ -207,7 +242,7 @@ namespace ft
 			// map&	operator=(const map& other)
 			// {
 				
-				_size = other.size();
+				// _size = other.size();
 			// 	return (*this);
 			// }
 
@@ -218,22 +253,22 @@ namespace ft
 
 			/* ----- element access ----- */
 
-			T& at(const Key& key)
-			{
-				Iterator	it = find(key);
-				if (it == end())
-					throw (std::out_of_range("key not found"));
-				return (it->second);
-			}
+			// T& at(const Key& key)
+			// {
+			// 	Iterator	it = find(key);
+			// 	if (it == end())
+			// 		throw (std::out_of_range("key not found"));
+			// 	return (it->second);
+			// }
 
-			T& operator[](const Key& key)
-			{
-				Iterator	it = find(key);
-				if (it != end())
-					return ((*it).second);
-				else
-					return (insert(value_type(key, T())).first->second);
-			}
+			// T& operator[](const Key& key)
+			// {
+			// 	Iterator	it = find(key);
+			// 	if (it != end())
+			// 		return ((*it).second);
+			// 	else
+			// 		return (insert(value_type(key, T())).first->second);
+			// }
 
 			/* ----- Iterators ----- */
 
@@ -279,45 +314,45 @@ namespace ft
 
 			/* ----- capacity ----- */
 
-			bool	empty(void) const
-			{
-				return (begin() == end());
-			}
+			// bool	empty(void) const
+			// {
+			// 	return (begin() == end());
+			// }
 
-			size_type	size(void) const
-			{
-				return (end() - begin());
-			}
+			// size_type	size(void) const
+			// {
+			// 	return (end() - begin());
+			// }
 
-			size_type	max_size(void) const
-			{
-				return (alloc.max_size());
-			}
+			// size_type	max_size(void) const
+			// {
+			// 	return (alloc.max_size());
+			// }
 
 			/* ----- modifiers ----- */
 
 			void	clear(void)
 			{
-				root.clear(root);
+				root->clear(root);
 				_size = 0;
 			}
 			
-			ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
-			{
-				TreeNode* node = root;
+			// ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
+			// {
+			// 	TreeNode* node = root;
 		
-				while (node != NULL)
-				{
-					if (value.first == node->pr.first)
-						return (ft::pair(iterator(node), false));
-					if (value.first < node->pr.first)
-						node = node->left;
-					else
-						node = node->right;
-				}
-				node = node->create(value);
-				return (ft::pair(iterator(node), true));
-			}
+			// 	while (node != NULL)
+			// 	{
+			// 		if (value.first == node->pr.first)
+			// 			return (ft::pair(iterator(node), false));
+			// 		if (value.first < node->pr.first)
+			// 			node = node->left;
+			// 		else
+			// 			node = node->right;
+			// 	}
+			// 	node = node->create(value);
+			// 	return (ft::pair(iterator(node), true));
+			// }
 
 			// iterator insert( iterator hint, const value_type& value ) // wtf ??
 			// {
@@ -326,6 +361,11 @@ namespace ft
 			
 			// template <class InputIt>
 			// void insert(InputIt first, InputIt last)
+			// {
+				
+			// }
+
+			// void	erase(iterator pos)
 			// {
 				
 			// }

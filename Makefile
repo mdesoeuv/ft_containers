@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/04/27 16:10:06 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/05 17:34:25 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ CXX		:=	c++
 
 CXXFLAGS	:=	-Wall -Werror -Wextra -std=c++98
 
-DEBUG		:=	-fsanitize=address -g3
+#DEBUG		:=	-fsanitize=address -g3
 
-SRCS	:=	main_vector.cpp
+SRCS	:=	main_map.cpp
 
 SRCS_DIR	:=	srcs/
 
