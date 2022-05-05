@@ -6,11 +6,13 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/05 11:43:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/05 13:35:26 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include "pair.hpp"
 
 namespace ft
 {
@@ -53,6 +55,7 @@ namespace ft
 			key_compare		comp;
 			allocator_type	alloc;
 			TreeNode*		root;
+			size_type		_size;
 
 			struct TreeNode
 			{
@@ -136,6 +139,16 @@ namespace ft
 					return (parent);
 				}
 
+				void	clear(TreeNode* node)
+				{
+					if (node == NULL)
+						return ;
+					clear(node->left);
+					clear(node->right);
+					alloc.destroy(node);
+					alloc.deallocate(node, 1);
+				}
+
 			};
 		
 		public:
@@ -169,13 +182,13 @@ namespace ft
 
 			/* ----- member functions ----- */
 
-			explicit map(const Compare& comp, const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc)
+			explicit map(const Compare& comp, const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc), _size(0)
 			{
 				root = NULL;
 			}
 
 			template< class InputIt >
-			map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc)
+			map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc), _size(0)
 			{
 				insert(first, last);
 			}
@@ -194,7 +207,7 @@ namespace ft
 			// map&	operator=(const map& other)
 			// {
 				
-				
+				_size = other.size();
 			// 	return (*this);
 			// }
 
@@ -224,45 +237,45 @@ namespace ft
 
 			/* ----- Iterators ----- */
 
-			iterator begin(void)
-			{
+			// iterator begin(void)
+			// {
 				
-			}
+			// }
 
-			const_iterator	begin(void) const
-			{
+			// const_iterator	begin(void) const
+			// {
 				
-			}
+			// }
 
-			iterator	end(void)
-			{
+			// iterator	end(void)
+			// {
 
-			}
+			// }
 			
-			const_iterator	end(void) const
-			{
+			// const_iterator	end(void) const
+			// {
 				
-			}
+			// }
 
-			reverse_iterator	rbegin(void)
-			{
+			// reverse_iterator	rbegin(void)
+			// {
 					
-			}
+			// }
 
-			const_reverse_iterator	rbegin(void) const
-			{
+			// const_reverse_iterator	rbegin(void) const
+			// {
 				
-			}
+			// }
 
-			reverse_iterator	rend(void)
-			{
+			// reverse_iterator	rend(void)
+			// {
 					
-			}
+			// }
 
-			const_reverse_iterator	rend(void) const
-			{
+			// const_reverse_iterator	rend(void) const
+			// {
 				
-			}
+			// }
 
 			/* ----- capacity ----- */
 
@@ -285,12 +298,37 @@ namespace ft
 
 			void	clear(void)
 			{
-				
+				root.clear(root);
+				_size = 0;
 			}
 			
+			ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
+			{
+				TreeNode* node = root;
+		
+				while (node != NULL)
+				{
+					if (value.first == node->pr.first)
+						return (ft::pair(iterator(node), false));
+					if (value.first < node->pr.first)
+						node = node->left;
+					else
+						node = node->right;
+				}
+				node = node->create(value);
+				return (ft::pair(iterator(node), true));
+			}
 
+			// iterator insert( iterator hint, const value_type& value ) // wtf ??
+			// {
+				
+			// }
 			
-			
+			// template <class InputIt>
+			// void insert(InputIt first, InputIt last)
+			// {
+				
+			// }
 					
 	};
 }
