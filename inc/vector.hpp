@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 16:41:29 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/05 10:44:10 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -925,6 +925,7 @@ namespace ft
 				_size += count;
 			}
 
+			
 			template <class InputIt>
 			void insert(Iterator pos, InputIt first, InputIt last)
 			{

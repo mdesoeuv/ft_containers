@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 17:40:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/05 11:29:15 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ namespace ft
 				value_type	pr;
 				TreeNode*	left;
 				TreeNode*	right;
+				TreeNode*	parent;
 
-				TreeNode(value_type pair) : pr(pair), left(NULL), right(NULL)
+				TreeNode(value_type pair) : pr(pair), left(NULL), right(NULL), parent(NULL)
 				{}
 				
 				TreeNode(const TreeNode& other)
@@ -68,6 +69,7 @@ namespace ft
 					pr = other.pr;
 					left = other.left;
 					right = other.right;
+					parent = other.parent;
 				}
 				
 				~TreeNode(void)
@@ -78,8 +80,60 @@ namespace ft
 					pr = rhs.pr;
 					left = rhs.left;
 					right = rhs.right;
+					parent = rhs.parent;
 
 					return (*this);
+				}
+
+				TreeNode*	create(value_type pr)
+				{
+					TreeNode*	new_node;
+
+
+					try
+					{
+						new_node = alloc.allocate(1);
+						alloc.construct(new_node, TreeNode(pr));
+					}
+					catch(...)
+					{
+						return (NULL);
+					}
+					return (new_node);					
+				}
+
+				TreeNode*	lefmost(TreeNode* node)
+				{
+					if (node == NULL)
+						return (NULL);
+					while (node->left)
+						node = node->left;
+					return (node);
+				}
+
+				TreeNode*	first(TreeNode* root)
+				{
+					return (lefmost(root));
+				}
+				
+				TreeNode*	next(TreeNode* node)
+				{
+					if (node == NULL)
+						return (NULL);
+					if (node->right)
+						return (lefmost(node->right));
+
+					TreeNode* parent = node->parent;
+					if (!parent)
+						return (NULL);
+					if (node == parent->left)
+						return (parent);
+					while (parent != NULL && node != parent->left)
+					{
+						node = parent;
+						parent = node->parent;
+					}
+					return (parent);
 				}
 
 			};
