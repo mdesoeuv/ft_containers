@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/05 11:29:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/05 11:43:01 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,76 @@ namespace ft
 				else
 					return (insert(value_type(key, T())).first->second);
 			}
+
+			/* ----- Iterators ----- */
+
+			iterator begin(void)
+			{
+				
+			}
+
+			const_iterator	begin(void) const
+			{
+				
+			}
+
+			iterator	end(void)
+			{
+
+			}
+			
+			const_iterator	end(void) const
+			{
+				
+			}
+
+			reverse_iterator	rbegin(void)
+			{
+					
+			}
+
+			const_reverse_iterator	rbegin(void) const
+			{
+				
+			}
+
+			reverse_iterator	rend(void)
+			{
+					
+			}
+
+			const_reverse_iterator	rend(void) const
+			{
+				
+			}
+
+			/* ----- capacity ----- */
+
+			bool	empty(void) const
+			{
+				return (begin() == end());
+			}
+
+			size_type	size(void) const
+			{
+				return (end() - begin());
+			}
+
+			size_type	max_size(void) const
+			{
+				return (alloc.max_size());
+			}
+
+			/* ----- modifiers ----- */
+
+			void	clear(void)
+			{
+				
+			}
+			
+
+			
+			
+					
 	};
 }
