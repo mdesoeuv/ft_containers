@@ -6,12 +6,14 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/05 17:37:10 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/06 10:26:19 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "../inc/map.hpp"
+
+#include <map>
 
 int	main(void)
 {

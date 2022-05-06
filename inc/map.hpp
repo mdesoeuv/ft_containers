@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/05 17:41:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/06 11:14:57 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,79 @@ namespace ft
 			typedef Const_Iterator									const_iterator;
 			typedef typename ft::Reverse_Iterator<Iterator>			reverse_iterator;
 			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
+			typedef typename allocator_type::template rebind<TreeNode>::other node_allocator_type;
 			
 		public: //////////////// change to private
 
-			key_compare		comp;
-			allocator_type	alloc;
-			TreeNode*		root;
+			key_compare			comp;
+			node_allocator_type	alloc; // only TreeNodes are allocated
+			
+			TreeNode		meta; // end node for end()
 			size_type		_size;
+
+			TreeNode* root() {
+				return meta.left;
+			}
+
+			TreeNode* end() {
+				return &meta;
+			}
+
+
+			TreeNode*	create(value_type pr, TreeNode* parent)
+			{
+				TreeNode*	new_node;
+
+
+				try
+				{
+					new_node = this->alloc.allocate(1);
+					this->alloc.construct(new_node, TreeNode(pr));
+					new_node->parent = parent;
+				}
+				catch(...)
+				{
+					return (NULL);
+				}
+				return (new_node);					
+			}
+
+
+			TreeNode*	insert(TreeNode* node, value_type pr)
+			{
+				if (node == NULL)
+				{
+					node = create(pr, node->parent);
+					return (node);
+				}
+				if (pr.first < node->pr.first)
+					node->left = insert(node->left, pr);
+				else
+					node->right = insert(node->right, pr);
+				return (node);
+			}
+		
+			void	clear(TreeNode* subtree)
+			{
+				if (subtree == NULL)
+					return ;
+				subtree->left->clear();
+				subtree->right->clear();
+				alloc.destroy(subtree);
+				alloc.deallocate(subtree, 1);
+			}
 
 			class TreeNode
 			{
 				public:				// a voir
+
+				
 				value_type	pr;
 				TreeNode*	left;
 				TreeNode*	right;
 				TreeNode*	parent;
-				// allocator_type	alloc;
-
-				// TreeNode(void) : pr(value_type()), left(NULL), right(NULL), parent(NULL)
-				// {}
-
-				TreeNode(value_type pair) : pr(pair), left(NULL), right(NULL), parent(NULL)
+				
+				TreeNode(value_type pair, TreeNode* left = NULL, TreeNode* right = NULL, TreeNode* parent = NULL) : pr(pair), left(left), right(right), parent(parent)
 				{
 					
 				}
@@ -98,26 +150,8 @@ namespace ft
 					return (*this);
 				}
 
-				TreeNode*	create(value_type pr, TreeNode* parent)
-				{
-					TreeNode*	new_node;
 
-
-					try
-					{
-						// new_node = this->alloc.allocate(1);
-						// this->alloc.construct(new_node, TreeNode(pr));
-						new_node = new TreeNode(pr);
-						new_node->parent = parent;
-					}
-					catch(...)
-					{
-						return (NULL);
-					}
-					return (new_node);					
-				}
-
-				TreeNode*	lefmost(TreeNode* node)
+				TreeNode*	leftmost(TreeNode* node) // ne pas prendre de parametre // travailler avec this
 				{
 					if (node == NULL)
 						return (NULL);
@@ -128,56 +162,30 @@ namespace ft
 
 				TreeNode*	first(TreeNode* root)
 				{
-					return (lefmost(root));
+					return (leftmost(root));
 				}
 				
-				TreeNode*	next(TreeNode* node)
+				TreeNode*	next()
 				{
-					if (node == NULL)
+					if (*this == NULL)
 						return (NULL);
-					if (node->right)
-						return (lefmost(node->right));
+					if (this->right)
+						return (leftmost(this->right));
 
-					TreeNode* parent = node->parent;
+					TreeNode* parent = this->parent;
 					if (!parent)
 						return (NULL);
-					if (node == parent->left)
+					if (*this == parent->left)
 						return (parent);
-					while (parent != NULL && node != parent->left)
+					while (parent != NULL && *this != parent->left)
 					{
-						node = parent;
-						parent = node->parent;
+						*this = parent;
+						parent = this->parent;
 					}
 					return (parent);
 				}
 
-				void	clear(TreeNode* node)
-				{
-					if (node == NULL)
-						return ;
-					clear(node->left);
-					clear(node->right);
-					delete node;
-					// this->alloc.destroy(node);
-					// this->alloc.deallocate(node, 1);
-				}
 
-				TreeNode*	insert(TreeNode** node, value_type pr)
-				{
-					if (*node == NULL)
-					{
-						std::cout << "here" << std::endl;
-						*node = create(pr, node->parent);
-						return (*node);
-					}
-					if (pr.first == node->pr.first)
-						return (node);
-					if (pr.first < node->pr.first)
-						node->left = insert(node->left, pr);
-					else
-						node->right = insert(node->right, pr);
-					return (node);
-				}
 
 			};
 		
@@ -214,12 +222,12 @@ namespace ft
 
 			map(void) : comp(std::less<Key>()), alloc(std::allocator<std::pair<const Key, T> >()), _size(0)
 			{
-				root = NULL;
+				root() = NULL;
 			}
 
 			explicit map(const Compare& comp, const Allocator& alloc = Allocator()) : comp(comp), alloc(alloc), _size(0)
 			{
-				root = NULL;
+				root() = NULL;
 			}
 
 			template< class InputIt >
@@ -333,7 +341,7 @@ namespace ft
 
 			void	clear(void)
 			{
-				root->clear(root);
+				root()->clear(root());
 				_size = 0;
 			}
 			
