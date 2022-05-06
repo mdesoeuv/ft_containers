@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/06 13:33:31 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/06 16:46:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ namespace ft
 			BaseNode		meta; // end node for end()
 			size_type		_size;
 
-			BaseNode* root() {
-				return meta.left;
+			Node* root() {
+				return (static_cast<Node*>(meta.left));
 			}
 
 			BaseNode* end() {
@@ -72,15 +72,14 @@ namespace ft
 			}
 
 
-			BaseNode*	create(value_type pair, BaseNode* parent)
+			Node*	create(const value_type& pair, BaseNode* parent)
 			{
-				BaseNode*	new_node;
-
+				Node*	new_node;
 
 				try
 				{
 					new_node = alloc.allocate(1);
-					alloc.construct(new_node, BaseNode(parent));
+					alloc.construct(new_node, Node(pair, parent));
 				}
 				catch(...)
 				{
@@ -90,25 +89,94 @@ namespace ft
 			}
 
 
-			BaseNode*	insert(BaseNode* node, value_type pr)
+			Node*	insert(value_type pair)
 			{
-				if (node == NULL)
+				if (root() == NULL)
 				{
-					node = create(pr, node->parent);
-					return (node);
+					Node* cursor = root();
+					cursor = create(pair, &meta);
+					return (cursor);
 				}
-				if (pr.first < node->pr.first)
-					node->left = insert(node->left, pr);
-				else
-					node->right = insert(node->right, pr);
-				return (node);
+				Node* cursor = root();
+				while (true)
+				{
+					if (pair.first < cursor->pair.first)
+					{
+						if (cursor->left == NULL)
+						{
+							cursor->left = create(pair, static_cast<BaseNode*>(cursor));
+							break ;
+						}
+						else
+						{
+							cursor = static_cast<Node*>(cursor->left);
+						}
+						
+					}
+					else if (pair.first > cursor->pair.first)
+					{
+						if (cursor->right == NULL)
+						{
+							cursor->right = create(pair, static_cast<BaseNode*>(cursor));
+							break ;
+						}
+						else
+						{
+							cursor = static_cast<Node*>(cursor->right);
+						}
+						
+					}
+					else
+						break;
+				}
+				return (cursor);
 			}
 		
-			
+			void	clear(Node* node)
+			{
+				if (node == NULL)
+					return ;
+				if (node->left != NULL)
+					clear(static_cast<Node*>(node->left));
+				if (node->right != NULL)
+					clear(static_cast<Node*>(node->right));
+				alloc.destroy(node);
+				alloc.deallocate(node, 1);
+			}
+
+
+			void	ft_print_tab(int level)
+			{
+				while (level > 0)
+				{
+					std::cout << "\t";
+					level--;
+				}
+			}
+
+			void	display(Node* node, int level)
+			{
+
+				if (node == NULL)
+				{
+					ft_print_tab(level);
+					std::cout << "<empty>\n";
+					return ;
+				}
+				ft_print_tab(level);
+				std::cout << "node : %s\n" << node->pair.first << ", " << node->pair.second;
+				ft_print_tab(level);
+				std::cout << "left \n";
+				display(static_cast<Node*>(node->left), level + 1);
+				ft_print_tab(level);
+				std::cout << "right \n";
+				display(static_cast<Node*>(node->right), level + 1);
+			}
+
 
 			class BaseNode
 			{
-				protected:				// a voir
+				public:				// a voir
 				
 				// value_type  pr;   // pas de paire  value_type dans le BaseNode => uniquement dans le Node
 				BaseNode*	left;
@@ -116,8 +184,12 @@ namespace ft
 				BaseNode*	parent;
 
 				public:
+
+				BaseNode(void) : left(NULL), right(NULL), parent(NULL)
+				{
+				}
 				
-				BaseNode(BaseNode* parent = NULL) : left(NULL), right(NULL), parent(parent)
+				BaseNode(BaseNode* parent) : left(NULL), right(NULL), parent(parent)
 				{
 				}
 				
@@ -168,7 +240,7 @@ namespace ft
 
 			class Node : public BaseNode
 			{
-				private:
+				public: // a voir
 				
 					value_type  pair;
 					
@@ -178,15 +250,6 @@ namespace ft
 					{
 					}
 
-					void	clear(Node* subtree)
-					{
-						if (subtree == NULL)
-							return ;
-						subtree->left->clear();
-						subtree->right->clear();
-						alloc.destroy(subtree);
-						alloc.deallocate(subtree, 1);
-					}
 
 			};
 		
@@ -243,7 +306,7 @@ namespace ft
 			// unclear if destructor must clear the tree itself
 			~map(void)
 			{
-				clear();
+				clear(root());
 			}
 			
 			// map&	operator=(const map& other)
@@ -340,7 +403,7 @@ namespace ft
 
 			void	clear(void)
 			{
-				root()->clear();
+				clear(root());
 				_size = 0;
 			}
 			
