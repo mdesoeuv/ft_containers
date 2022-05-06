@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/06 10:26:19 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/06 11:29:50 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 int	main(void)
 {
-	ft::map<int, std::string>::TreeNode*	myMap = NULL;
-	myMap->insert(myMap, ft::make_pair<int, std::string>(10, "first"));
+	ft::map<int, std::string>	myMap;
+	myMap.insert(myMap.root(), ft::make_pair<int, std::string>(10, "first"));
 	std::cout << "there" << std::endl;
-	myMap->insert(myMap, ft::make_pair<int, std::string>(15, "second"));
+	myMap.insert(myMap.root(), ft::make_pair<int, std::string>(15, "second"));
 	
 	// myMap->clear(myMap);
 
