@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 17:11:50 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 17:23:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ namespace ft
 					Node* cursor = root();
 					cursor = create(pair, &meta);
 					meta.left = cursor;
+					_size++;
 					return (cursor);
 				}
 				Node* cursor = root();
@@ -106,6 +107,7 @@ namespace ft
 						if (cursor->left == NULL)
 						{
 							cursor->left = create(pair, static_cast<BaseNode*>(cursor));
+							_size++;
 							break ;
 						}
 						else
@@ -119,6 +121,7 @@ namespace ft
 						if (cursor->right == NULL)
 						{
 							cursor->right = create(pair, static_cast<BaseNode*>(cursor));
+							_size++;
 							break ;
 						}
 						else
@@ -396,10 +399,11 @@ namespace ft
 			// 	return (begin() == end());
 			// }
 
-			// size_type	size(void) const
-			// {
-			// 	return (end() - begin());
-			// }
+			size_type	size(void) const
+			{
+				return (_size);
+				// return (end() - begin()); really usefull ?
+			}
 
 			// size_type	max_size(void) const
 			// {
@@ -450,11 +454,18 @@ namespace ft
 
 			void	swap(map& other)
 			{
-				BaseNode* root_temp = this->meta.left;
+				BaseNode*	root_temp = this->meta.left;
+				size_type	size_temp = this->_size;
 
 				this->meta.left = other.meta.left;
 				other.meta.left = root_temp;
+
+				this->_size = other._size;
+				other._size = size_temp;
 			}
-					
+
+			/* ----- lookup ----- */
+
+			
 	};
 }
