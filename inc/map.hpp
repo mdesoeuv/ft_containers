@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 18:04:24 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 18:12:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,10 +398,11 @@ namespace ft
 
 			/* ----- capacity ----- */
 
-			// bool	empty(void) const
-			// {
-			// 	return (begin() == end());
-			// }
+			bool	empty(void) const
+			{
+				return (_size == 0);
+				// return (begin() == end());
+			}
 
 			size_type	size(void) const
 			{
