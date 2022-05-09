@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 18:00:50 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 18:04:24 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 	>
 	class map
 	{
-		public: ////////////// change to private
+		private:
 
 			/* ----- forward declarations ----- */
 			
@@ -55,14 +55,16 @@ namespace ft
 			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
 			typedef typename allocator_type::template rebind<Node>::other node_allocator_type;
 			
-		public: //////////////// change to private
+		private:
 
 			key_compare			comp;
-			node_allocator_type	alloc; // only TreeNodes are allocated
+			node_allocator_type	alloc; // only Nodes are allocated
 			
 			BaseNode		meta; // end node for end()
 			size_type		_size;
 
+		public: // change to private !!!!
+		
 			Node* root() const // is const really ok ?
 			{
 				return (static_cast<Node*>(meta.left));
@@ -185,6 +187,7 @@ namespace ft
 				display(static_cast<Node*>(node->right), level + 1);
 			}
 
+		private:
 
 			class BaseNode
 			{
@@ -534,7 +537,7 @@ namespace ft
 				return (this->key_comp()); // is it really that simple ??
 			}
 			
-			ft::map::value_compare	value_comp() const
+			value_compare	value_comp() const
 			{
 				return (this->value_comp());
 			}
