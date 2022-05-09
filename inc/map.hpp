@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/06 16:46:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 08:12:10 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ namespace ft
 				{
 					Node* cursor = root();
 					cursor = create(pair, &meta);
+					meta.left = cursor;
 					return (cursor);
 				}
 				Node* cursor = root();
@@ -134,14 +135,22 @@ namespace ft
 		
 			void	clear(Node* node)
 			{
+				std::cout << "call to clear" << std::endl;
 				if (node == NULL)
 					return ;
 				if (node->left != NULL)
+				{
+					std::cout << "go to left" << std::endl;
 					clear(static_cast<Node*>(node->left));
+				}
 				if (node->right != NULL)
+				{
+					std::cout << "go to right" << std::endl;
 					clear(static_cast<Node*>(node->right));
+				}
 				alloc.destroy(node);
 				alloc.deallocate(node, 1);
+				// node = NULL;
 			}
 
 
@@ -156,7 +165,6 @@ namespace ft
 
 			void	display(Node* node, int level)
 			{
-
 				if (node == NULL)
 				{
 					ft_print_tab(level);
@@ -164,7 +172,7 @@ namespace ft
 					return ;
 				}
 				ft_print_tab(level);
-				std::cout << "node : %s\n" << node->pair.first << ", " << node->pair.second;
+				std::cout << "node :\n" << node->pair.first << ", " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
 				display(static_cast<Node*>(node->left), level + 1);
