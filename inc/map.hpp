@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 17:23:44 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 17:38:52 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ namespace ft
 			BaseNode		meta; // end node for end()
 			size_type		_size;
 
-			Node* root() {
+			Node* root() const
+			{
 				return (static_cast<Node*>(meta.left));
 			}
 
@@ -466,6 +467,23 @@ namespace ft
 
 			/* ----- lookup ----- */
 
+			size_type count(const Key& key) const
+			{
+				Node* cursor = root();
+
+				while (true)
+				{
+					if (cursor == NULL)
+						return (0);
+					if (key < cursor->pair.first)
+						cursor = static_cast<Node*>(cursor->left);
+					else if (key > cursor->pair.first)
+						cursor = static_cast<Node*>(cursor->right);
+					else
+						return (1);
+				}
+				return (0);
+			}
 			
 	};
 }
