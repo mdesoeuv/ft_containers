@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 17:38:52 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 18:00:50 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ namespace ft
 			BaseNode		meta; // end node for end()
 			size_type		_size;
 
-			Node* root() const
+			Node* root() const // is const really ok ?
 			{
 				return (static_cast<Node*>(meta.left));
 			}
@@ -469,9 +469,10 @@ namespace ft
 
 			size_type count(const Key& key) const
 			{
-				Node* cursor = root();
+				Node*	cursor = root();
+				bool	found = false;
 
-				while (true)
+				while (!found)
 				{
 					if (cursor == NULL)
 						return (0);
@@ -484,6 +485,71 @@ namespace ft
 				}
 				return (0);
 			}
+
+			// waiting for iterator + const_iterator implementation
+			// iterator	find(const Key& key)
+			// {
+
+			// }
+
+			// const_iterator	find(const Key& key)
+			// {
+				
+			// }
+
+			// ft::pair<iterator, iterator> equal_range(const Key& key)
+			// {
+				
+			// }
+
+			// ft::pair<const_iterator, const_iterator> equal_range(const Key& key) const
+			// {
+				
+			// }
+
+			// iterator	lower_bound(const Key& key)
+			// {
+				
+			// }
+
+			// const_iterator	lower_bound(const Key& key) const
+			// {
+				
+			// }
+
+			// iterator	upper_bound(const Key& key)
+			// {
+				
+			// }
+
+			// const_iterator	upper_bound(const Key& key) const
+			// {
+				
+			// }
+
+			/* ----- observers ----- */
+
+			key_compare	key_comp() const 
+			{
+				return (this->key_comp()); // is it really that simple ??
+			}
+			
+			ft::map::value_compare	value_comp() const
+			{
+				return (this->value_comp());
+			}
+			
 			
 	};
+
+
+	// waiting for iterators to be implemented first ...
+	// template <class Key, class T, class Compare, class Alloc>
+	// bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	// {
+			// if (lhs.size() != rhs.size())
+			// 	return (false);
+			// taking iterators from begin() of each and comparing pair.first and pair.second all the way to end() of each
+	// }
+	
 }
