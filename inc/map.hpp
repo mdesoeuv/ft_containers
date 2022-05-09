@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 08:12:10 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 17:11:50 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ namespace ft
 				}
 				alloc.destroy(node);
 				alloc.deallocate(node, 1);
-				// node = NULL;
+				node = NULL;
 			}
 
 
@@ -172,7 +172,7 @@ namespace ft
 					return ;
 				}
 				ft_print_tab(level);
-				std::cout << "node :\n" << node->pair.first << ", " << node->pair.second << std::endl;
+				std::cout << "node : " << node->pair.first << ", " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
 				display(static_cast<Node*>(node->left), level + 1);
@@ -311,7 +311,6 @@ namespace ft
 				*this = other;
 			}
 			
-			// unclear if destructor must clear the tree itself
 			~map(void)
 			{
 				clear(root());
@@ -412,6 +411,7 @@ namespace ft
 			void	clear(void)
 			{
 				clear(root());
+				meta.left = NULL;
 				_size = 0;
 			}
 			
@@ -447,6 +447,14 @@ namespace ft
 			// {
 				
 			// }
+
+			void	swap(map& other)
+			{
+				BaseNode* root_temp = this->meta.left;
+
+				this->meta.left = other.meta.left;
+				other.meta.left = root_temp;
+			}
 					
 	};
 }
