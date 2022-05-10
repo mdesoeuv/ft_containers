@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/05 10:44:10 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 10:15:35 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1178,7 +1178,7 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
-  	bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+  	bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) // revient a utilser lexigraphical compare
 	{
 		typename ft::vector<T, Alloc>::const_iterator	start_l = lhs.begin();
 		typename ft::vector<T, Alloc>::const_iterator	start_r = rhs.begin();

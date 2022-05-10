@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 18:12:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 13:25:20 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,25 @@ namespace ft
 			BaseNode		meta; // end node for end()
 			size_type		_size;
 
-		public: // change to private !!!!
+		public: // change to private !!!
 		
-			Node* root() const // is const really ok ?
+			BaseNode*& root()
 			{
-				return (static_cast<Node*>(meta.left));
+				return (meta.left);
 			}
+
+			const BaseNode* root() const
+			{
+				return (meta.left);
+			}
+			
 
 			BaseNode* end() {
 				return &meta;
 			}
 
 
-			Node*	create(const value_type& pair, BaseNode* parent)
+			BaseNode*	create(const value_type& pair, BaseNode* parent)
 			{
 				Node*	new_node;
 
@@ -88,48 +94,46 @@ namespace ft
 				{
 					return (NULL);
 				}
-				return (new_node);					
+				return (static_cast<BaseNode*>(new_node));					
 			}
 
 
-			Node*	insert(value_type pair)
+			BaseNode*	insert(value_type pair)
 			{
 				if (root() == NULL)
 				{
-					Node* cursor = root();
-					cursor = create(pair, &meta);
-					meta.left = cursor;
+					root() = create(pair, &meta);
 					_size++;
-					return (cursor);
+					return (root());
 				}
-				Node* cursor = root();
+				BaseNode* cursor = root();
 				while (true)
 				{
-					if (pair.first < cursor->pair.first)
+					if (pair.first < static_cast<Node*>(cursor)->pair.first) // use compare
 					{
 						if (cursor->left == NULL)
 						{
-							cursor->left = create(pair, static_cast<BaseNode*>(cursor));
+							cursor->left = create(pair, cursor);
 							_size++;
 							break ;
 						}
 						else
 						{
-							cursor = static_cast<Node*>(cursor->left);
+							cursor = cursor->left;
 						}
 						
 					}
-					else if (pair.first > cursor->pair.first)
+					else if (pair.first > static_cast<Node*>(cursor)->pair.first) // use compare
 					{
 						if (cursor->right == NULL)
 						{
-							cursor->right = create(pair, static_cast<BaseNode*>(cursor));
+							cursor->right = create(pair, cursor);
 							_size++;
 							break ;
 						}
 						else
 						{
-							cursor = static_cast<Node*>(cursor->right);
+							cursor = cursor->right;
 						}
 						
 					}
@@ -139,7 +143,7 @@ namespace ft
 				return (cursor);
 			}
 		
-			void	clear(Node* node)
+			void	clear(BaseNode* node)
 			{
 				std::cout << "call to clear" << std::endl;
 				if (node == NULL)
@@ -147,15 +151,15 @@ namespace ft
 				if (node->left != NULL)
 				{
 					std::cout << "go to left" << std::endl;
-					clear(static_cast<Node*>(node->left));
+					clear(node->left);
 				}
 				if (node->right != NULL)
 				{
 					std::cout << "go to right" << std::endl;
-					clear(static_cast<Node*>(node->right));
+					clear(node->right);
 				}
-				alloc.destroy(node);
-				alloc.deallocate(node, 1);
+				alloc.destroy(static_cast<Node*>(node));
+				alloc.deallocate(static_cast<Node*>(node), 1);
 				node = NULL;
 			}
 
@@ -169,22 +173,23 @@ namespace ft
 				}
 			}
 
-			void	display(Node* node, int level)
+			void	display(BaseNode* base_node, int level)
 			{
-				if (node == NULL)
+				if (base_node == NULL)
 				{
 					ft_print_tab(level);
 					std::cout << "<empty>\n";
 					return ;
 				}
+				Node*	node = static_cast<Node*>(base_node);
 				ft_print_tab(level);
 				std::cout << "node : " << node->pair.first << ", " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
-				display(static_cast<Node*>(node->left), level + 1);
+				display(node->left, level + 1);
 				ft_print_tab(level);
 				std::cout << "right \n";
-				display(static_cast<Node*>(node->right), level + 1);
+				display(node->right, level + 1);
 			}
 
 		private:
@@ -215,7 +220,7 @@ namespace ft
 				~BaseNode(void)
 				{}
 
-				BaseNode*	leftmost() // ne pas prendre de parametre // travailler avec this
+				BaseNode*	leftmost()
 				{
 					if (*this == NULL)
 						return (NULL);
@@ -292,8 +297,6 @@ namespace ft
 						return (comp(lhs.first, rhs.first));
 					}
 
-					// ~value_compare(void) is there a destructor for this class ?
-					// {}
 			
 			};
 
@@ -473,17 +476,18 @@ namespace ft
 
 			size_type count(const Key& key) const
 			{
-				Node*	cursor = root();
-				bool	found = false;
+				const BaseNode *cursor; 
+				bool			found = false;
 
+				cursor = root();
 				while (!found)
 				{
 					if (cursor == NULL)
 						return (0);
-					if (key < cursor->pair.first)
-						cursor = static_cast<Node*>(cursor->left);
-					else if (key > cursor->pair.first)
-						cursor = static_cast<Node*>(cursor->right);
+					if (key < static_cast<const Node*>(cursor)->pair.first)  // use key_compare
+						cursor = cursor->left;
+					else if (key > static_cast<const Node*>(cursor)->pair.first) // use key_compare
+						cursor = cursor->right;
 					else
 						return (1);
 				}
@@ -535,12 +539,12 @@ namespace ft
 
 			key_compare	key_comp() const 
 			{
-				return (this->key_comp()); // is it really that simple ??
+				return (key_compare()); // ou return (comp)
 			}
 			
 			value_compare	value_comp() const
 			{
-				return (this->value_comp());
+				return (value_compare(key_comp()));
 			}
 			
 			
@@ -553,6 +557,8 @@ namespace ft
 	// {
 			// if (lhs.size() != rhs.size())
 			// 	return (false);
+
+			// utiliser ft::equal en faisant attention a la taille
 			// taking iterators from begin() of each and comparing pair.first and pair.second all the way to end() of each
 	// }
 	
