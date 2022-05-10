@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/10 15:41:37 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 16:20:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ namespace ft
 			}
 			
 
-			BaseNode* end() {
+			BaseNode* end_node() {
 				return &meta;
 			}
 
@@ -273,6 +273,87 @@ namespace ft
 
 
 			};
+
+			class Iterator
+			{
+				protected:
+
+					Node*	ptr;
+
+				public:
+
+					Iterator()
+					{
+						ptr = NULL;
+					} 
+
+					Iterator(BaseNode* base_node)
+					{
+						ptr = static_cast<Node*>(base_node);
+					}
+
+					Iterator(Node* node)
+					{
+						ptr = node;
+					}
+
+					Iterator(const Iterator& other) : ptr(other.ptr)
+					{
+					}
+
+					~Iterator()
+					{
+					}
+
+					Iterator&	operator=(const Iterator& rhs)
+					{
+						ptr = rhs.ptr;
+
+						return (*this);
+					}
+
+					bool	operator==(const Iterator& rhs)
+					{
+						return (ptr == rhs.ptr);
+					}
+
+					bool	operator!=(const Iterator& rhs)
+					{
+						return (!(ptr == rhs.ptr));
+					}
+
+					
+					Iterator&	operator++(void)
+					{
+						ptr = ptr->next();
+						
+						return (*this);
+					}
+
+
+					Iterator	operator++(int)
+					{
+						Iterator	it_temp = *this;
+						
+						ptr = ptr->next();
+						return (it_temp);
+					}
+
+
+					value_type&	operator*(void)
+					{
+						return (ptr->pair);
+					}
+
+					
+					value_type*	operator->(void)
+					{
+						return (&(ptr->pair));
+					}
+
+					
+					
+			};
 		
 		public:
 		
@@ -360,21 +441,25 @@ namespace ft
 
 			/* ----- Iterators ----- */
 
-			// iterator begin(void)
-			// {
-				
-			// }
+			Iterator begin(void)
+			{
+				Iterator	it(this->root());
+
+				return (it);
+			}
 
 			// const_iterator	begin(void) const
 			// {
 				
 			// }
 
-			// iterator	end(void)
-			// {
+			Iterator end(void)
+			{
+				Iterator	it(this->end_node());
 
-			// }
-			
+				return (it);
+			}
+
 			// const_iterator	end(void) const
 			// {
 				

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/09 18:14:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 16:23:03 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ int	main(void)
 	std::cout << "searching for element with key = 777 in first map : " <<  myMap.count(777) << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 	
+	Map::iterator	it = myMap.begin();
+	std::cout << std::endl << "testing iterators :" << std::endl;
+	std::cout << "dereferencing begin: " << "key=" << (*it).first << ", value=" << it->second << std::endl;
+	Map::iterator	itEnd = myMap.end();
+	std::cout << 
+	
+	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
 	secondMap.clear();
@@ -57,5 +64,6 @@ int	main(void)
 	std::cout << "size : " << secondMap.size() << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 	std::cout << "end of main" << std::endl;
+
 	return (0);
 }
