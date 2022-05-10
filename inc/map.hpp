@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/10 16:20:44 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 18:55:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ namespace ft
 			BaseNode		meta; // end node for end()
 			size_type		_size;
 
-		public: // change to private !!!
+		public: // change to protected !!!
 		
 			BaseNode*& root()
 			{
@@ -94,7 +94,7 @@ namespace ft
 				{
 					return (NULL);
 				}
-				return (static_cast<BaseNode*>(new_node));					
+				return (static_cast<BaseNode*>(new_node));			
 			}
 
 
@@ -223,36 +223,36 @@ namespace ft
 
 				BaseNode*	leftmost()
 				{
-					if (*this == NULL)
-						return (NULL);
-					while (this->left)
-						this = this->left;
-					return (this);
+					BaseNode* node = this;
+
+					while (node->left)
+						node = node->left;
+					return (node);
 				}
 
-				BaseNode*	first(BaseNode* root)
+				BaseNode*	first()
 				{
-					return (leftmost(root));
+					return (this->leftmost());
 				}
 				
 				BaseNode*	next()
 				{
-					if (*this == NULL)
-						return (NULL);
-					if (this->right)
-						return (this->right->leftmost());
+					BaseNode* node = this;
 
-					BaseNode* parent = this->parent;
-					if (!parent)
-						return (NULL);
-					if (this == parent->left)
-						return (parent);
-					while (parent != NULL && this != parent->left)
+					if (node->right)
+						return (node->right->leftmost());
+
+					BaseNode* parent_node = node->parent;
+					while (node != parent_node->left)
 					{
-						this = parent;
-						parent = this->parent;
+						std::cout << "going up" << std::endl;
+						std::cout << static_cast<Node*>(node)->pair.first << std::endl;
+						node = parent_node;
+						parent_node = node->parent;
 					}
-					return (parent);
+					std::cout << "out" << std::endl;
+					
+					return (node->parent);
 				}
 
 
@@ -325,7 +325,7 @@ namespace ft
 					
 					Iterator&	operator++(void)
 					{
-						ptr = ptr->next();
+						ptr = static_cast<Node*>(ptr->next());
 						
 						return (*this);
 					}
@@ -335,7 +335,7 @@ namespace ft
 					{
 						Iterator	it_temp = *this;
 						
-						ptr = ptr->next();
+						ptr = static_cast<Node*>(ptr->next());
 						return (it_temp);
 					}
 
@@ -443,7 +443,7 @@ namespace ft
 
 			Iterator begin(void)
 			{
-				Iterator	it(this->root());
+				Iterator	it(root()->first());
 
 				return (it);
 			}
@@ -556,6 +556,11 @@ namespace ft
 
 				this->_size = other._size;
 				other._size = size_temp;
+
+				if (this->root())
+					this->root()->parent = &this->meta;
+				if (other.root())
+					other.root()->parent = &other.meta;
 			}
 
 			/* ----- lookup ----- */
