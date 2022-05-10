@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/10 13:25:20 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/10 15:41:37 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,18 +202,19 @@ namespace ft
 				BaseNode*	left;
 				BaseNode*	right;
 				BaseNode*	parent;
+				int			balance_factor;
 
 				public:
 
-				BaseNode(void) : left(NULL), right(NULL), parent(NULL)
+				BaseNode(void) : left(NULL), right(NULL), parent(NULL), balance_factor(0)
 				{
 				}
 				
-				BaseNode(BaseNode* parent) : left(NULL), right(NULL), parent(parent)
+				BaseNode(BaseNode* parent) : left(NULL), right(NULL), parent(parent), balance_factor(0)
 				{
 				}
 				
-				BaseNode(const BaseNode& other) : left(other.left), right(other.right), parent(other.parent)
+				BaseNode(const BaseNode& other) : left(other.left), right(other.right), parent(other.parent), balance_factor(other.balance_factor)
 				{
 				}
 				
