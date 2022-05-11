@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 15:17:53 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 15:45:46 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ int	main(void)
 		it--;
 		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
 	}
+
+	std::cout << std::endl << "< testing find() function >" << std::endl;
+	std::cout << "is key 7 found ? "; 
+	if (secondMap.find(7) != secondMap.end())
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
+	std::cout << "is key 10 found ? "; 
+	if (secondMap.find(10) != secondMap.end())
+		std::cout << "true" << std::endl;
+	else
+		std::cout << "false" << std::endl;
 
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;

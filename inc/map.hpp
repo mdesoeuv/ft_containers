@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 15:17:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 16:09:17 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,21 @@ namespace ft
 					}
 					return (node->parent);
 				}
+				
+				Iterator	iter()
+				{
+					Iterator iter(this);
+					
+					return (iter);
+				}
 
+								
+				Const_Iterator	iter() const
+				{
+					Const_Iterator iter(this);
+					
+					return (iter);
+				}
 
 
 			};
@@ -802,11 +816,23 @@ namespace ft
 				return (0);
 			}
 
-			// waiting for iterator + const_iterator implementation
-			// iterator	find(const Key& key)
-			// {
-
-			// }
+			Iterator	find(const Key& key)
+			{
+				if (root() == NULL)
+					return (end());
+				
+				BaseNode* cursor = root();
+				while (cursor != NULL)
+				{
+					if (comp(key, static_cast<Node*>(cursor)->pair.first))
+						cursor = cursor->left;
+					else if (comp(static_cast<Node*>(cursor)->pair.first, key))
+						cursor = cursor->right;
+					else
+						return (cursor->iter());
+				}
+				return (end());
+			}
 
 			// const_iterator	find(const Key& key)
 			// {
