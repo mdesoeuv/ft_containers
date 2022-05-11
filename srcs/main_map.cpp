@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 10:19:37 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 11:30:28 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(void)
 	std::cout << "searching for element with key = 777 in first map : " <<  myMap.count(777) << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 	
-	Map::iterator	it = secondMap.begin();
+	// Map::iterator	it = secondMap.begin();
 	std::cout << std::endl << "testing iterators with in order display :" << std::endl;
 	for (Map::iterator	it = secondMap.begin(); it != secondMap.end(); ++it)
 		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
@@ -54,6 +54,16 @@ int	main(void)
 	for (Map::iterator	it = secondMap.end(); it != secondMap.begin();)
 		std::cout << "key=" << (*--it).first << ", value=" << it->second << std::endl;
 	// Map::iterator	itEnd = secondMap.end();
+	
+	
+	// Map::const_iterator	const_it = secondMap.begin();
+	std::cout << std::endl << "testing const iterators with in order display :" << std::endl;
+	for (Map::const_iterator	const_it = secondMap.constbegin(); const_it != secondMap.end(); ++const_it)
+		std::cout << "key=" << (*const_it).first << ", value=" << const_it->second << std::endl;
+	std::cout << std::endl << "backward display :" << std::endl;
+	for (Map::const_iterator	const_it = secondMap.end(); const_it != secondMap.begin();)
+		std::cout << "key=" << (*--const_it).first << ", value=" << const_it->second << std::endl;
+	// Map::const_iterator	const_itEnd = secondMap.end();
 	
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;

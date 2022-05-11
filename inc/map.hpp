@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 10:21:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 11:35:39 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,13 @@ namespace ft
 			}
 			
 
-			BaseNode* end_node() {
+			BaseNode* end_node()
+			{
+				return &meta;
+			}
+
+			const BaseNode* end_node() const
+			{
 				return &meta;
 			}
 
@@ -230,6 +236,15 @@ namespace ft
 					return (node);
 				}
 
+				const BaseNode*	leftmost() const
+				{
+					const BaseNode* node = this;
+
+					while (node->left)
+						node = node->left;
+					return (node);
+				}
+
 				BaseNode*	rightmost()
 				{
 					BaseNode* node = this;
@@ -239,7 +254,21 @@ namespace ft
 					return (node);
 				}
 
+				const BaseNode*	rightmost() const
+				{
+					const BaseNode* node = this;
+
+					while (node->right)
+						node = node->right;
+					return (node);
+				}
+
 				BaseNode*	first()
+				{
+					return (this->leftmost());
+				}
+
+				const BaseNode*	first() const
 				{
 					return (this->leftmost());
 				}
@@ -260,6 +289,22 @@ namespace ft
 					return (node->parent);
 				}
 				
+				const BaseNode*	previous() const
+				{
+					const BaseNode* node = this;
+
+					if (node->left)
+						return (node->left->rightmost());
+
+					const BaseNode* parent_node = node->parent;
+					while (node != parent_node->right)
+					{
+						node = parent_node;
+						parent_node = node->parent;
+					}
+					return (node->parent);
+				}
+				
 				BaseNode*	next()
 				{
 					BaseNode* node = this;
@@ -268,6 +313,22 @@ namespace ft
 						return (node->right->leftmost());
 
 					BaseNode* parent_node = node->parent;
+					while (node != parent_node->left)
+					{
+						node = parent_node;
+						parent_node = node->parent;
+					}
+					return (node->parent);
+				}
+				
+				const BaseNode*	next() const
+				{
+					const BaseNode* node = this;
+
+					if (node->right)
+						return (node->right->leftmost());
+
+					const BaseNode* parent_node = node->parent;
 					while (node != parent_node->left)
 					{
 						node = parent_node;
@@ -393,6 +454,105 @@ namespace ft
 					
 					
 			};
+
+			class Const_Iterator
+			{
+				protected:
+
+					const Node*	ptr;
+
+				public:
+
+					typedef std::bidirectional_iterator_tag iterator_category;
+
+					Const_Iterator()
+					{
+						ptr = NULL;
+					} 
+
+					Const_Iterator(const BaseNode* base_node)
+					{
+						ptr = static_cast<const Node*>(base_node);
+					}
+
+					Const_Iterator(const Node* node)
+					{
+						ptr = node;
+					}
+
+					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
+					{
+					}
+
+					~Const_Iterator()
+					{
+					}
+
+					Const_Iterator&	operator=(const Const_Iterator& rhs)
+					{
+						ptr = rhs.ptr;
+
+						return (*this);
+					}
+
+					bool	operator==(const Const_Iterator& rhs)
+					{
+						return (ptr == rhs.ptr);
+					}
+
+					bool	operator!=(const Const_Iterator& rhs)
+					{
+						return (!(ptr == rhs.ptr));
+					}
+
+					
+					Const_Iterator&	operator++(void)
+					{
+						ptr = static_cast<const Node*>(ptr->next());
+						
+						return (*this);
+					}
+
+
+					Const_Iterator	operator++(int)
+					{
+						Const_Iterator	it_temp = *this;
+						
+						ptr = static_cast<const Node*>(ptr->next());
+						return (it_temp);
+					}
+					
+					Const_Iterator&	operator--(void)
+					{
+						ptr = static_cast<const Node*>(ptr->previous());
+						
+						return (*this);
+					}
+
+
+					Const_Iterator	operator--(int)
+					{
+						Const_Iterator	it_temp = *this;
+						
+						ptr = static_cast<const Node*>(ptr->previous());
+						return (it_temp);
+					}
+
+
+					const value_type&	operator*(void)
+					{
+						return (ptr->pair);
+					}
+
+					
+					const value_type*	operator->(void)
+					{
+						return (&(ptr->pair));
+					}
+
+					
+					
+			};
 		
 		public:
 		
@@ -487,10 +647,12 @@ namespace ft
 				return (it);
 			}
 
-			// const_iterator	begin(void) const
-			// {
-				
-			// }
+			Const_Iterator constbegin(void) const
+			{
+				Const_Iterator	it(const_cast<const BaseNode*>(root()->first()));
+
+				return (it);
+			}
 
 			Iterator end(void)
 			{
@@ -499,10 +661,12 @@ namespace ft
 				return (it);
 			}
 
-			// const_iterator	end(void) const
-			// {
-				
-			// }
+			Const_Iterator end(void) const
+			{
+				Const_Iterator	it(const_cast<const BaseNode*>(this->end_node()));
+
+				return (it);
+			}
 
 			// reverse_iterator	rbegin(void)
 			// {
