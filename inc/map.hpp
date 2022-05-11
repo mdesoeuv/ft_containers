@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 16:26:09 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 16:28:54 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ namespace ft
 				BaseNode* cursor = root();
 				while (true)
 				{
-					if (pair.first < static_cast<Node*>(cursor)->pair.first) // use compare
+					if (comp(pair.first, static_cast<Node*>(cursor)->pair.first))
 					{
 						if (cursor->left == NULL)
 						{
@@ -129,7 +129,7 @@ namespace ft
 						}
 						
 					}
-					else if (pair.first > static_cast<Node*>(cursor)->pair.first) // use compare
+					else if (comp(static_cast<Node*>(cursor)->pair.first, pair.first))
 					{
 						if (cursor->right == NULL)
 						{
@@ -671,7 +671,7 @@ namespace ft
 				return (it);
 			}
 
-			Const_Iterator begin(void) const // problem with name begin()
+			Const_Iterator begin(void) const
 			{
 				Const_Iterator	it(const_cast<const BaseNode*>(root()->first()));
 
@@ -685,7 +685,7 @@ namespace ft
 				return (it);
 			}
 
-			Const_Iterator end(void) const // problem with name end()
+			Const_Iterator end(void) const
 			{
 				Const_Iterator	it(const_cast<const BaseNode*>(this->end_node()));
 
