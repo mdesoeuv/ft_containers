@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 16:57:14 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 17:10:43 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -907,25 +907,65 @@ namespace ft
 				return (ft::make_pair(first_iter, second_iter));
 			}
 
-			// iterator	lower_bound(const Key& key)
-			// {
-				
-			// }
+			Iterator	lower_bound(const Key& key)
+			{
+				Iterator cursor = this->begin();
 
-			// const_iterator	lower_bound(const Key& key) const
-			// {
-				
-			// }
+				while (cursor != this->end())
+				{
+					if (!comp(cursor->first, key))
+					{
+						return (cursor);
+					}
+					++cursor;
+				}
+				return (cursor);
+			}
 
-			// iterator	upper_bound(const Key& key)
-			// {
-				
-			// }
+			Const_Iterator	lower_bound(const Key& key) const
+			{
+				Const_Iterator cursor = this->begin();
 
-			// const_iterator	upper_bound(const Key& key) const
-			// {
-				
-			// }
+				while (cursor != this->end())
+				{
+					if (!comp(cursor->first, key))
+					{
+						return (cursor);
+					}
+					++cursor;
+				}
+				return (cursor);
+			}
+
+			Iterator	upper_bound(const Key& key)
+			{
+				Iterator cursor = this->begin();
+
+				while (cursor != this->end())
+				{
+					if (comp(key, cursor->first))
+					{
+						return (cursor);
+					}
+					++cursor;
+				}
+				return (cursor);
+			}
+
+			Const_Iterator	upper_bound(const Key& key) const
+			{
+				Const_Iterator cursor = this->begin();
+
+				while (cursor != this->end())
+				{
+					if (comp(key, cursor->first))
+					{
+						return (cursor);
+					}
+					++cursor;
+				}
+				return (cursor);
+			}
 
 			/* ----- observers ----- */
 
