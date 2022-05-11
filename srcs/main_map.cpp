@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 11:30:28 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 11:36:51 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	main(void)
 	
 	// Map::const_iterator	const_it = secondMap.begin();
 	std::cout << std::endl << "testing const iterators with in order display :" << std::endl;
-	for (Map::const_iterator	const_it = secondMap.constbegin(); const_it != secondMap.end(); ++const_it)
+	for (Map::const_iterator	const_it = secondMap.constbegin(); const_it != secondMap.constend(); ++const_it)
 		std::cout << "key=" << (*const_it).first << ", value=" << const_it->second << std::endl;
 	std::cout << std::endl << "backward display :" << std::endl;
-	for (Map::const_iterator	const_it = secondMap.end(); const_it != secondMap.begin();)
+	for (Map::const_iterator	const_it = secondMap.constend(); const_it != secondMap.constbegin();)
 		std::cout << "key=" << (*--const_it).first << ", value=" << const_it->second << std::endl;
 	// Map::const_iterator	const_itEnd = secondMap.end();
 	

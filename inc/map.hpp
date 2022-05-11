@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 11:35:39 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 11:37:34 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -647,7 +647,7 @@ namespace ft
 				return (it);
 			}
 
-			Const_Iterator constbegin(void) const
+			Const_Iterator constbegin(void) const // problem with name begin()
 			{
 				Const_Iterator	it(const_cast<const BaseNode*>(root()->first()));
 
@@ -661,7 +661,7 @@ namespace ft
 				return (it);
 			}
 
-			Const_Iterator end(void) const
+			Const_Iterator constend(void) const // problem with name end()
 			{
 				Const_Iterator	it(const_cast<const BaseNode*>(this->end_node()));
 
