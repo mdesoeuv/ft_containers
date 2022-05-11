@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 17:43:24 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 17:44:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1001,15 +1001,15 @@ namespace ft
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
-	bool operator!=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs )
+	bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
 		return (!(lhs == rhs));
 	}
 
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator<( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs )
-	{
-		/// to implement
-	}
+	// template< class Key, class T, class Compare, class Alloc >
+	// bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
+	// {
+	// 	/// to implement
+	// }
 	
 }

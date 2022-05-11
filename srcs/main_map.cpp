@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 17:40:16 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 17:43:58 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ int	main(void)
 
 	std::cout << std::endl << "< testing operator== >" << std::endl;
 	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
+	std::cout << "map 1 != map 2 : " << (myMap != secondMap) << std::endl;
 	std::cout << "map 2 == map 2 : " << (secondMap == secondMap) << std::endl;
+	std::cout << "map 2 != map 2 : " << (secondMap != secondMap) << std::endl;
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
 	secondMap.clear();
