@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/10 18:18:20 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 10:19:37 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int	main(void)
 	std::cout << std::endl << "testing iterators with in order display :" << std::endl;
 	for (Map::iterator	it = secondMap.begin(); it != secondMap.end(); ++it)
 		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
+	std::cout << std::endl << "backward display :" << std::endl;
+	for (Map::iterator	it = secondMap.end(); it != secondMap.begin();)
+		std::cout << "key=" << (*--it).first << ", value=" << it->second << std::endl;
 	// Map::iterator	itEnd = secondMap.end();
 	
 	

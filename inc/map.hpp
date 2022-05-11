@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/10 18:55:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 10:21:43 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,9 +230,34 @@ namespace ft
 					return (node);
 				}
 
+				BaseNode*	rightmost()
+				{
+					BaseNode* node = this;
+
+					while (node->right)
+						node = node->right;
+					return (node);
+				}
+
 				BaseNode*	first()
 				{
 					return (this->leftmost());
+				}
+				
+				BaseNode*	previous()
+				{
+					BaseNode* node = this;
+
+					if (node->left)
+						return (node->left->rightmost());
+
+					BaseNode* parent_node = node->parent;
+					while (node != parent_node->right)
+					{
+						node = parent_node;
+						parent_node = node->parent;
+					}
+					return (node->parent);
 				}
 				
 				BaseNode*	next()
@@ -245,13 +270,9 @@ namespace ft
 					BaseNode* parent_node = node->parent;
 					while (node != parent_node->left)
 					{
-						std::cout << "going up" << std::endl;
-						std::cout << static_cast<Node*>(node)->pair.first << std::endl;
 						node = parent_node;
 						parent_node = node->parent;
 					}
-					std::cout << "out" << std::endl;
-					
 					return (node->parent);
 				}
 
@@ -281,6 +302,8 @@ namespace ft
 					Node*	ptr;
 
 				public:
+
+					typedef std::bidirectional_iterator_tag iterator_category;
 
 					Iterator()
 					{
@@ -336,6 +359,22 @@ namespace ft
 						Iterator	it_temp = *this;
 						
 						ptr = static_cast<Node*>(ptr->next());
+						return (it_temp);
+					}
+					
+					Iterator&	operator--(void)
+					{
+						ptr = static_cast<Node*>(ptr->previous());
+						
+						return (*this);
+					}
+
+
+					Iterator	operator--(int)
+					{
+						Iterator	it_temp = *this;
+						
+						ptr = static_cast<Node*>(ptr->previous());
 						return (it_temp);
 					}
 
