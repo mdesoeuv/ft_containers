@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 13:40:38 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 15:11:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ int	main(void)
 		std::cout << "key=" << (*--const_it).first << ", value=" << const_it->second << std::endl;
 	// Map::const_iterator	const_itEnd = secondMap.end();
 	
-	std::cout << std::endl << "testing reverse iterator decrementation :" << std::endl;
-	for (Map::reverse_iterator it = secondMap.rend(); it != secondMap.rbegin();)
-	{
-		it++;
-		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
-	}
-	
 	std::cout << std::endl << "testing reverse iterator incrementation :" << std::endl;
 	for (Map::reverse_iterator it = secondMap.rbegin(); it != secondMap.rend(); ++it)
 		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
+	
+	std::cout << std::endl << "testing reverse iterator decrementation :" << std::endl;
+	for (Map::reverse_iterator it = secondMap.rend(); it != secondMap.rbegin();)
+	{ 
+		it--;
+		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
+	}
 
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
