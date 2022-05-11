@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 16:13:54 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 16:26:09 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -799,16 +799,13 @@ namespace ft
 			size_type count(const Key& key) const
 			{
 				const BaseNode *cursor; 
-				bool			found = false;
 
 				cursor = root();
-				while (!found)
+				while (cursor)
 				{
-					if (cursor == NULL)
-						return (0);
-					if (key < static_cast<const Node*>(cursor)->pair.first)  // use key_compare
+					if (comp(key, static_cast<const Node*>(cursor)->pair.first))
 						cursor = cursor->left;
-					else if (key > static_cast<const Node*>(cursor)->pair.first) // use key_compare
+					else if (comp(static_cast<const Node*>(cursor)->pair.first, key))
 						cursor = cursor->right;
 					else
 						return (1);
