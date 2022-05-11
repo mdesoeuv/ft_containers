@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 17:16:57 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 17:40:16 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,22 @@ int	main(void)
 	std::cout << "testing if references from iterators are valid are writable : look for the ZOB" << std::endl;
 	pair_range.first->second = "ZOB";
 	secondMap.display(secondMap.root(), 0);
-	
+
+	std::cout << std::endl << "< testing at(key) function >" << std::endl;
+	std::cout << "value at key = 5 is : " << secondMap.at(5) << std::endl;
+	std::cout << "value at key = 12 is : ";
+	try
+	{
+		std::cout << secondMap.at(12) << std::endl;
+	}
+	catch (std::out_of_range& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << std::endl << "< testing operator== >" << std::endl;
+	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
+	std::cout << "map 2 == map 2 : " << (secondMap == secondMap) << std::endl;
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
 	secondMap.clear();

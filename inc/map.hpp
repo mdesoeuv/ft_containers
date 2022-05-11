@@ -6,13 +6,14 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 17:10:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 17:43:24 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "pair.hpp"
+#include "equal.hpp"
 #include "Reverse_Iterator.hpp"
 
 namespace ft
@@ -621,7 +622,7 @@ namespace ft
 				insert(first, last);
 			}
 			
-			map(const map& other) : comp(other.comp), alloc(other.alloc)
+			map(const map& other) : comp(other.comp), alloc(other.alloc) // very buggy constructor allocate memory ? insert all range of elements ?
 			{
 				*this = other;
 			}
@@ -645,13 +646,13 @@ namespace ft
 
 			/* ----- element access ----- */
 
-			// T& at(const Key& key)
-			// {
-			// 	Iterator	it = find(key);
-			// 	if (it == end())
-			// 		throw (std::out_of_range("key not found"));
-			// 	return (it->second);
-			// }
+			T& at(const Key& key)
+			{
+				Iterator	it = find(key);
+				if (it == end())
+					throw (std::out_of_range("key not found"));
+				return (it->second);
+			}
 
 			// T& operator[](const Key& key)
 			// {
@@ -984,14 +985,31 @@ namespace ft
 
 
 	// waiting for iterators to be implemented first ...
-	// template <class Key, class T, class Compare, class Alloc>
-	// bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
-	// {
-			// if (lhs.size() != rhs.size())
-			// 	return (false);
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		typename ft::map<Key,T,Compare,Alloc>::const_iterator	lhs_first = lhs.begin();
+		typename ft::map<Key,T,Compare,Alloc>::const_iterator	lhs_last = lhs.end();
+		typename ft::map<Key,T,Compare,Alloc>::const_iterator	rhs_first = rhs.begin();
+		
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (ft::equal(lhs_first, lhs_last, rhs_first));	
 
 			// utiliser ft::equal en faisant attention a la taille
 			// taking iterators from begin() of each and comparing pair.first and pair.second all the way to end() of each
-	// }
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator!=( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs )
+	{
+		return (!(lhs == rhs));
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<( const std::map<Key,T,Compare,Alloc>& lhs, const std::map<Key,T,Compare,Alloc>& rhs )
+	{
+		/// to implement
+	}
 	
 }
