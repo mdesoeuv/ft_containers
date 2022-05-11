@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 15:45:46 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 16:49:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ int	main(void)
 	else
 		std::cout << "false" << std::endl;
 
+	std::cout << std::endl << "< testing equal_range function >" << std::endl;
+	ft::pair<Map::iterator, Map::iterator> pair_range = secondMap.equal_range(3);
+	std::cout << "displaying key of equal_range(3) : " << pair_range.first->first << ", " << pair_range.second->first << std::endl;
+	pair_range = secondMap.equal_range(5);
+	std::cout << "displaying key of equal_range(5) : " << pair_range.first->first << ", " << pair_range.second->first << std::endl;
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();

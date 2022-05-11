@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 16:28:54 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 16:57:14 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -849,15 +849,63 @@ namespace ft
 				return (end());
 			}
 
-			// ft::pair<iterator, iterator> equal_range(const Key& key)
-			// {
-				
-			// }
+			ft::pair<iterator, iterator> equal_range(const Key& key)
+			{
+				Iterator	first_iter = this->end();
+				Iterator	second_iter = this->end();
 
-			// ft::pair<const_iterator, const_iterator> equal_range(const Key& key) const
-			// {
-				
-			// }
+				Iterator cursor = this->begin();
+
+				while (cursor != this->end())
+				{
+					if (!comp(cursor->first, key))
+					{
+						first_iter = cursor;
+						break ;
+					}
+					++cursor;
+				}
+				cursor = this->begin();
+				while (cursor != this->end())
+				{
+					if (comp(key, cursor->first))
+					{
+						second_iter = cursor;
+						break ;
+					}
+					++cursor;
+				}
+				return (ft::make_pair(first_iter, second_iter));
+			}
+
+			ft::pair<const_iterator, const_iterator> equal_range(const Key& key) const
+			{
+				Const_Iterator	first_iter = this->end();
+				Const_Iterator	second_iter = this->end();
+
+				Const_Iterator cursor = this->begin();
+
+				while (cursor != this->end())
+				{
+					if (!comp(cursor->first, key))
+					{
+						first_iter = cursor;
+						break ;
+					}
+					++cursor;
+				}
+				cursor = this->begin();
+				while (cursor != this->end())
+				{
+					if (comp(key, cursor->first))
+					{
+						second_iter = cursor;
+						break ;
+					}
+					++cursor;
+				}
+				return (ft::make_pair(first_iter, second_iter));
+			}
 
 			// iterator	lower_bound(const Key& key)
 			// {
