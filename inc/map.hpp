@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 16:09:17 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 16:13:54 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -834,10 +834,23 @@ namespace ft
 				return (end());
 			}
 
-			// const_iterator	find(const Key& key)
-			// {
+			Const_Iterator	find(const Key& key) const
+			{
+				if (root() == NULL)
+					return (end());
 				
-			// }
+				BaseNode* cursor = root();
+				while (cursor != NULL)
+				{
+					if (comp(key, static_cast<Node*>(cursor)->pair.first))
+						cursor = cursor->left;
+					else if (comp(static_cast<Node*>(cursor)->pair.first, key))
+						cursor = cursor->right;
+					else
+						return (cursor->iter());
+				}
+				return (end());
+			}
 
 			// ft::pair<iterator, iterator> equal_range(const Key& key)
 			// {
