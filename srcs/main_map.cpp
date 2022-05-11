@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 15:11:59 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 15:17:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	main(void)
 	/////// prendre une ref constante sur la map a utiliser
 	// Map::const_iterator	const_it = secondMap.begin();
 	std::cout << std::endl << "testing const iterators with in order display :" << std::endl;
-	for (Map::const_iterator	const_it = secondMap.constbegin(); const_it != secondMap.constend(); ++const_it)
+	for (Map::const_iterator	const_it = secondMap.begin(); const_it != secondMap.end(); ++const_it)
 		std::cout << "key=" << (*const_it).first << ", value=" << const_it->second << std::endl;
 	std::cout << std::endl << "backward display :" << std::endl;
-	for (Map::const_iterator	const_it = secondMap.constend(); const_it != secondMap.constbegin();)
+	for (Map::const_iterator	const_it = secondMap.end(); const_it != secondMap.begin();)
 		std::cout << "key=" << (*--const_it).first << ", value=" << const_it->second << std::endl;
 	// Map::const_iterator	const_itEnd = secondMap.end();
 	
@@ -88,6 +88,8 @@ int	main(void)
 	secondMap.display(secondMap.root(), 0);
 	std::cout << "size : " << secondMap.size() << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
+
+	std::cout << "max_size : " << secondMap.max_size() << std::endl;
 	std::cout << "end of main" << std::endl;
 
 	return (0);

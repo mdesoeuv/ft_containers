@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 13:37:20 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 15:17:01 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,7 +362,7 @@ namespace ft
 
 					Node*	ptr;
 
-					friend class Const_Iterator; // pour pouvoir utiliser le constructeur de Iterator
+					friend class Const_Iterator; // in order to construct Const_Iterator from Iterator in Const_Iterator class
 
 				public:
 
@@ -657,7 +657,7 @@ namespace ft
 				return (it);
 			}
 
-			Const_Iterator constbegin(void) const // problem with name begin()
+			Const_Iterator begin(void) const // problem with name begin()
 			{
 				Const_Iterator	it(const_cast<const BaseNode*>(root()->first()));
 
@@ -671,7 +671,7 @@ namespace ft
 				return (it);
 			}
 
-			Const_Iterator constend(void) const // problem with name end()
+			Const_Iterator end(void) const // problem with name end()
 			{
 				Const_Iterator	it(const_cast<const BaseNode*>(this->end_node()));
 
@@ -716,10 +716,10 @@ namespace ft
 				// return (end() - begin()); really usefull ?
 			}
 
-			// size_type	max_size(void) const
-			// {
-			// 	return (alloc.max_size());
-			// }
+			size_type	max_size(void) const
+			{
+				return (alloc.max_size());
+			}
 
 			/* ----- modifiers ----- */
 
