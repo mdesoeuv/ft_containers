@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 14:45:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 13:40:00 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ namespace ft
 
 			reference_type	operator*(void)
 			{
-				return (*(current - 1));
+				Iterator	temp(current);
+				
+				return (*(--temp));
 			}
 
 			pointer	operator->(void)

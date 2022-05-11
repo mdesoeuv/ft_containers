@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 11:36:51 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 13:40:38 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(void)
 	// Map::iterator	itEnd = secondMap.end();
 	
 	
+	/////// prendre une ref constante sur la map a utiliser
 	// Map::const_iterator	const_it = secondMap.begin();
 	std::cout << std::endl << "testing const iterators with in order display :" << std::endl;
 	for (Map::const_iterator	const_it = secondMap.constbegin(); const_it != secondMap.constend(); ++const_it)
@@ -65,6 +66,17 @@ int	main(void)
 		std::cout << "key=" << (*--const_it).first << ", value=" << const_it->second << std::endl;
 	// Map::const_iterator	const_itEnd = secondMap.end();
 	
+	std::cout << std::endl << "testing reverse iterator decrementation :" << std::endl;
+	for (Map::reverse_iterator it = secondMap.rend(); it != secondMap.rbegin();)
+	{
+		it++;
+		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
+	}
+	
+	std::cout << std::endl << "testing reverse iterator incrementation :" << std::endl;
+	for (Map::reverse_iterator it = secondMap.rbegin(); it != secondMap.rend(); ++it)
+		std::cout << "key=" << (*it).first << ", value=" << it->second << std::endl;
+
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 11:37:34 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/11 13:37:20 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,8 +362,14 @@ namespace ft
 
 					Node*	ptr;
 
+					friend class Const_Iterator; // pour pouvoir utiliser le constructeur de Iterator
+
 				public:
 
+					typedef ft::pair<const Key, T>			value_type;
+					typedef std::ptrdiff_t					difference_type;
+					typedef value_type&						reference_type;
+					typedef	value_type*						pointer;
 					typedef std::bidirectional_iterator_tag iterator_category;
 
 					Iterator()
@@ -481,6 +487,10 @@ namespace ft
 					}
 
 					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
+					{
+					}
+
+					Const_Iterator(const Iterator& other) : ptr(other.ptr)
 					{
 					}
 
@@ -668,25 +678,29 @@ namespace ft
 				return (it);
 			}
 
-			// reverse_iterator	rbegin(void)
-			// {
-					
-			// }
+			reverse_iterator	rbegin(void)
+			{
+				reverse_iterator	it(this->end());
+				return (it);	
+			}
 
-			// const_reverse_iterator	rbegin(void) const
-			// {
-				
-			// }
+			const_reverse_iterator	rbegin(void) const
+			{
+				const_reverse_iterator	it(this->end());
+				return (it);
+			}
 
-			// reverse_iterator	rend(void)
-			// {
-					
-			// }
+			reverse_iterator	rend(void)
+			{
+				reverse_iterator	it(this->begin());
+				return (it);
+			}
 
-			// const_reverse_iterator	rend(void) const
-			// {
-				
-			// }
+			const_reverse_iterator	rend(void) const
+			{
+				const_reverse_iterator	it(this->begin());
+				return (it);
+			}
 
 			/* ----- capacity ----- */
 
