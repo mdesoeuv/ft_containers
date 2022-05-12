@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 15:44:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 16:48:47 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	main(void)
 	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
 	// myMap.insert(ft::make_pair<int, std::string>(30, "lol"));
 	// myMap.insert(ft::make_pair<int, std::string>(42, "lol2"));
-	
+	std::cout << "insertion with operator[], inserting key 3, value HERE" << std::endl;
+	myMap[3] = "HERE";
+	std::cout << myMap[3] << std::endl;
 	myMap.display(myMap.root(), 0);
 	std::cout << "size : " << myMap.size() << std::endl;
 	

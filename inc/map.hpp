@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 15:48:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 16:44:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -757,14 +757,14 @@ namespace ft
 				return (it->second);
 			}
 
-			// T& operator[](const Key& key)
-			// {
-			// 	Iterator	it = find(key);
-			// 	if (it != end())
-			// 		return ((*it).second);
-			// 	else
-			// 		return (insert(value_type(key, T())).first->second);
-			// }
+			T& operator[](const Key& key)
+			{
+				Iterator	it = find(key);
+				if (it != end())
+					return ((*it).second);
+				else
+					return (insert(value_type(key, T())).first->second);
+			}
 
 			/* ----- Iterators ----- */
 
@@ -875,16 +875,20 @@ namespace ft
 					return (ft::make_pair(inserted_node, true));
 			}
 
-			// iterator insert( iterator hint, const value_type& value ) // wtf ??
+			// iterator insert( iterator hint, const value_type& value ) // wtf how to update balance factor if insertion from child node  ??
 			// {
-				
+			// 	(void)hint;
+			// 	return (insert(value).first);
 			// }
 			
-			// template <class InputIt>
-			// void insert(InputIt first, InputIt last)
-			// {
-				
-			// }
+			template <class InputIt>
+			void insert(InputIt first, InputIt last)
+			{
+				for (; first != last; ++first)
+				{
+					insert(*first);
+				}
+			}
 
 			void	erase(iterator pos)
 			{
