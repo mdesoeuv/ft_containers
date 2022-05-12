@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 09:56:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 10:16:47 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(void)
 	myMap.insert(ft::make_pair<int, std::string>(15, "second"));
 	myMap.insert(ft::make_pair<int, std::string>(5, "third"));
 	myMap.insert(ft::make_pair<int, std::string>(0, "fourth"));
+	// myMap.insert(ft::make_pair<int, std::string>(30, "lol"));
+	// myMap.insert(ft::make_pair<int, std::string>(42, "lol2"));
 	
 	myMap.display(myMap.root(), 0);
 	std::cout << "size : " << myMap.size() << std::endl;

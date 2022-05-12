@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 09:55:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 10:17:09 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ namespace ft
 				{
 					if (comp(pair.first, static_cast<Node*>(cursor)->pair.first))
 					{
+						cursor->balance_factor += 1;
 						if (cursor->left == NULL)
 						{
 							cursor->left = create(pair, cursor);
@@ -133,6 +134,7 @@ namespace ft
 					}
 					else if (comp(static_cast<Node*>(cursor)->pair.first, pair.first))
 					{
+						cursor->balance_factor -= 1;
 						if (cursor->right == NULL)
 						{
 							cursor->right = create(pair, cursor);
@@ -143,7 +145,6 @@ namespace ft
 						{
 							cursor = cursor->right;
 						}
-						
 					}
 					else
 						break;
@@ -191,7 +192,7 @@ namespace ft
 				}
 				Node*	node = static_cast<Node*>(base_node);
 				ft_print_tab(level);
-				std::cout << "node : " << node->pair.first << ", " << node->pair.second << std::endl;
+				std::cout << "node : " << "BF : " << node->balance_factor << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
 				display(node->left, level + 1);
@@ -787,6 +788,16 @@ namespace ft
 			// {
 				
 			// }
+			
+			// void erase( iterator first, iterator last )
+			// {
+
+			// }
+
+			// size_type erase( const Key& key )
+			// {
+
+			// }
 
 			void	swap(map& other)
 			{
@@ -993,8 +1004,6 @@ namespace ft
 			
 	};
 
-
-	// waiting for iterators to be implemented first ...
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
 	{
