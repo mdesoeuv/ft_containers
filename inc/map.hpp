@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 14:59:07 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 15:39:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,13 @@ namespace ft
 				return &meta;
 			}
 
+			int	getBalanceFactor(BaseNode* node)
+			{
+				if (node == NULL)
+					return (0);
+				return (node->getHeight(node->left) - node->getHeight(node->right));
+			}
+
 
 			BaseNode*	create(const value_type& pair, BaseNode* parent)
 			{
@@ -102,58 +109,70 @@ namespace ft
 				}
 				catch(...)
 				{
+					// throw ;
 					return (NULL);
 				}
 				_size++;
 				return (static_cast<BaseNode*>(new_node));			
 			}
 
-			BaseNode*	deleteBaseNode(BaseNode* node)
+			BaseNode*	deleteBaseNode(BaseNode* node, const Key& key )
 			{
 				BaseNode*	temp = NULL;
 
 				if (node == NULL)
 					return (NULL);
-				if (node->left == NULL || node->right == NULL)
-				{
-					if (node->left == NULL && node->right == NULL)
-					{
-						temp = node;
-						if (node == node->parent->left)
-							node->parent->left = NULL;
-						else if (node == node->parent->right)
-							node->parent->right = NULL;
-						
-						node = NULL;
-					}
-					else if (node->left == NULL)
-					{
-						temp = node->right;
-						BaseNode* saveParent = node->parent;
-						this->alloc.destroy(static_cast<Node*>(node));
-						this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
-					}
-					else if (node->right == NULL)
-					{
-						temp = node->left;
-						BaseNode* saveParent = node->parent;
-						this->alloc.destroy(static_cast<Node*>(node));
-						this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
-					}
-					this->alloc.destroy(static_cast<Node*>(temp));
-					this->alloc.deallocate(static_cast<Node*>(temp), 1);
-					_size--;
-				}
+				
+				if (comp(key, static_cast<Node*>(node)->pair.first))
+						node->left = deleteBaseNode(node->left, key);
+				else if (comp(static_cast<Node*>(node)->pair.first, key))
+						node->right = deleteBaseNode(node->right, key);
 				else
 				{
-					temp = node->right->leftmost();
-					BaseNode* saveParent = node->parent;
-					this->alloc.destroy(static_cast<Node*>(node));
-					this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
-					node->right = deleteBaseNode(node->right);
+					if (node->left == NULL || node->right == NULL)
+					{
+						if (node->left == NULL && node->right == NULL)
+						{
+							temp = node;
+							if (node == node->parent->left)
+								node->parent->left = NULL;
+							else if (node == node->parent->right)
+								node->parent->right = NULL;
+							
+							node = NULL;
+						}
+						else if (node->left == NULL)
+						{
+							temp = node->right;
+							BaseNode*	saveParent = node->parent;
+							this->alloc.destroy(static_cast<Node*>(node));
+							this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
+						}
+						else if (node->right == NULL)
+						{
+							temp = node->left;
+							BaseNode*	saveParent = node->parent;
+							this->alloc.destroy(static_cast<Node*>(node));
+							this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
+						}
+						this->alloc.destroy(static_cast<Node*>(temp));
+						this->alloc.deallocate(static_cast<Node*>(temp), 1);
+						_size--;
+					}
+					else
+					{
+						temp = node->right->leftmost();
+						BaseNode*	saveParent = node->parent;
+						this->alloc.destroy(static_cast<Node*>(node));
+						this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
+						node->right = deleteBaseNode(node->right, key);
+					}
 				}
 				if (node == NULL)
 					return (node);
+					
+				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
+									
 				// equilibrage a faire
 				
 				return (node);
@@ -178,7 +197,7 @@ namespace ft
 			}
 
 
-			// BaseNode*	insert(value_type pair)
+			// BaseNode*	non_recursive_insert(value_type pair)
 			// {
 			// 	if (root() == NULL)
 			// 	{
@@ -264,7 +283,7 @@ namespace ft
 				}
 				Node*	node = static_cast<Node*>(base_node);
 				ft_print_tab(level);
-				std::cout << "node : " << "BF : " << node->height << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
+				std::cout << "node : " << "BF : " << getBalanceFactor(node) << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
 				display(node->left, level + 1);
@@ -868,9 +887,9 @@ namespace ft
 
 			void	erase(iterator pos)
 			{
-				BaseNode*	node = static_cast<BaseNode*>(pos.getNode());
+				Node*	node = pos.getNode();
 
-				deleteBaseNode(node);
+				deleteBaseNode(root(), node->pair.first);
 			}
 			
 			// void erase( iterator first, iterator last )
@@ -883,7 +902,7 @@ namespace ft
 				Iterator	item = find(key);
 				if (item == this->end())
 					return (0);
-				erase(item);
+				deleteBaseNode(root(), key);
 				return (1);
 			}
 
