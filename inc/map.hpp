@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 12:32:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 14:59:07 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 namespace ft
 {
+	int	max(int a, int b);
+
 	template<
     class Key,
     class T,
@@ -102,6 +104,7 @@ namespace ft
 				{
 					return (NULL);
 				}
+				_size++;
 				return (static_cast<BaseNode*>(new_node));			
 			}
 
@@ -139,6 +142,7 @@ namespace ft
 					}
 					this->alloc.destroy(static_cast<Node*>(temp));
 					this->alloc.deallocate(static_cast<Node*>(temp), 1);
+					_size--;
 				}
 				else
 				{
@@ -155,52 +159,70 @@ namespace ft
 				return (node);
 			}
 
-
-			BaseNode*	insert(value_type pair)
+			BaseNode*	insert(BaseNode* node, BaseNode* parent, value_type pair)
 			{
-				if (root() == NULL)
-				{
-					root() = create(pair, &meta);
-					_size++;
-					return (root());
-				}
-				BaseNode* cursor = root();
-				while (true)
-				{
-					if (comp(pair.first, static_cast<Node*>(cursor)->pair.first))
-					{
-						cursor->balance_factor += 1;
-						if (cursor->left == NULL)
-						{
-							cursor->left = create(pair, cursor);
-							_size++;
-							break ;
-						}
-						else
-						{
-							cursor = cursor->left;
-						}
-						
-					}
-					else if (comp(static_cast<Node*>(cursor)->pair.first, pair.first))
-					{
-						cursor->balance_factor -= 1;
-						if (cursor->right == NULL)
-						{
-							cursor->right = create(pair, cursor);
-							_size++;
-							break ;
-						}
-						else
-						{
-							cursor = cursor->right;
-						}
-					}
-					else
-						break;
-				}
-				return (cursor);
+				if (node == NULL)
+					return (create(pair, parent));
+				if (comp(pair.first, static_cast<Node*>(node)->pair.first))
+					node->left = insert(node->left, node, pair);
+				else if (comp(static_cast<Node*>(node)->pair.first, pair.first))
+					node->right = insert(node->right, node, pair);
+				else
+					return (node);
+
+				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
+				
+				// balance
+
+				return (node);
 			}
+
+
+			// BaseNode*	insert(value_type pair)
+			// {
+			// 	if (root() == NULL)
+			// 	{
+			// 		root() = create(pair, &meta);
+			// 		_size++;
+			// 		return (root());
+			// 	}
+			// 	BaseNode* cursor = root();
+			// 	while (true)
+			// 	{
+			// 		if (comp(pair.first, static_cast<Node*>(cursor)->pair.first))
+			// 		{
+			// 			cursor->height += 1;
+			// 			if (cursor->left == NULL)
+			// 			{
+			// 				cursor->left = create(pair, cursor);
+			// 				_size++;
+			// 				break ;
+			// 			}
+			// 			else
+			// 			{
+			// 				cursor = cursor->left;
+			// 			}
+						
+			// 		}
+			// 		else if (comp(static_cast<Node*>(cursor)->pair.first, pair.first))
+			// 		{
+			// 			cursor->height -= 1;
+			// 			if (cursor->right == NULL)
+			// 			{
+			// 				cursor->right = create(pair, cursor);
+			// 				_size++;
+			// 				break ;
+			// 			}
+			// 			else
+			// 			{
+			// 				cursor = cursor->right;
+			// 			}
+			// 		}
+			// 		else
+			// 			break;
+			// 	}
+			// 	return (cursor);
+			// }
 		
 			void	clear(BaseNode* node)
 			{
@@ -242,7 +264,7 @@ namespace ft
 				}
 				Node*	node = static_cast<Node*>(base_node);
 				ft_print_tab(level);
-				std::cout << "node : " << "BF : " << node->balance_factor << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
+				std::cout << "node : " << "BF : " << node->height << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
 				display(node->left, level + 1);
@@ -261,24 +283,32 @@ namespace ft
 				BaseNode*	left;
 				BaseNode*	right;
 				BaseNode*	parent;
-				int			balance_factor;
+				int			height;
 
 				public:
 
-				BaseNode(void) : left(NULL), right(NULL), parent(NULL), balance_factor(0)
+				BaseNode(void) : left(NULL), right(NULL), parent(NULL), height(1)
 				{
 				}
 				
-				BaseNode(BaseNode* parent) : left(NULL), right(NULL), parent(parent), balance_factor(0)
+				BaseNode(BaseNode* parent) : left(NULL), right(NULL), parent(parent), height(1)
 				{
 				}
 				
-				BaseNode(const BaseNode& other) : left(other.left), right(other.right), parent(other.parent), balance_factor(other.balance_factor)
+				// a voir, constructeur normalement inutile, passer en private ?
+				BaseNode(const BaseNode& other) : left(other.left), right(other.right), parent(other.parent), height(other.height)
 				{
 				}
 				
 				~BaseNode(void)
 				{}
+
+				int	getHeight(BaseNode* node)
+				{
+					if (node == NULL)
+						return (0);
+					return (node->height);
+				}
 
 				BaseNode*	leftmost()
 				{
@@ -808,22 +838,22 @@ namespace ft
 				_size = 0;
 			}
 			
-			// ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
-			// {
-			// 	TreeNode* node = root;
-		
-			// 	while (node != NULL)
-			// 	{
-			// 		if (value.first == node->pr.first)
-			// 			return (ft::pair(iterator(node), false));
-			// 		if (value.first < node->pr.first)
-			// 			node = node->left;
-			// 		else
-			// 			node = node->right;
-			// 	}
-			// 	node = node->create(value);
-			// 	return (ft::pair(iterator(node), true));
-			// }
+			ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
+			{
+				size_type	old_size = size();
+				BaseNode*	inserted_node;
+				
+				if (root() == NULL)
+				{
+					root() = create(value, &meta);
+					return (ft::make_pair(Iterator(root()), true));
+				}
+				inserted_node = insert(root(), &meta, value);
+				if (old_size == size())
+					return (ft::make_pair(inserted_node->iter(), false));
+				else
+					return (ft::make_pair(inserted_node->iter(), true));
+			}
 
 			// iterator insert( iterator hint, const value_type& value ) // wtf ??
 			// {
@@ -1112,5 +1142,12 @@ namespace ft
 	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
 		return (!(lhs < rhs));
+	}
+
+	int	max(int a, int b)
+	{
+		if (a > b)
+			return (a);
+		return (b);
 	}
 }

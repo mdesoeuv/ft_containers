@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 12:33:22 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 15:00:16 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,13 @@ int	main(void)
 	std::cout << "erasing the node key=5, value=ZOB" << std::endl;
 	secondMap.erase(5);
 	secondMap.display(secondMap.root(), 0);
+	std::cout << "size : " << secondMap.size() << std::endl;
+
 	std::cout << std::endl << "erasing the iter=begin()" << std::endl;
 	secondMap.erase(secondMap.begin());
 	secondMap.display(secondMap.root(), 0);
+	std::cout << "size : " << secondMap.size() << std::endl;
+
 	std::cout << std::endl << "< testing operator== >" << std::endl;
 	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
 	std::cout << "map 1 != map 2 : " << (myMap != secondMap) << std::endl;
