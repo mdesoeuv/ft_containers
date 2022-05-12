@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 15:39:59 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 15:48:21 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -860,18 +860,19 @@ namespace ft
 			ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
 			{
 				size_type	old_size = size();
-				BaseNode*	inserted_node;
+				Iterator	inserted_node;
 				
 				if (root() == NULL)
 				{
 					root() = create(value, &meta);
 					return (ft::make_pair(Iterator(root()), true));
 				}
-				inserted_node = insert(root(), &meta, value);
+				insert(root(), &meta, value);
+				inserted_node = find(value.first);
 				if (old_size == size())
-					return (ft::make_pair(inserted_node->iter(), false));
+					return (ft::make_pair(inserted_node, false));
 				else
-					return (ft::make_pair(inserted_node->iter(), true));
+					return (ft::make_pair(inserted_node, true));
 			}
 
 			// iterator insert( iterator hint, const value_type& value ) // wtf ??

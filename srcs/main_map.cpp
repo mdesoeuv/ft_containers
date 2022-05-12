@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 15:00:16 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 15:44:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ int	main(void)
 	myMap.insert(ft::make_pair<int, std::string>(10, "first"));
 	myMap.insert(ft::make_pair<int, std::string>(15, "second"));
 	myMap.insert(ft::make_pair<int, std::string>(5, "third"));
-	myMap.insert(ft::make_pair<int, std::string>(0, "fourth"));
+	ft::pair<Map::iterator, bool> insertion_result;
+	insertion_result = myMap.insert(ft::make_pair<int, std::string>(0, "fourth"));
+	std::cout << "insertion success of non double element : " << insertion_result.second << std::endl;
+	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
+	insertion_result = myMap.insert(ft::make_pair<int, std::string>(0, "fourth"));
+	std::cout << "insertion success of non double element : " << insertion_result.second << std::endl;
+	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
 	// myMap.insert(ft::make_pair<int, std::string>(30, "lol"));
 	// myMap.insert(ft::make_pair<int, std::string>(42, "lol2"));
 	
