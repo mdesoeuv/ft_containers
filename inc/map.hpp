@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 16:44:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 17:33:04 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,68 @@ namespace ft
 				return (node->getHeight(node->left) - node->getHeight(node->right));
 			}
 
+			BaseNode*	leftRotation(BaseNode* node)
+			{
+				BaseNode*	y = node->right;
+				BaseNode*	t2 = y->left;
+
+				y->parent = node->parent;
+				node->parent = y;
+				t2->parent = node;
+
+				node->right = t2;
+				y->left = node;
+				
+				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
+				y->height = 1 + ft::max(node->getHeight(y->left), node->getHeight(y->right));
+
+				return (y);
+			}
+
+			BaseNode*	rightRotation(BaseNode* node)
+			{
+				BaseNode*	y = node->left;
+				BaseNode*	t3 = y->right;
+
+				y->parent = node->parent;
+				node->parent = y;
+				t3->parent = node;
+				
+				node->left = t3;
+				y->right = node;
+
+				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
+				y->height = 1 + ft::max(node->getHeight(y->left), node->getHeight(y->right));
+
+				return (y);
+			}
+
+
+			BaseNode*	balanceTree(BaseNode* node)
+			{
+				int	balance = getBalanceFactor(node);
+
+				if (balance == 2 && getBalanceFactor(node->left) == 1)
+					return (rightRotation(node));
+
+				if (balance == -2 && getBalanceFactor(node->right) == -1)
+					return (leftRotation(node));
+
+				if (balance == 2 && getBalanceFactor(node->left) == -1)
+				{
+					node->left = leftRotation(node->left);
+					return (rightRotation(node));
+				}
+
+				if (balance == -2 && getBalanceFactor(node->right) == 1)
+				{
+					node->right = rightRotation(node->right);
+					return (leftRotation(node));
+				}
+
+				return (node);
+
+			}
 
 			BaseNode*	create(const value_type& pair, BaseNode* parent)
 			{
@@ -174,6 +236,8 @@ namespace ft
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 									
 				// equilibrage a faire
+
+				balanceTree(node);
 				
 				return (node);
 			}
@@ -192,6 +256,7 @@ namespace ft
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 				
 				// balance
+				balanceTree(node);
 
 				return (node);
 			}
