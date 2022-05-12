@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 17:33:04 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 17:36:13 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,9 +256,7 @@ namespace ft
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 				
 				// balance
-				balanceTree(node);
-
-				return (node);
+				return (balanceTree(node));
 			}
 
 
