@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 17:43:58 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 09:36:29 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,13 @@ int	main(void)
 	std::cout << "map 1 != map 2 : " << (myMap != secondMap) << std::endl;
 	std::cout << "map 2 == map 2 : " << (secondMap == secondMap) << std::endl;
 	std::cout << "map 2 != map 2 : " << (secondMap != secondMap) << std::endl;
+	std::cout << "map 1 < map 2 : " << (myMap < secondMap) << std::endl;
+	std::cout << "map 2 < map 1 : " << (secondMap < myMap) << std::endl;
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
 	secondMap.clear();
+	std::cout << "map 1 < map 2 : " << (myMap < secondMap) << std::endl;
+	std::cout << "map 2 < map 1 : " << (secondMap < myMap) << std::endl;
 	std::cout << "displaying first map :" << std::endl;
 	myMap.display(myMap.root(), 0);
 	std::cout << "size : " << myMap.size() << std::endl;
@@ -136,6 +140,7 @@ int	main(void)
 	secondMap.display(secondMap.root(), 0);
 	std::cout << "size : " << secondMap.size() << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
+	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
 
 	std::cout << "max_size : " << secondMap.max_size() << std::endl;
 	std::cout << "end of main" << std::endl;

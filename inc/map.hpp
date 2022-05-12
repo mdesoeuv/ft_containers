@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 17:44:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/12 09:48:16 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "pair.hpp"
 #include "equal.hpp"
+#include "lexicographical_compare.hpp"
 #include "Reverse_Iterator.hpp"
 
 namespace ft
@@ -667,14 +668,23 @@ namespace ft
 
 			Iterator begin(void)
 			{
-				Iterator	it(root()->first());
+				Iterator	it;
 
+				if (root() == NULL)
+					it = Iterator(&meta);
+				else
+					it = Iterator(root()->first());
 				return (it);
 			}
 
 			Const_Iterator begin(void) const
 			{
-				Const_Iterator	it(const_cast<const BaseNode*>(root()->first()));
+				Const_Iterator	it;
+
+				if (root() == NULL)
+					it = Const_Iterator(&meta);
+				else
+					it = Const_Iterator(const_cast<const BaseNode*>(root()->first()));
 
 				return (it);
 			}
@@ -994,10 +1004,11 @@ namespace ft
 		
 		if (lhs.size() != rhs.size())
 			return (false);
+		if (lhs.size() == 0 && rhs.size() == 0)
+		{
+			return (true);
+		}
 		return (ft::equal(lhs_first, lhs_last, rhs_first));	
-
-			// utiliser ft::equal en faisant attention a la taille
-			// taking iterators from begin() of each and comparing pair.first and pair.second all the way to end() of each
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
@@ -1006,10 +1017,16 @@ namespace ft
 		return (!(lhs == rhs));
 	}
 
-	// template< class Key, class T, class Compare, class Alloc >
-	// bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
-	// {
-	// 	/// to implement
-	// }
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
+	{
+		if (lhs.size() == 0 && rhs.size() == 0)
+			return (false);
+		if (lhs.size() == 0 && rhs.size() != 0)
+			return (true);
+		else if (lhs.size() != 0 && rhs.size() == 0)
+			return (false);
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
 	
 }
