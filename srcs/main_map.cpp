@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 17:37:11 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 10:27:13 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,37 @@ int	main(void)
 {
 	typedef ft::map<int, std::string> Map;
 	Map	myMap;
-	myMap.insert(ft::make_pair<int, std::string>(10, "first"));
-	myMap.insert(ft::make_pair<int, std::string>(15, "second"));
-	myMap.insert(ft::make_pair<int, std::string>(5, "third"));
+	myMap.insert(ft::make_pair(10, "first"));
+	myMap.insert(ft::make_pair(15, "second"));
+	myMap.insert(ft::make_pair(5, "third"));
 	ft::pair<Map::iterator, bool> insertion_result;
-	insertion_result = myMap.insert(ft::make_pair<int, std::string>(0, "fourth"));
+	insertion_result = myMap.insert(ft::make_pair(0, "fourth"));
 	std::cout << "insertion success of non double element : " << insertion_result.second << std::endl;
 	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
-	insertion_result = myMap.insert(ft::make_pair<int, std::string>(0, "fourth"));
+	insertion_result = myMap.insert(ft::make_pair(0, "fourth"));
 	std::cout << "insertion success of non double element : " << insertion_result.second << std::endl;
 	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
-	// myMap.insert(ft::make_pair<int, std::string>(30, "lol"));
-	// myMap.insert(ft::make_pair<int, std::string>(42, "lol2"));
+	// myMap.insert(ft::make_pair(30, "lol"));
+	// myMap.insert(ft::make_pair(42, "lol2"));
 	std::cout << "insertion with operator[], inserting key 3, value HERE" << std::endl;
 	myMap[3] = "HERE";
 	std::cout << myMap[3] << std::endl;
 	myMap.display(myMap.root(), 0);
 	std::cout << "size : " << myMap.size() << std::endl;
+	insertion_result = myMap.insert(ft::make_pair(-12, "lol"));
+	std::cout << "insertion success : " << insertion_result.second << std::endl;
+	insertion_result = myMap.insert(ft::make_pair(-15, "third"));
+	std::cout << "insertion success : " << insertion_result.second << std::endl;
+	insertion_result = myMap.insert(ft::make_pair(-25, "third"));
+	std::cout << "insertion success : " << insertion_result.second << std::endl;
+	insertion_result = myMap.insert(ft::make_pair(-35, "third"));
+	std::cout << "insertion success : " << insertion_result.second << std::endl;
+	myMap.display(myMap.root(), 0);
+	std::cout << "size : " << myMap.size() << std::endl;
 	
 	std::cout << std::endl << "creating a second map :" << std::endl;
 	Map secondMap;
-	secondMap.insert(ft::make_pair<int, std::string>(-1000, "minus thousand"));
+	secondMap.insert(ft::make_pair(-1000, "minus thousand"));
 	secondMap.display(secondMap.root(), 0);
 	std::cout << "size : " << secondMap.size() << std::endl;
 

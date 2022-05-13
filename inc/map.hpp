@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/12 17:36:13 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 10:45:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,24 @@ namespace ft
 
 			BaseNode*	leftRotation(BaseNode* node)
 			{
+				std::cout << "left rotation" << std::endl;
+				
+				if (node == NULL)
+					return (node);
+				
 				BaseNode*	y = node->right;
 				BaseNode*	t2 = y->left;
 
-				y->parent = node->parent;
-				node->parent = y;
-				t2->parent = node;
+				if (node == root())
+					root() = y;
 
 				node->right = t2;
 				y->left = node;
+
+				y->parent = node->parent;
+				if (t2)
+					t2->parent = node;
+				node->parent = y;
 				
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 				y->height = 1 + ft::max(node->getHeight(y->left), node->getHeight(y->right));
@@ -117,15 +126,23 @@ namespace ft
 
 			BaseNode*	rightRotation(BaseNode* node)
 			{
+				std::cout << "right rotation" << std::endl;
+				
+				if (node == NULL)
+					return (node);
+				
 				BaseNode*	y = node->left;
 				BaseNode*	t3 = y->right;
-
-				y->parent = node->parent;
-				node->parent = y;
-				t3->parent = node;
+				if (node == root())
+					root() = y;
 				
+				y->parent = node->parent;
 				node->left = t3;
+				if (t3)
+					t3->parent = node;
 				y->right = node;
+
+				node->parent = y;
 
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 				y->height = 1 + ft::max(node->getHeight(y->left), node->getHeight(y->right));
@@ -136,10 +153,14 @@ namespace ft
 
 			BaseNode*	balanceTree(BaseNode* node)
 			{
+				std::cout << "balancing tree" << std::endl;
 				int	balance = getBalanceFactor(node);
 
 				if (balance == 2 && getBalanceFactor(node->left) == 1)
+				{
+					std::cout << "infernal rotation" << std::endl;
 					return (rightRotation(node));
+				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == -1)
 					return (leftRotation(node));
@@ -152,6 +173,7 @@ namespace ft
 
 				if (balance == -2 && getBalanceFactor(node->right) == 1)
 				{
+					std::cout << "RL" << std::endl;
 					node->right = rightRotation(node->right);
 					return (leftRotation(node));
 				}
@@ -938,11 +960,13 @@ namespace ft
 					return (ft::make_pair(inserted_node, true));
 			}
 
-			// iterator insert( iterator hint, const value_type& value ) // wtf how to update balance factor if insertion from child node  ??
-			// {
-			// 	(void)hint;
-			// 	return (insert(value).first);
-			// }
+			iterator insert( iterator hint, const value_type& value ) // wtf how to update balance factor if insertion from child node  ??
+			{
+				(void)hint;
+
+				// verifier que le noeud peut etre inserer 
+				return (insert(value).first);
+			}
 			
 			template <class InputIt>
 			void insert(InputIt first, InputIt last)
