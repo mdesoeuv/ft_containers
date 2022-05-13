@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 15:53:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 17:27:48 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,8 @@ namespace ft
 					node->parent->right = new_node;
 			}
 
+
+/////////////////////////// redo by moving node pointers instead of destroy objects
 			BaseNode*	deleteBaseNode(BaseNode* node, const Key& key )
 			{
 				BaseNode*	temp = NULL;
@@ -230,16 +232,21 @@ namespace ft
 				if (node == NULL || node == root()->parent)
 					return (NULL);
 				
+				std::cout << "deleting" << std::endl;
 				if (comp(key, static_cast<Node*>(node)->pair.first))
 						node->left = deleteBaseNode(node->left, key);
 				else if (comp(static_cast<Node*>(node)->pair.first, key))
 						node->right = deleteBaseNode(node->right, key);
 				else
 				{
+					std::cout << "deleting 2" << std::endl;
 					if (node->left == NULL || node->right == NULL)
 					{
+						std::cout << "deleting 3" << std::endl;
 						if (node->left == NULL && node->right == NULL)
 						{
+							std::cout << "deleting 4" << std::endl;
+							std::cout << static_cast<Node*>(node)->pair.first << std::endl;
 							temp = node;
 							if (node == node->parent->left)
 								node->parent->left = NULL;
@@ -282,14 +289,19 @@ namespace ft
 						node->right = deleteBaseNode(node->right, key);
 					}
 				}
+				std::cout << "deleting 5" << std::endl;
 				if (node == NULL)
 					return (node);
+				std::cout << "deleting 6" << std::endl;
+				std::cout << static_cast<Node*>(node)->pair.first << std::endl;
 
+				
 					
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 									
 				balanceTree(node);
 				
+				std::cout << "deleting 7" << std::endl;
 				return (node);
 			}
 
@@ -470,7 +482,7 @@ namespace ft
 				BaseNode*	next()
 				{
 					BaseNode* node = this;
-
+					
 					if (node->right)
 						return (node->right->leftmost());
 
@@ -968,10 +980,15 @@ namespace ft
 			
 			void erase( iterator first, iterator last )
 			{
-				for (; first != last; ++first)
+				iterator temp = first;
+				for (; first != last;)
 				{
-					deleteBaseNode(root(), (*first).first);
+					++temp;
+					std::cout << "erasing iter with key : " << (*first).first << std::endl;
+					deleteBaseNode(this->root(), (*first).first);
+					first = temp;
 				}
+				std::cout << "lol" << std::endl;
 
 			}
 

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 15:53:42 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 17:00:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,11 +185,16 @@ int	main(void)
 	std::cout << std::endl;
 	fourthMap.display(); 
 	std::cout << std::endl << "removing root key: " << std::endl;
-	fourthMap.erase(0); 
-	fourthMap.display(); 
+	fourthMap.erase(0);
+	fourthMap.display();
 
-	// std::cout << "erasing with iterators" << std::endl;
-	// fourthMap.erase(fourthMap.begin(), fourthMap.end());
+	std::cout << std::endl << "erasing with iterators" << std::endl;
+	std::cout << "begin : " << fourthMap.begin()->first << ", end : " << fourthMap.rbegin()->first << std::endl;
+	fourthMap.erase(fourthMap.begin(), --fourthMap.end());
+	std::cout << "display :" << std::endl;
+	fourthMap.display();
+	
+
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
