@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 12:23:58 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 15:53:15 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,11 @@ namespace ft
 				BaseNode*	y = node->right;
 				BaseNode*	t2 = y->left;
 
-				if (node == root())
-					root() = y;
-
 				node->right = t2;
 				y->left = node;
+
+				if (node == root())
+					root() = y;
 
 				y->parent = node->parent;
 				if (t2)
@@ -162,31 +162,30 @@ namespace ft
 
 			BaseNode*	balanceTree(BaseNode* node)
 			{
-				// std::cout << "balancing tree" << std::endl;
 				int	balance = getBalanceFactor(node);
 
 				if (balance == 2 && getBalanceFactor(node->left) == 1)
 				{
-					// std::cout << "LL imbalance" << std::endl;
+					std::cout << "LL imbalance" << std::endl;
 					return (rightRotation(node));
 				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == -1)
 				{
-					// std::cout << "RR imbalance" << std::endl;
+					std::cout << "RR imbalance" << std::endl;
 					return (leftRotation(node));
 				}
 
 				if (balance == 2 && getBalanceFactor(node->left) == -1)
 				{
-					// std::cout << "LR imbalance" << std::endl;
+					std::cout << "LR imbalance" << std::endl;
 					node->left = leftRotation(node->left);
 					return (rightRotation(node));
 				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == 1)
 				{
-					// std::cout << "RL imbalance" << std::endl;
+					std::cout << "RL imbalance" << std::endl;
 					node->right = rightRotation(node->right);
 					return (leftRotation(node));
 				}
@@ -213,11 +212,22 @@ namespace ft
 				return (static_cast<BaseNode*>(new_node));			
 			}
 
+ ////////////////////////////
+			void	assign_child(BaseNode* node, BaseNode* new_node)
+			{
+				if (node == NULL)
+					return ;
+				if (node == node->parent->left)
+					node->parent->left = new_node;
+				else if (node == node->parent->right)
+					node->parent->right = new_node;
+			}
+
 			BaseNode*	deleteBaseNode(BaseNode* node, const Key& key )
 			{
 				BaseNode*	temp = NULL;
 
-				if (node == NULL)
+				if (node == NULL || node == root()->parent)
 					return (NULL);
 				
 				if (comp(key, static_cast<Node*>(node)->pair.first))
@@ -241,6 +251,7 @@ namespace ft
 						}
 						else if (node->left == NULL)
 						{
+	
 							temp = node->right;
 							BaseNode*	saveParent = node->parent;
 							this->alloc.destroy(static_cast<Node*>(node));
@@ -255,21 +266,25 @@ namespace ft
 						}
 						this->alloc.destroy(static_cast<Node*>(temp));
 						this->alloc.deallocate(static_cast<Node*>(temp), 1);
+						temp = NULL;
 						_size--;
 					}
 					else
 					{
 						temp = node->right->leftmost();
 						BaseNode*	saveParent = node->parent;
+						BaseNode*	saveLeft = node->left;
+						BaseNode*	saveRight = node->right;
 						this->alloc.destroy(static_cast<Node*>(node));
 						this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
+						node->left = saveLeft;
+						node->right = saveRight;
 						node->right = deleteBaseNode(node->right, key);
 					}
-					// if (node == root())
-					// 	root() = node_remplacant;
 				}
 				if (node == NULL)
 					return (node);
+
 					
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 									
@@ -955,7 +970,6 @@ namespace ft
 			{
 				for (; first != last; ++first)
 				{
-					std::cout << "lol" << std::endl;
 					deleteBaseNode(root(), (*first).first);
 				}
 

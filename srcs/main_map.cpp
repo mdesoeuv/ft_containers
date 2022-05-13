@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 12:16:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 15:53:42 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,10 @@ int	main(void)
 	thirdMap.display();
 	std::cout << std::endl;
 	fourthMap.display(); 
-	std::cout << "removing root key: " << std::endl;
+	std::cout << std::endl << "removing root key: " << std::endl;
 	fourthMap.erase(0); 
 	fourthMap.display(); 
+
 	// std::cout << "erasing with iterators" << std::endl;
 	// fourthMap.erase(fourthMap.begin(), fourthMap.end());
 	
