@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 10:27:13 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 11:56:43 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(void)
 	std::cout << "insertion with operator[], inserting key 3, value HERE" << std::endl;
 	myMap[3] = "HERE";
 	std::cout << myMap[3] << std::endl;
-	myMap.display(myMap.root(), 0);
+	myMap.display();
 	std::cout << "size : " << myMap.size() << std::endl;
 	insertion_result = myMap.insert(ft::make_pair(-12, "lol"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
@@ -44,22 +44,22 @@ int	main(void)
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
 	insertion_result = myMap.insert(ft::make_pair(-35, "third"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
-	myMap.display(myMap.root(), 0);
+	myMap.display();
 	std::cout << "size : " << myMap.size() << std::endl;
 	
 	std::cout << std::endl << "creating a second map :" << std::endl;
 	Map secondMap;
 	secondMap.insert(ft::make_pair(-1000, "minus thousand"));
-	secondMap.display(secondMap.root(), 0);
+	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
 
 	std::cout << std::endl << "--- swaping maps ---" << std::endl;
 	myMap.swap(secondMap);
 	std::cout << "displaying first map :" << std::endl;
-	myMap.display(myMap.root(), 0);
+	myMap.display();
 	std::cout << "size : " << myMap.size() << std::endl;
 	std::cout << std::endl << "displaying second map :" << std::endl;
-	secondMap.display(secondMap.root(), 0);
+	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
 
 	std::cout << std::endl << "searching for element with key = -1000 in first map : " <<  myMap.count(-1000) << std::endl;
@@ -127,7 +127,7 @@ int	main(void)
 		std::cout << "end()" << std::endl;
 	std::cout << "testing if references from iterators are valid are writable : look for the ZOB" << std::endl;
 	pair_range.first->second = "ZOB";
-	secondMap.display(secondMap.root(), 0);
+	secondMap.display();
 
 	std::cout << std::endl << "< testing at(key) function >" << std::endl;
 	std::cout << "value at key = 5 is : " << secondMap.at(5) << std::endl;
@@ -144,12 +144,12 @@ int	main(void)
 	std::cout << std::endl << "< testing erase functions >" << std::endl;
 	std::cout << "erasing the node key=5, value=ZOB" << std::endl;
 	secondMap.erase(5);
-	secondMap.display(secondMap.root(), 0);
+	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
 
 	std::cout << std::endl << "erasing the iter=begin()" << std::endl;
 	secondMap.erase(secondMap.begin());
-	secondMap.display(secondMap.root(), 0);
+	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
 
 	std::cout << std::endl << "< testing operator== >" << std::endl;
@@ -163,6 +163,28 @@ int	main(void)
 	std::cout << "map 1 <= map 1 : " << (myMap <= myMap) << std::endl;
 	std::cout << "map 1 >= map 2 : " << (myMap >= secondMap) << std::endl;
 	std::cout << "map 1 >= map 1 : " << (myMap <= myMap) << std::endl;
+	
+	std::cout << std::endl << "< testing operator= >" << std::endl;
+	Map	thirdMap;
+	thirdMap.insert(ft::make_pair(42, "forty-two"));
+	std::cout << "before assignation :" << std::endl;
+	thirdMap.display();
+	std::cout << "size : " << thirdMap.size() << std::endl;
+	std::cout << "after assignation :" << std::endl;
+	thirdMap = secondMap;
+	thirdMap.display();
+	std::cout << "size : " << thirdMap.size() << std::endl;
+
+	std::cout << std::endl << "construction by copy :" << std::endl;
+	Map fourthMap(thirdMap);
+	fourthMap.display();
+
+	std::cout << std::endl << "changing element in previous map to prove deep copy :" << std::endl;
+	thirdMap.insert(ft::make_pair(42, "forty-two"));
+	thirdMap.display();
+	std::cout << std::endl;
+	fourthMap.display();
+	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
 	secondMap.clear();
@@ -170,14 +192,15 @@ int	main(void)
 	std::cout << "map 2 < map 1 : " << (secondMap < myMap) << std::endl;
 	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
 	std::cout << "displaying first map :" << std::endl;
-	myMap.display(myMap.root(), 0);
+	myMap.display();
 	std::cout << "size : " << myMap.size() << std::endl;
 	std::cout << "displaying second map :" << std::endl;
-	secondMap.display(secondMap.root(), 0);
+	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 
 	std::cout << "max_size : " << secondMap.max_size() << std::endl;
+
 	std::cout << "end of main" << std::endl;
 
 	return (0);

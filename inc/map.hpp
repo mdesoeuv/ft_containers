@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 10:45:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 11:54:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,25 @@ namespace ft
 			typedef typename ft::Reverse_Iterator<Iterator>			reverse_iterator;
 			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
 			typedef typename allocator_type::template rebind<Node>::other node_allocator_type;
+
+			/* ----- display function ----- */
+			
+			public:
+
+			void	display(void)
+			{
+				displayBaseNode(root(), 0);
+			}
 			
 		private:
 
 			key_compare			comp;
-			node_allocator_type	alloc; // only Nodes are allocated
+			node_allocator_type	alloc;
 			
-			BaseNode		meta; // end node for end()
+			BaseNode		meta;
 			size_type		_size;
 
-		public: // change to protected !!!
+		private:
 		
 			BaseNode*& root()
 			{
@@ -99,7 +108,7 @@ namespace ft
 
 			BaseNode*	leftRotation(BaseNode* node)
 			{
-				std::cout << "left rotation" << std::endl;
+				// std::cout << "left rotation" << std::endl;
 				
 				if (node == NULL)
 					return (node);
@@ -126,7 +135,7 @@ namespace ft
 
 			BaseNode*	rightRotation(BaseNode* node)
 			{
-				std::cout << "right rotation" << std::endl;
+				// std::cout << "right rotation" << std::endl;
 				
 				if (node == NULL)
 					return (node);
@@ -153,27 +162,31 @@ namespace ft
 
 			BaseNode*	balanceTree(BaseNode* node)
 			{
-				std::cout << "balancing tree" << std::endl;
+				// std::cout << "balancing tree" << std::endl;
 				int	balance = getBalanceFactor(node);
 
 				if (balance == 2 && getBalanceFactor(node->left) == 1)
 				{
-					std::cout << "infernal rotation" << std::endl;
+					// std::cout << "LL imbalance" << std::endl;
 					return (rightRotation(node));
 				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == -1)
+				{
+					// std::cout << "RR imbalance" << std::endl;
 					return (leftRotation(node));
+				}
 
 				if (balance == 2 && getBalanceFactor(node->left) == -1)
 				{
+					// std::cout << "LR imbalance" << std::endl;
 					node->left = leftRotation(node->left);
 					return (rightRotation(node));
 				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == 1)
 				{
-					std::cout << "RL" << std::endl;
+					// std::cout << "RL imbalance" << std::endl;
 					node->right = rightRotation(node->right);
 					return (leftRotation(node));
 				}
@@ -257,97 +270,40 @@ namespace ft
 					
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 									
-				// equilibrage a faire
-
 				balanceTree(node);
 				
 				return (node);
 			}
 
-			BaseNode*	insert(BaseNode* node, BaseNode* parent, value_type pair)
+			BaseNode*	insertBaseNode(BaseNode* node, BaseNode* parent, value_type pair)
 			{
 				if (node == NULL)
 					return (create(pair, parent));
 				if (comp(pair.first, static_cast<Node*>(node)->pair.first))
-					node->left = insert(node->left, node, pair);
+					node->left = insertBaseNode(node->left, node, pair);
 				else if (comp(static_cast<Node*>(node)->pair.first, pair.first))
-					node->right = insert(node->right, node, pair);
+					node->right = insertBaseNode(node->right, node, pair);
 				else
 					return (node);
 
 				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
 				
-				// balance
 				return (balanceTree(node));
 			}
 
-
-			// BaseNode*	non_recursive_insert(value_type pair)
-			// {
-			// 	if (root() == NULL)
-			// 	{
-			// 		root() = create(pair, &meta);
-			// 		_size++;
-			// 		return (root());
-			// 	}
-			// 	BaseNode* cursor = root();
-			// 	while (true)
-			// 	{
-			// 		if (comp(pair.first, static_cast<Node*>(cursor)->pair.first))
-			// 		{
-			// 			cursor->height += 1;
-			// 			if (cursor->left == NULL)
-			// 			{
-			// 				cursor->left = create(pair, cursor);
-			// 				_size++;
-			// 				break ;
-			// 			}
-			// 			else
-			// 			{
-			// 				cursor = cursor->left;
-			// 			}
-						
-			// 		}
-			// 		else if (comp(static_cast<Node*>(cursor)->pair.first, pair.first))
-			// 		{
-			// 			cursor->height -= 1;
-			// 			if (cursor->right == NULL)
-			// 			{
-			// 				cursor->right = create(pair, cursor);
-			// 				_size++;
-			// 				break ;
-			// 			}
-			// 			else
-			// 			{
-			// 				cursor = cursor->right;
-			// 			}
-			// 		}
-			// 		else
-			// 			break;
-			// 	}
-			// 	return (cursor);
-			// }
-		
-			void	clear(BaseNode* node)
+			void	clearBaseNode(BaseNode* node)
 			{
-				std::cout << "call to clear" << std::endl;
 				if (node == NULL)
 					return ;
 				if (node->left != NULL)
-				{
-					std::cout << "go to left" << std::endl;
-					clear(node->left);
-				}
+					clearBaseNode(node->left);
 				if (node->right != NULL)
-				{
-					std::cout << "go to right" << std::endl;
-					clear(node->right);
-				}
+					clearBaseNode(node->right);
 				alloc.destroy(static_cast<Node*>(node));
 				alloc.deallocate(static_cast<Node*>(node), 1);
+				_size--;
 				node = NULL;
 			}
-
 
 			void	ft_print_tab(int level)
 			{
@@ -358,7 +314,9 @@ namespace ft
 				}
 			}
 
-			void	display(BaseNode* base_node, int level)
+			private:
+
+			void	displayBaseNode(BaseNode* base_node, int level)
 			{
 				if (base_node == NULL)
 				{
@@ -371,19 +329,18 @@ namespace ft
 				std::cout << "node : " << "BF : " << getBalanceFactor(node) << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
-				display(node->left, level + 1);
+				displayBaseNode(node->left, level + 1);
 				ft_print_tab(level);
 				std::cout << "right \n";
-				display(node->right, level + 1);
+				displayBaseNode(node->right, level + 1);
 			}
 
 		private:
 
 			class BaseNode
 			{
-				public:				// a voir
+				public:				// a voir pour protected ?
 				
-				// value_type  pr;   // pas de paire  value_type dans le BaseNode => uniquement dans le Node
 				BaseNode*	left;
 				BaseNode*	right;
 				BaseNode*	parent;
@@ -810,22 +767,27 @@ namespace ft
 				insert(first, last);
 			}
 			
-			map(const map& other) : comp(other.comp), alloc(other.alloc) // very buggy constructor allocate memory ? insert all range of elements ?
+			map(const map& other) : comp(other.comp), alloc(other.alloc)
 			{
 				*this = other;
 			}
 			
 			~map(void)
 			{
-				clear(root());
+				clear();
 			}
 			
-			// map&	operator=(const map& other)
-			// {
-				
-				// _size = other.size();
-			// 	return (*this);
-			// }
+			map&	operator=(const map& other)
+			{
+				clear();				
+
+				for (Const_Iterator iter = other.begin(); iter != other.end(); ++iter)
+				{
+					this->insert(*iter);
+				}
+				_size = other.size();
+				return (*this);
+			}
 
 			allocator_type	get_allocator(void) const
 			{
@@ -937,7 +899,7 @@ namespace ft
 
 			void	clear(void)
 			{
-				clear(root());
+				clearBaseNode(root());
 				meta.left = NULL;
 				_size = 0;
 			}
@@ -952,7 +914,7 @@ namespace ft
 					root() = create(value, &meta);
 					return (ft::make_pair(Iterator(root()), true));
 				}
-				insert(root(), &meta, value);
+				insertBaseNode(root(), &meta, value);
 				inserted_node = find(value.first);
 				if (old_size == size())
 					return (ft::make_pair(inserted_node, false));
@@ -960,20 +922,24 @@ namespace ft
 					return (ft::make_pair(inserted_node, true));
 			}
 
-			iterator insert( iterator hint, const value_type& value ) // wtf how to update balance factor if insertion from child node  ??
-			{
-				(void)hint;
+			// iterator insert( iterator hint, const value_type& value ) // wtf how to update balance factor if insertion from child node  ??
+			// {
+			// 	(void)hint;
 
-				// verifier que le noeud peut etre inserer 
-				return (insert(value).first);
-			}
+			// 	// verifier que le noeud peut etre inseré a l'endroit demandé, si oui insertion puis rebalance vers le haut
+			// 	return (insert(value).first);
+			// }
 			
 			template <class InputIt>
 			void insert(InputIt first, InputIt last)
 			{
+				std::cout << "arriving here" << std::endl;
+				if (first == last)
+					return ;
 				for (; first != last; ++first)
 				{
-					insert(*first);
+					std::cout << "lol" << std::endl;
+					// insert(*first);
 				}
 			}
 
