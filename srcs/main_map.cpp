@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 11:56:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 12:16:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,12 @@ int	main(void)
 	thirdMap.insert(ft::make_pair(42, "forty-two"));
 	thirdMap.display();
 	std::cout << std::endl;
-	fourthMap.display();
+	fourthMap.display(); 
+	std::cout << "removing root key: " << std::endl;
+	fourthMap.erase(0); 
+	fourthMap.display(); 
+	// std::cout << "erasing with iterators" << std::endl;
+	// fourthMap.erase(fourthMap.begin(), fourthMap.end());
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();

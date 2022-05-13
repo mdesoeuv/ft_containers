@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 11:54:53 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/13 12:23:58 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,8 @@ namespace ft
 								node->parent->left = NULL;
 							else if (node == node->parent->right)
 								node->parent->right = NULL;
-							
+							if (node == root())
+								root() = NULL;
 							node = NULL;
 						}
 						else if (node->left == NULL)
@@ -264,6 +265,8 @@ namespace ft
 						this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
 						node->right = deleteBaseNode(node->right, key);
 					}
+					// if (node == root())
+					// 	root() = node_remplacant;
 				}
 				if (node == NULL)
 					return (node);
@@ -933,13 +936,11 @@ namespace ft
 			template <class InputIt>
 			void insert(InputIt first, InputIt last)
 			{
-				std::cout << "arriving here" << std::endl;
 				if (first == last)
 					return ;
 				for (; first != last; ++first)
 				{
-					std::cout << "lol" << std::endl;
-					// insert(*first);
+					insert(*first);
 				}
 			}
 
@@ -950,10 +951,15 @@ namespace ft
 				deleteBaseNode(root(), node->pair.first);
 			}
 			
-			// void erase( iterator first, iterator last )
-			// {
+			void erase( iterator first, iterator last )
+			{
+				for (; first != last; ++first)
+				{
+					std::cout << "lol" << std::endl;
+					deleteBaseNode(root(), (*first).first);
+				}
 
-			// }
+			}
 
 			size_type erase( const Key& key )
 			{
