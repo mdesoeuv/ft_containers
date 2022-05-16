@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 13:36:19 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 13:36:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,26 +168,26 @@ namespace ft
 					return (node);
 				if (balance == 2 && getBalanceFactor(node->left) == 1)
 				{
-					std::cout << "LL imbalance" << std::endl;
+					// std::cout << "LL imbalance" << std::endl;
 					return (rightRotation(node));
 				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == -1)
 				{
-					std::cout << "RR imbalance" << std::endl;
+					// std::cout << "RR imbalance" << std::endl;
 					return (leftRotation(node));
 				}
 
 				if (balance == 2 && getBalanceFactor(node->left) == -1)
 				{
-					std::cout << "LR imbalance" << std::endl;
+					// std::cout << "LR imbalance" << std::endl;
 					node->left = leftRotation(node->left);
 					return (rightRotation(node));
 				}
 
 				if (balance == -2 && getBalanceFactor(node->right) == 1)
 				{
-					std::cout << "RL imbalance" << std::endl;
+					// std::cout << "RL imbalance" << std::endl;
 					node->right = rightRotation(node->right);
 					return (leftRotation(node));
 				}
