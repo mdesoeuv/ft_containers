@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 13:22:41 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 13:27:21 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1000,18 +1000,11 @@ namespace ft
 
 			size_type count(const Key& key) const
 			{
-				const BaseNode *cursor; 
+				Const_Iterator cursor; 
 
-				cursor = root();
-				while (cursor)
-				{
-					if (comp(key, static_cast<const Node*>(cursor)->pair.first))
-						cursor = cursor->left;
-					else if (comp(static_cast<const Node*>(cursor)->pair.first, key))
-						cursor = cursor->right;
-					else
-						return (1);
-				}
+				cursor = find(key);
+				if (cursor != this->end())
+					return (1);
 				return (0);
 			}
 
@@ -1032,12 +1025,12 @@ namespace ft
 
 			Const_Iterator	find(const Key& key) const
 			{
-				BaseNode* cursor = root();
+				const BaseNode* cursor = root();
 				while (cursor != NULL)
 				{
-					if (comp(key, static_cast<Node*>(cursor)->pair.first))
+					if (comp(key, static_cast<const Node*>(cursor)->pair.first))
 						cursor = cursor->left;
-					else if (comp(static_cast<Node*>(cursor)->pair.first, key))
+					else if (comp(static_cast<const Node*>(cursor)->pair.first, key))
 						cursor = cursor->right;
 					else
 						return (cursor->iter());
