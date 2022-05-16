@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 17:27:48 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 10:31:13 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ namespace ft
 			{
 				int	balance = getBalanceFactor(node);
 
+				if (node == NULL)
+					return (node);
 				if (balance == 2 && getBalanceFactor(node->left) == 1)
 				{
 					std::cout << "LL imbalance" << std::endl;
@@ -212,15 +214,77 @@ namespace ft
 				return (static_cast<BaseNode*>(new_node));			
 			}
 
- ////////////////////////////
+ //////////////////////////// replaced with subtree_shift
 			void	assign_child(BaseNode* node, BaseNode* new_node)
 			{
 				if (node == NULL)
 					return ;
+				if (node == root())
+					root() = new_node;
 				if (node == node->parent->left)
 					node->parent->left = new_node;
 				else if (node == node->parent->right)
 					node->parent->right = new_node;
+			}
+
+			void	subtree_shift(BaseNode* node, BaseNode* new_node)
+			{
+				if (node == root())
+					root() = new_node;
+				else if (node == node->parent->left)
+					node->parent->left = new_node;
+				else if (node == node->parent->right)
+					node->parent->right = new_node;
+				if (new_node != NULL)
+					new_node->parent = node->parent;
+			}
+
+			void	deleteNode(BaseNode* node)
+			{
+				if (node->left == NULL)
+				{
+					subtree_shift(node, node->right);
+					rebalance(node->right);
+					removeNode(node);
+				}
+				else if (node->right == NULL)
+				{
+					subtree_shift(node, node->left);
+					rebalance(node->left);
+					removeNode(node);
+				}
+				else
+				{
+					BaseNode* y = node->next();
+					if (y->parent != node)
+					{
+						subtree_shift(y, y->right);
+						y->right = node->right;
+						y->right->parent = y;
+						balanceTree(y->right);
+					}
+					subtree_shift(node, y);
+					y->left = node->left;
+					y->left->parent = y;
+					rebalance(y);
+				}
+			}
+
+			void	removeNode(BaseNode* node)
+			{
+				this->alloc.destroy(static_cast<Node*>(node));
+				this->alloc.deallocate(static_cast<Node*>(node), 1);
+			}
+
+			void	rebalance(BaseNode* node)
+			{
+				if (node == NULL)
+					return ;
+				while (node != &meta)
+				{
+					balanceTree(node);
+					node = node->parent;
+				}
 			}
 
 
@@ -644,9 +708,9 @@ namespace ft
 						return (&(ptr->pair));
 					}
 
-					Node*	getNode(void)
+					BaseNode*	getNode(void)
 					{
-						return (ptr);
+						return (static_cast<BaseNode*>(ptr));
 					}
 					
 			};
@@ -973,9 +1037,7 @@ namespace ft
 
 			void	erase(iterator pos)
 			{
-				Node*	node = pos.getNode();
-
-				deleteBaseNode(root(), node->pair.first);
+				deleteNode(pos.getNode());
 			}
 			
 			void erase( iterator first, iterator last )
@@ -985,7 +1047,7 @@ namespace ft
 				{
 					++temp;
 					std::cout << "erasing iter with key : " << (*first).first << std::endl;
-					deleteBaseNode(this->root(), (*first).first);
+					deleteNode(first.getNode());
 					first = temp;
 				}
 				std::cout << "lol" << std::endl;
@@ -997,7 +1059,7 @@ namespace ft
 				Iterator	item = find(key);
 				if (item == this->end())
 					return (0);
-				deleteBaseNode(root(), key);
+				deleteNode(item.getNode());
 				return (1);
 			}
 

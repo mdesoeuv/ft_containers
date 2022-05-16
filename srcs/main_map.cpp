@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/13 17:00:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 10:33:42 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,10 @@ int	main(void)
 	std::cout << "size : " << secondMap.size() << std::endl;
 
 	std::cout << std::endl << "erasing the iter=begin()" << std::endl;
+	secondMap.erase(secondMap.begin());
+	secondMap.display();
+	std::cout << "size : " << secondMap.size() << std::endl;
+	std::cout << std::endl << "removing root node :" << std::endl;
 	secondMap.erase(secondMap.begin());
 	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
