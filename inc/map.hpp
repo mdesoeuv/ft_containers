@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 11:59:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 13:19:40 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1193,10 +1193,6 @@ namespace ft
 		
 		if (lhs.size() != rhs.size())
 			return (false);
-		if (lhs.size() == 0 && rhs.size() == 0)
-		{
-			return (true);
-		}
 		return (ft::equal(lhs_first, lhs_last, rhs_first));	
 	}
 
