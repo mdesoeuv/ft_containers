@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 11:55:52 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 11:59:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1209,12 +1209,6 @@ namespace ft
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
-		if (lhs.size() == 0 && rhs.size() == 0)
-			return (false);
-		if (lhs.size() == 0 && rhs.size() != 0)
-			return (true);
-		else if (lhs.size() != 0 && rhs.size() == 0)
-			return (false);
 		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
