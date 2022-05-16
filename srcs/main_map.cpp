@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 16:27:54 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 17:01:18 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	main(void)
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
 	insertion_result = myMap.insert(ft::make_pair(-35, "third"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
+	std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, ft::make_pair(-30, "INSERTED HINT"))->second << std::endl;
+	std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, ft::make_pair(-30, "INSERTED HINT"))->second << std::endl;
 	myMap.display();
 	std::cout << "size : " << myMap.size() << std::endl;
 	

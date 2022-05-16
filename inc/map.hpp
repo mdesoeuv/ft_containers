@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 16:30:27 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 17:02:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,8 @@ namespace ft
 
 			key_compare			comp;
 			node_allocator_type	alloc;
-			
-			BaseNode		meta;
-			size_type		_size;
+			BaseNode			meta;
+			size_type			_size;
 
 		private:
 			BaseNode*& root()
@@ -959,7 +958,7 @@ namespace ft
 				meta.left = NULL;
 			}
 			
-			ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
+			ft::pair<iterator, bool> insert(const value_type& value)
 			{
 				size_type	old_size = size();
 				Iterator	inserted_node;
@@ -977,13 +976,21 @@ namespace ft
 					return (ft::make_pair(inserted_node, true));
 			}
 
-			// iterator insert( iterator hint, const value_type& value ) // wtf how to update balance factor if insertion from child node  ??
-			// {
-			// 	(void)hint;
-
-			// 	// verifier que le noeud peut etre inseré a l'endroit demandé, si oui insertion puis rebalance vers le haut
-			// 	return (insert(value).first);
-			// }
+			iterator insert(iterator hint, const value_type& value)
+			{
+				iterator temp = ++hint;
+				if (!comp(temp->first, value.first))
+					return (insert(value).first);
+				if (hint != this->end())
+				{
+					if (!comp(value.first, hint->first))
+						return (insert(value).first);
+				}
+				BaseNode* new_parent = hint.getNode();
+				new_parent->right = create(value, new_parent);
+				rebalance(new_parent);
+				return (Iterator(new_parent->right));
+			}
 			
 			template <class InputIt>
 			void insert(InputIt first, InputIt last)
@@ -1005,11 +1012,9 @@ namespace ft
 				for (; first != last;)
 				{
 					++temp;
-					std::cout << "erasing iter with key : " << (*first).first << std::endl;
 					deleteNode(first.getNode());
 					first = temp;
 				}
-				std::cout << "lol" << std::endl;
 
 			}
 
@@ -1192,7 +1197,7 @@ namespace ft
 
 			key_compare	key_comp() const 
 			{
-				return (key_compare()); // ou return (comp)
+				return (key_compare());
 			}
 			
 			value_compare	value_comp() const
