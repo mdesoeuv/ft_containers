@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 10:41:10 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 11:54:35 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,8 @@ namespace ft
 					t2->parent = node;
 				node->parent = y;
 				
-				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
-				y->height = 1 + ft::max(node->getHeight(y->left), node->getHeight(y->right));
+				node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
+				y->height = 1 + std::max(node->getHeight(y->left), node->getHeight(y->right));
 
 				return (y);
 			}
@@ -153,8 +153,8 @@ namespace ft
 
 				node->parent = y;
 
-				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
-				y->height = 1 + ft::max(node->getHeight(y->left), node->getHeight(y->right));
+				node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
+				y->height = 1 + std::max(node->getHeight(y->left), node->getHeight(y->right));
 
 				return (y);
 			}
@@ -200,31 +200,18 @@ namespace ft
 			{
 				Node*	new_node;
 
+				new_node = alloc.allocate(1);
 				try
 				{
-					new_node = alloc.allocate(1);
 					alloc.construct(new_node, Node(pair, parent));
 				}
 				catch(...)
 				{
-					// throw ;
-					return (NULL);
+					alloc.deallocate(new_node, 1);
+					throw ;
 				}
 				_size++;
 				return (static_cast<BaseNode*>(new_node));			
-			}
-
- //////////////////////////// replaced with subtree_shift
-			void	assign_child(BaseNode* node, BaseNode* new_node)
-			{
-				if (node == NULL)
-					return ;
-				if (node == root())
-					root() = new_node;
-				if (node == node->parent->left)
-					node->parent->left = new_node;
-				else if (node == node->parent->right)
-					node->parent->right = new_node;
 			}
 
 			void	subtree_shift(BaseNode* node, BaseNode* new_node)
@@ -238,6 +225,15 @@ namespace ft
 				if (new_node != NULL)
 					new_node->parent = node->parent;
 			}
+
+			// void	subtree_shift(BaseNode* node, BaseNode* new_node)
+			// {
+			// 	BaseNode* parent = node->parent;
+			// 	(node == parent->left)
+			// 		? parent->left
+			// 		: parent->right = new_node;
+			// 	new_node->parent = parent;
+			// }
 
 			void	deleteNode(BaseNode* node)
 			{
@@ -259,6 +255,7 @@ namespace ft
 						subtree_shift(y, y->right);
 						y->right = node->right;
 						y->right->parent = y;
+						
 						balanceTree(y->right);
 					}
 					subtree_shift(node, y);
@@ -282,92 +279,12 @@ namespace ft
 					return ;
 				while (node != &meta)
 				{
+					node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
 					balanceTree(node);
 					node = node->parent;
 				}
 			}
 
-
-/////////////////////////// redo by moving node pointers instead of destroy objects
-			BaseNode*	deleteBaseNode(BaseNode* node, const Key& key )
-			{
-				BaseNode*	temp = NULL;
-
-				if (node == NULL || node == root()->parent)
-					return (NULL);
-				
-				std::cout << "deleting" << std::endl;
-				if (comp(key, static_cast<Node*>(node)->pair.first))
-						node->left = deleteBaseNode(node->left, key);
-				else if (comp(static_cast<Node*>(node)->pair.first, key))
-						node->right = deleteBaseNode(node->right, key);
-				else
-				{
-					std::cout << "deleting 2" << std::endl;
-					if (node->left == NULL || node->right == NULL)
-					{
-						std::cout << "deleting 3" << std::endl;
-						if (node->left == NULL && node->right == NULL)
-						{
-							std::cout << "deleting 4" << std::endl;
-							std::cout << static_cast<Node*>(node)->pair.first << std::endl;
-							temp = node;
-							if (node == node->parent->left)
-								node->parent->left = NULL;
-							else if (node == node->parent->right)
-								node->parent->right = NULL;
-							if (node == root())
-								root() = NULL;
-							node = NULL;
-						}
-						else if (node->left == NULL)
-						{
-	
-							temp = node->right;
-							BaseNode*	saveParent = node->parent;
-							this->alloc.destroy(static_cast<Node*>(node));
-							this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
-						}
-						else if (node->right == NULL)
-						{
-							temp = node->left;
-							BaseNode*	saveParent = node->parent;
-							this->alloc.destroy(static_cast<Node*>(node));
-							this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
-						}
-						this->alloc.destroy(static_cast<Node*>(temp));
-						this->alloc.deallocate(static_cast<Node*>(temp), 1);
-						temp = NULL;
-						_size--;
-					}
-					else
-					{
-						temp = node->right->leftmost();
-						BaseNode*	saveParent = node->parent;
-						BaseNode*	saveLeft = node->left;
-						BaseNode*	saveRight = node->right;
-						this->alloc.destroy(static_cast<Node*>(node));
-						this->alloc.construct(static_cast<Node*>(node), Node(static_cast<Node*>(temp)->pair, saveParent));
-						node->left = saveLeft;
-						node->right = saveRight;
-						node->right = deleteBaseNode(node->right, key);
-					}
-				}
-				std::cout << "deleting 5" << std::endl;
-				if (node == NULL)
-					return (node);
-				std::cout << "deleting 6" << std::endl;
-				std::cout << static_cast<Node*>(node)->pair.first << std::endl;
-
-				
-					
-				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
-									
-				balanceTree(node);
-				
-				std::cout << "deleting 7" << std::endl;
-				return (node);
-			}
 
 			BaseNode*	insertBaseNode(BaseNode* node, BaseNode* parent, value_type pair)
 			{
@@ -380,7 +297,7 @@ namespace ft
 				else
 					return (node);
 
-				node->height = 1 + ft::max(node->getHeight(node->left), node->getHeight(node->right));
+				node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
 				
 				return (balanceTree(node));
 			}
@@ -995,7 +912,6 @@ namespace ft
 			{
 				clearBaseNode(root());
 				meta.left = NULL;
-				_size = 0;
 			}
 			
 			ft::pair<iterator, bool> insert(const value_type& value) // try catch ??
@@ -1318,12 +1234,5 @@ namespace ft
 	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs )
 	{
 		return (!(lhs < rhs));
-	}
-
-	int	max(int a, int b)
-	{
-		if (a > b)
-			return (a);
-		return (b);
 	}
 }
