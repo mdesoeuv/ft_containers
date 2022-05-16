@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 17:09:04 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 17:15:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,8 @@ int	main(void)
 	
 	std::cout << "testing tree validity tree 1: " << myMap.check_tree() << std::endl;
 	std::cout << "testing tree validity tree 2: " << secondMap.check_tree() << std::endl;
-	std::cout << "testing tree validity tree 3 : " << thirdMap.check_tree() << std::endl;
-	std::cout << "testing tree validity tree 4 : " << fourthMap.check_tree() << std::endl;
+	std::cout << "testing tree validity tree 3: " << thirdMap.check_tree() << std::endl;
+	std::cout << "testing tree validity tree 4: " << fourthMap.check_tree() << std::endl;
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 17:02:44 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 17:14:56 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ namespace ft
 
 			void	display(void)
 			{
-				displayBaseNode(root(), 0);
+				display_BaseNode(root(), 0);
 			}
 			
 
@@ -141,21 +141,21 @@ namespace ft
 				return &meta;
 			}
 
-			static int	getHeight(BaseNode* node)
+			static int	get_height(BaseNode* node)
 			{
 				if (node == NULL)
 					return (0);
 				return (node->height);
 			}
 
-			int	getBalanceFactor(BaseNode* node)
+			int	get_balance_factor(BaseNode* node)
 			{
 				if (node == NULL)
 					return (0);
-				return (getHeight(node->left) - getHeight(node->right));
+				return (get_height(node->left) - get_height(node->right));
 			}
 
-			BaseNode*	leftRotation(BaseNode* node)
+			BaseNode*	left_rotation(BaseNode* node)
 			{
 				// std::cout << "left rotation" << std::endl;
 				
@@ -176,13 +176,13 @@ namespace ft
 					t2->parent = node;
 				node->parent = y;
 				
-				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
-				y->height = 1 + std::max(getHeight(y->left), getHeight(y->right));
+				node->height = 1 + std::max(get_height(node->left), get_height(node->right));
+				y->height = 1 + std::max(get_height(y->left), get_height(y->right));
 
 				return (y);
 			}
 
-			BaseNode*	rightRotation(BaseNode* node)
+			BaseNode*	right_rotation(BaseNode* node)
 			{
 				// std::cout << "right rotation" << std::endl;
 				
@@ -202,43 +202,43 @@ namespace ft
 
 				node->parent = y;
 
-				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
-				y->height = 1 + std::max(getHeight(y->left), getHeight(y->right));
+				node->height = 1 + std::max(get_height(node->left), get_height(node->right));
+				y->height = 1 + std::max(get_height(y->left), get_height(y->right));
 
 				return (y);
 			}
 
 
-			BaseNode*	balanceTree(BaseNode* node)
+			BaseNode*	balance_tree(BaseNode* node)
 			{
-				int	balance = getBalanceFactor(node);
+				int	balance = get_balance_factor(node);
 
 				if (node == NULL)
 					return (node);
-				if (balance == 2 && getBalanceFactor(node->left) == 1)
+				if (balance == 2 && get_balance_factor(node->left) == 1)
 				{
 					// std::cout << "LL imbalance" << std::endl;
-					return (rightRotation(node));
+					return (right_rotation(node));
 				}
 
-				if (balance == -2 && getBalanceFactor(node->right) == -1)
+				if (balance == -2 && get_balance_factor(node->right) == -1)
 				{
 					// std::cout << "RR imbalance" << std::endl;
-					return (leftRotation(node));
+					return (left_rotation(node));
 				}
 
-				if (balance == 2 && getBalanceFactor(node->left) == -1)
+				if (balance == 2 && get_balance_factor(node->left) == -1)
 				{
 					// std::cout << "LR imbalance" << std::endl;
-					node->left = leftRotation(node->left);
-					return (rightRotation(node));
+					node->left = left_rotation(node->left);
+					return (right_rotation(node));
 				}
 
-				if (balance == -2 && getBalanceFactor(node->right) == 1)
+				if (balance == -2 && get_balance_factor(node->right) == 1)
 				{
 					// std::cout << "RL imbalance" << std::endl;
-					node->right = rightRotation(node->right);
-					return (leftRotation(node));
+					node->right = right_rotation(node->right);
+					return (left_rotation(node));
 				}
 
 				return (node);
@@ -285,7 +285,7 @@ namespace ft
 			// 		new_node->parent = parent;
 			// }
 
-			void	deleteNode(BaseNode* node)
+			void	delete_BaseNode(BaseNode* node)
 			{
 				if (node->left == NULL)
 				{
@@ -306,17 +306,17 @@ namespace ft
 						y->right = node->right;
 						y->right->parent = y;
 						
-						balanceTree(y->right);
+						balance_tree(y->right);
 					}
 					subtree_shift(node, y);
 					y->left = node->left;
 					y->left->parent = y;
 					rebalance(y);
 				}
-				removeNode(node);
+				remove_BaseNode(node);
 			}
 
-			void	removeNode(BaseNode* node)
+			void	remove_BaseNode(BaseNode* node)
 			{
 				this->alloc.destroy(static_cast<Node*>(node));
 				this->alloc.deallocate(static_cast<Node*>(node), 1);
@@ -329,37 +329,37 @@ namespace ft
 					return ;
 				while (node != &meta)
 				{
-					node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
-					balanceTree(node);
+					node->height = 1 + std::max(get_height(node->left), get_height(node->right));
+					balance_tree(node);
 					node = node->parent;
 				}
 			}
 
 
-			BaseNode*	insertBaseNode(BaseNode* node, BaseNode* parent, value_type pair)
+			BaseNode*	insert_BaseNode(BaseNode* node, BaseNode* parent, value_type pair)
 			{
 				if (node == NULL)
 					return (create(pair, parent));
 				if (comp(pair.first, static_cast<Node*>(node)->pair.first))
-					node->left = insertBaseNode(node->left, node, pair);
+					node->left = insert_BaseNode(node->left, node, pair);
 				else if (comp(static_cast<Node*>(node)->pair.first, pair.first))
-					node->right = insertBaseNode(node->right, node, pair);
+					node->right = insert_BaseNode(node->right, node, pair);
 				else
 					return (node);
 
-				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+				node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 				
-				return (balanceTree(node));
+				return (balance_tree(node));
 			}
 
-			void	clearBaseNode(BaseNode*& node)
+			void	clear_BaseNode(BaseNode*& node)
 			{
 				if (node == NULL)
 					return ;
 				if (node->left != NULL)
-					clearBaseNode(node->left);
+					clear_BaseNode(node->left);
 				if (node->right != NULL)
-					clearBaseNode(node->right);
+					clear_BaseNode(node->right);
 				alloc.destroy(static_cast<Node*>(node));
 				alloc.deallocate(static_cast<Node*>(node), 1);
 				_size--;
@@ -377,7 +377,7 @@ namespace ft
 
 			private:
 
-			void	displayBaseNode(BaseNode* base_node, int level)
+			void	display_BaseNode(BaseNode* base_node, int level)
 			{
 				if (base_node == NULL)
 				{
@@ -387,13 +387,13 @@ namespace ft
 				}
 				Node*	node = static_cast<Node*>(base_node);
 				ft_print_tab(level);
-				std::cout << "node : " << "BF : " << getBalanceFactor(node) << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
+				std::cout << "node : " << "BF : " << get_balance_factor(node) << " key : " << node->pair.first << ", value : " << node->pair.second << std::endl;
 				ft_print_tab(level);
 				std::cout << "left \n";
-				displayBaseNode(node->left, level + 1);
+				display_BaseNode(node->left, level + 1);
 				ft_print_tab(level);
 				std::cout << "right \n";
-				displayBaseNode(node->right, level + 1);
+				display_BaseNode(node->right, level + 1);
 			}
 
 		private:
@@ -663,7 +663,7 @@ namespace ft
 						return (&(ptr->pair));
 					}
 
-					BaseNode*	getNode(void)
+					BaseNode*	get_BaseNode(void)
 					{
 						return (static_cast<BaseNode*>(ptr));
 					}
@@ -954,7 +954,7 @@ namespace ft
 
 			void	clear(void)
 			{
-				clearBaseNode(root());
+				clear_BaseNode(root());
 				meta.left = NULL;
 			}
 			
@@ -968,7 +968,7 @@ namespace ft
 					root() = create(value, &meta);
 					return (ft::make_pair(Iterator(root()), true));
 				}
-				insertBaseNode(root(), &meta, value);
+				insert_BaseNode(root(), &meta, value);
 				inserted_node = find(value.first);
 				if (old_size == size())
 					return (ft::make_pair(inserted_node, false));
@@ -986,7 +986,7 @@ namespace ft
 					if (!comp(value.first, hint->first))
 						return (insert(value).first);
 				}
-				BaseNode* new_parent = hint.getNode();
+				BaseNode* new_parent = hint.get_BaseNode();
 				new_parent->right = create(value, new_parent);
 				rebalance(new_parent);
 				return (Iterator(new_parent->right));
@@ -1003,7 +1003,7 @@ namespace ft
 
 			void	erase(iterator pos)
 			{
-				deleteNode(pos.getNode());
+				delete_BaseNode(pos.get_BaseNode());
 			}
 			
 			void erase( iterator first, iterator last )
@@ -1012,7 +1012,7 @@ namespace ft
 				for (; first != last;)
 				{
 					++temp;
-					deleteNode(first.getNode());
+					delete_BaseNode(first.get_BaseNode());
 					first = temp;
 				}
 
@@ -1023,7 +1023,7 @@ namespace ft
 				Iterator	item = find(key);
 				if (item == this->end())
 					return (0);
-				deleteNode(item.getNode());
+				delete_BaseNode(item.get_BaseNode());
 				return (1);
 			}
 
