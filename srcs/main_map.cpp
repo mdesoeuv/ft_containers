@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 13:29:38 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:27:54 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 
 int	main(void)
 {
+	
 	typedef ft::map<int, std::string> Map;
 	Map	myMap;
+	std::cout << myMap.check_tree() << std::endl;
 	myMap.insert(ft::make_pair(10, "first"));
 	myMap.insert(ft::make_pair(15, "second"));
 	myMap.insert(ft::make_pair(5, "third"));
@@ -198,7 +200,10 @@ int	main(void)
 	std::cout << "display :" << std::endl;
 	fourthMap.display();
 	
-
+	std::cout << "testing tree validity tree 1: " << myMap.check_tree() << std::endl;
+	std::cout << "testing tree validity tree 2: " << secondMap.check_tree() << std::endl;
+	std::cout << "testing tree validity tree 3 : " << thirdMap.check_tree() << std::endl;
+	std::cout << "testing tree validity tree 4 : " << fourthMap.check_tree() << std::endl;
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();

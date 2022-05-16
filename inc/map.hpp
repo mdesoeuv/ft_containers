@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 13:36:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 16:30:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,50 @@ namespace ft
 				displayBaseNode(root(), 0);
 			}
 			
+
+			static bool	is_valid(const BaseNode* node, int& height, int& size, const Key** min, const Key** max)
+			{
+				if (node == NULL) {
+					*min = NULL;
+					*max = NULL;
+					height = 0;
+					size = 0;
+					return true;
+				}
+				int left_height, right_height, left_size, right_size;
+				const Key *left_min, *left_max, *right_min, *right_max;
+				if (!is_valid(node->left, left_height, left_size, &left_min, &left_max) ||
+					!is_valid(node->right, right_height, right_size, &right_min, &right_max))
+					return true;
+				if (std::abs(left_height - right_height) >= 2)
+					return false;
+				const Key& key = static_cast<const Node*>(node)->pair.first;
+				if (!(
+					(!left_max || *left_max < key) &&
+					(!right_min || key < *right_min)))
+					return false;
+				if (!(!node->left || node == node->left->parent)
+					&& (!node->right ||	node == node->right->parent))
+					return false;
+				if (node->height != 1 + std::max(left_height, right_height))
+					return false;
+				height = node->height;
+				*min = left_min ? left_min : &key;
+				*max = right_max ? right_max : &key;
+				size = 1 + left_size + right_size;
+				return true;
+			}
+
+			bool check_tree() const {
+				int height, size;
+				const Key *min, *max;
+				return (
+					(root() == NULL || root()->parent == &meta) &&
+					is_valid(root(), height, size, &min, &max) &&
+					_size == static_cast<size_t>(size)
+				);
+			}
+		
 		private:
 
 			key_compare			comp;
@@ -77,7 +121,6 @@ namespace ft
 			size_type		_size;
 
 		private:
-		
 			BaseNode*& root()
 			{
 				return (meta.left);
@@ -99,11 +142,18 @@ namespace ft
 				return &meta;
 			}
 
+			static int	getHeight(BaseNode* node)
+			{
+				if (node == NULL)
+					return (0);
+				return (node->height);
+			}
+
 			int	getBalanceFactor(BaseNode* node)
 			{
 				if (node == NULL)
 					return (0);
-				return (node->getHeight(node->left) - node->getHeight(node->right));
+				return (getHeight(node->left) - getHeight(node->right));
 			}
 
 			BaseNode*	leftRotation(BaseNode* node)
@@ -127,8 +177,8 @@ namespace ft
 					t2->parent = node;
 				node->parent = y;
 				
-				node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
-				y->height = 1 + std::max(node->getHeight(y->left), node->getHeight(y->right));
+				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+				y->height = 1 + std::max(getHeight(y->left), getHeight(y->right));
 
 				return (y);
 			}
@@ -153,8 +203,8 @@ namespace ft
 
 				node->parent = y;
 
-				node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
-				y->height = 1 + std::max(node->getHeight(y->left), node->getHeight(y->right));
+				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+				y->height = 1 + std::max(getHeight(y->left), getHeight(y->right));
 
 				return (y);
 			}
@@ -232,7 +282,8 @@ namespace ft
 			// 	(node == parent->left)
 			// 		? parent->left
 			// 		: parent->right = new_node;
-			// 	new_node->parent = parent;
+			// 	if (new_node != NULL)
+			// 		new_node->parent = parent;
 			// }
 
 			void	deleteNode(BaseNode* node)
@@ -279,7 +330,7 @@ namespace ft
 					return ;
 				while (node != &meta)
 				{
-					node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
+					node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
 					balanceTree(node);
 					node = node->parent;
 				}
@@ -297,7 +348,7 @@ namespace ft
 				else
 					return (node);
 
-				node->height = 1 + std::max(node->getHeight(node->left), node->getHeight(node->right));
+				node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
 				
 				return (balanceTree(node));
 			}
@@ -374,13 +425,6 @@ namespace ft
 				
 				~BaseNode(void)
 				{}
-
-				int	getHeight(BaseNode* node)
-				{
-					if (node == NULL)
-						return (0);
-					return (node->height);
-				}
 
 				BaseNode*	leftmost()
 				{
@@ -494,17 +538,12 @@ namespace ft
 				
 				Iterator	iter()
 				{
-					Iterator iter(this);
-					
-					return (iter);
+					return (Iterator(this));
 				}
-
 								
 				Const_Iterator	iter() const
 				{
-					Const_Iterator iter(this);
-					
-					return (iter);
+					return (Const_Iterator(this));
 				}
 
 
@@ -985,14 +1024,8 @@ namespace ft
 
 			void	swap(map& other)
 			{
-				BaseNode*	root_temp = this->meta.left;
-				size_type	size_temp = this->_size;
-
-				this->meta.left = other.meta.left;
-				other.meta.left = root_temp;
-
-				this->_size = other._size;
-				other._size = size_temp;
+				std::swap(this->meta.left, other.meta.left);
+				std::swap(this->_size, other._size);
 
 				if (this->root())
 					this->root()->parent = &this->meta;
@@ -1004,12 +1037,7 @@ namespace ft
 
 			size_type count(const Key& key) const
 			{
-				Const_Iterator cursor; 
-
-				cursor = find(key);
-				if (cursor != this->end())
-					return (1);
-				return (0);
+				return (find(key) != this->end());
 			}
 
 			Iterator	find(const Key& key)
