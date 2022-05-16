@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 11:54:35 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 11:55:52 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,7 @@ namespace ft
 				return (balanceTree(node));
 			}
 
-			void	clearBaseNode(BaseNode* node)
+			void	clearBaseNode(BaseNode*& node)
 			{
 				if (node == NULL)
 					return ;
