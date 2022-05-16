@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 17:14:56 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 17:47:09 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -838,7 +838,7 @@ namespace ft
 
 				for (Const_Iterator iter = other.begin(); iter != other.end(); ++iter)
 				{
-					this->insert(*iter);
+					insert(*iter);
 				}
 				_size = other.size();
 				return (*this);
@@ -978,7 +978,9 @@ namespace ft
 
 			iterator insert(iterator hint, const value_type& value)
 			{
-				iterator temp = ++hint;
+				if (hint == this->end())
+					return (insert(value).first);
+				iterator temp = hint++;
 				if (!comp(temp->first, value.first))
 					return (insert(value).first);
 				if (hint != this->end())
