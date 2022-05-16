@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 10:39:08 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 13:29:38 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	main(void)
 	secondMap.display();
 	std::cout << "size : " << secondMap.size() << std::endl;
 
-	std::cout << std::endl << "searching for element with key = -1000 in first map : " <<  myMap.count(-1000) << std::endl;
-	std::cout << "searching for element with key = 777 in first map : " <<  myMap.count(777) << std::endl;
+	std::cout << std::endl << "searching for element with key = -1000 in first map with count() : " <<  myMap.count(-1000) << std::endl;
+	std::cout << "searching for element with key = 777 in first map with count () : " <<  myMap.count(777) << std::endl;
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 	
 	// Map::iterator	it = secondMap.begin();

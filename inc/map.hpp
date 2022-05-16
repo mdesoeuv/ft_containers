@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 13:27:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 13:32:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -640,7 +640,13 @@ namespace ft
 
 				public:
 
+					typedef ft::pair<const Key, T>			value_type;
+					typedef std::ptrdiff_t					difference_type;
+					typedef value_type&						reference_type;
+					typedef	value_type*						pointer;
 					typedef std::bidirectional_iterator_tag iterator_category;
+
+
 
 					Const_Iterator()
 					{
@@ -943,8 +949,6 @@ namespace ft
 			template <class InputIt>
 			void insert(InputIt first, InputIt last)
 			{
-				if (first == last)
-					return ;
 				for (; first != last; ++first)
 				{
 					insert(*first);
