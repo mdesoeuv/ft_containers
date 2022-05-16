@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 13:22:10 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 13:22:41 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1032,9 +1032,6 @@ namespace ft
 
 			Const_Iterator	find(const Key& key) const
 			{
-				if (root() == NULL)
-					return (end());
-				
 				BaseNode* cursor = root();
 				while (cursor != NULL)
 				{
