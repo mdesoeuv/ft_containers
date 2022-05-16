@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 10:31:13 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/16 10:41:10 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,13 +245,11 @@ namespace ft
 				{
 					subtree_shift(node, node->right);
 					rebalance(node->right);
-					removeNode(node);
 				}
 				else if (node->right == NULL)
 				{
 					subtree_shift(node, node->left);
 					rebalance(node->left);
-					removeNode(node);
 				}
 				else
 				{
@@ -268,12 +266,14 @@ namespace ft
 					y->left->parent = y;
 					rebalance(y);
 				}
+				removeNode(node);
 			}
 
 			void	removeNode(BaseNode* node)
 			{
 				this->alloc.destroy(static_cast<Node*>(node));
 				this->alloc.deallocate(static_cast<Node*>(node), 1);
+				_size--;
 			}
 
 			void	rebalance(BaseNode* node)
