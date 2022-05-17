@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 11:58:00 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 16:40:49 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,19 @@ namespace ft
 			bool check_tree() const {
 				int height, size;
 				const Key *min, *max;
-				return (
-					(root() == NULL || root()->parent == &meta) &&
-					is_valid(root(), height, size, &min, &max) &&
-					_size == static_cast<size_t>(size)
-				);
+				if (!is_valid(root(), height, size, &min, &max))
+					return (false);
+				if (!(_size == static_cast<size_t>(size)))
+				{
+					std::cout << "tree size error, _size : " << _size << std::endl;
+					return (false);
+				}
+				if (!(root() == NULL || root()->parent == &meta))
+				{
+					std::cout << "root parent error" << std::endl;
+					return (false);
+				}
+				return (true);
 			}
 		
 		private:
@@ -229,26 +237,26 @@ namespace ft
 					return (node);
 				if (balance == 2 && get_balance_factor(node->left) == 1)
 				{
-					// std::cout << "LL imbalance" << std::endl;
+					std::cout << "LL imbalance" << std::endl;
 					return (right_rotation(node));
 				}
 
 				if (balance == -2 && get_balance_factor(node->right) == -1)
 				{
-					// std::cout << "RR imbalance" << std::endl;
+					std::cout << "RR imbalance" << std::endl;
 					return (left_rotation(node));
 				}
 
 				if (balance == 2 && get_balance_factor(node->left) == -1)
 				{
-					// std::cout << "LR imbalance" << std::endl;
+					std::cout << "LR imbalance" << std::endl;
 					node->left = left_rotation(node->left);
 					return (right_rotation(node));
 				}
 
 				if (balance == -2 && get_balance_factor(node->right) == 1)
 				{
-					// std::cout << "RL imbalance" << std::endl;
+					std::cout << "RL imbalance" << std::endl;
 					node->right = right_rotation(node->right);
 					return (left_rotation(node));
 				}
@@ -347,11 +355,13 @@ namespace ft
 				}
 			}
 
-
 			BaseNode*	insert_BaseNode(BaseNode* node, BaseNode* parent, value_type pair)
 			{
 				if (node == NULL)
-					return (create(pair, parent));
+				{
+					node = create(pair, parent);
+					return (node);
+				}
 				if (value_comp()(pair, static_cast<Node*>(node)->pair))
 					node->left = insert_BaseNode(node->left, node, pair);
 				else if (value_comp()(static_cast<Node*>(node)->pair, pair))
@@ -426,11 +436,6 @@ namespace ft
 				}
 				
 				BaseNode(BaseNode* parent) : left(NULL), right(NULL), parent(parent), height(1)
-				{
-				}
-				
-				// a voir, constructeur normalement inutile, passer en private ?
-				BaseNode(const BaseNode& other) : left(other.left), right(other.right), parent(other.parent), height(other.height)
 				{
 				}
 				
@@ -836,7 +841,7 @@ namespace ft
 				insert(first, last);
 			}
 			
-			map(const map& other) : comp(other.comp), alloc(other.alloc)
+			map(const map& other) : comp(other.comp), alloc(other.alloc), _size(0)
 			{
 				*this = other;
 			}
@@ -854,7 +859,6 @@ namespace ft
 				{
 					insert(*iter);
 				}
-				_size = other.size();
 				return (*this);
 			}
 
@@ -976,7 +980,7 @@ namespace ft
 			{
 				size_type	old_size = size();
 				Iterator	inserted_node;
-				
+
 				if (root() == NULL)
 				{
 					root() = create(value, &meta);
@@ -994,7 +998,6 @@ namespace ft
 			{
 				if (hint == this->end())
 					return (insert(value).first);
-				// iterator temp = hint++;
 				if (!value_comp()(*hint, value))
 					return (insert(value).first);
 				++hint;
@@ -1004,11 +1007,15 @@ namespace ft
 						return (insert(value).first);
 				}
 				--hint;
-				std::cout << "//////////////////////////////////////////" << std::endl;
-				hint.get_BaseNode()->right = insert_BaseNode(hint.get_BaseNode()->right, hint.get_BaseNode(), *hint);
-				// new_parent->right = create(value, new_parent);
-				// rebalance(new_parent);
-				return (++hint);
+				BaseNode* new_parent = hint.get_BaseNode();
+				new_parent->right = insert_BaseNode(new_parent->right, new_parent, value);
+				++hint;
+				std::cout << "DISPLAYING TREE BEFORE REBALANCE " << std::endl;
+				this->display();
+				rebalance(hint.get_BaseNode()->parent);
+				std::cout << "DISPLAYING TREE AFTER REBALANCE " << std::endl;
+				this->display();
+				return (hint);
 			}
 			
 			template <class InputIt>

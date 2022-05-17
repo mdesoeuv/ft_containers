@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 11:48:52 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 16:23:07 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,15 +193,18 @@ int	test_map(void)
 	thirdMap.display();
 	std::cout << std::endl;
 	fourthMap.display(); 
+	std::cout << "size : " << fourthMap.size() << std::endl;
 	std::cout << std::endl << "removing root key: " << std::endl;
 	fourthMap.erase(0);
 	fourthMap.display();
+	std::cout << "size : " << fourthMap.size() << std::endl;
 
 	std::cout << std::endl << "erasing with iterators" << std::endl;
 	std::cout << "begin : " << fourthMap.begin()->first << ", end : " << fourthMap.rbegin()->first << std::endl;
-	fourthMap.erase(fourthMap.begin(), --fourthMap.end());
+	fourthMap.erase(fourthMap.begin(), fourthMap.end());
 	std::cout << "display :" << std::endl;
 	fourthMap.display();
+	std::cout << "size : " << fourthMap.size() << std::endl;
 	
 	std::cout << "testing tree validity tree 1: " << myMap.check_tree() << std::endl;
 	std::cout << "testing tree validity tree 2: " << secondMap.check_tree() << std::endl;
