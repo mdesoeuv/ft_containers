@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/16 17:47:09 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 11:15:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,9 +340,9 @@ namespace ft
 			{
 				if (node == NULL)
 					return (create(pair, parent));
-				if (comp(pair.first, static_cast<Node*>(node)->pair.first))
+				if (value_comp()(pair, static_cast<Node*>(node)->pair))
 					node->left = insert_BaseNode(node->left, node, pair);
-				else if (comp(static_cast<Node*>(node)->pair.first, pair.first))
+				else if (value_comp()(static_cast<Node*>(node)->pair, pair))
 					node->right = insert_BaseNode(node->right, node, pair);
 				else
 					return (node);
@@ -786,6 +786,8 @@ namespace ft
 			class value_compare
 			{
 
+				friend class map;
+				
 				protected:
 				
 					Compare	comp;
@@ -981,11 +983,11 @@ namespace ft
 				if (hint == this->end())
 					return (insert(value).first);
 				iterator temp = hint++;
-				if (!comp(temp->first, value.first))
+				if (!value_comp()(*temp, value))
 					return (insert(value).first);
 				if (hint != this->end())
 				{
-					if (!comp(value.first, hint->first))
+					if (!value_comp()(value, *hint))
 						return (insert(value).first);
 				}
 				BaseNode* new_parent = hint.get_BaseNode();
@@ -1052,9 +1054,9 @@ namespace ft
 				BaseNode* cursor = root();
 				while (cursor != NULL)
 				{
-					if (comp(key, static_cast<Node*>(cursor)->pair.first))
+					if (key_comp()(key, static_cast<Node*>(cursor)->pair.first))
 						cursor = cursor->left;
-					else if (comp(static_cast<Node*>(cursor)->pair.first, key))
+					else if (key_comp()(static_cast<Node*>(cursor)->pair.first, key))
 						cursor = cursor->right;
 					else
 						return (cursor->iter());
@@ -1067,9 +1069,9 @@ namespace ft
 				const BaseNode* cursor = root();
 				while (cursor != NULL)
 				{
-					if (comp(key, static_cast<const Node*>(cursor)->pair.first))
+					if (key_comp()(key, static_cast<const Node*>(cursor)->pair.first))
 						cursor = cursor->left;
-					else if (comp(static_cast<const Node*>(cursor)->pair.first, key))
+					else if (key_comp()(static_cast<const Node*>(cursor)->pair.first, key))
 						cursor = cursor->right;
 					else
 						return (cursor->iter());

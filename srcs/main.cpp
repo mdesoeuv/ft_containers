@@ -1,21 +1,25 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+#define CHOICE
+#if LIB
 	#include <map>
 	#include <stack>
 	#include <vector>
 	namespace ft = std;
 #else
-	#include <map.hpp>
-	#include <stack.hpp>
-	#include <vector.hpp>
+	#include "../inc/map.hpp"
+	#include "../inc/stack.hpp"
+	#include "../inc/vector.hpp"
 #endif
 
 #include <stdlib.h>
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
+#define STL 1
+#define FT 0
+
 struct Buffer
 {
 	int idx;
@@ -52,6 +56,12 @@ int main(int argc, char** argv) {
 		std::cerr << "Count value:" << COUNT << std::endl;
 		return 1;
 	}
+
+	if (LIB == STL)
+		std::cout << "running tests with STL containers" << std::endl;
+	else if (LIB == FT)
+		std::cout << "running tests with FT containers" << std::endl;
+
 	const int seed = atoi(argv[1]);
 	srand(seed);
 

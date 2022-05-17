@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 14:45:50 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 09:56:09 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
 			return (lhs.c == rhs.c);
 		}
 		friend bool operator<(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
-			{
+		{
 			return (lhs.c < rhs.c);
 		}
 
@@ -94,25 +94,25 @@ namespace ft
 	template <class T, class Container>
 	bool operator!=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 	{
-		return (!(lhs.c == rhs.c));
+		return (!(lhs == rhs));
 	}
 	
 	template <class T, class Container>
 	bool operator<=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 	{
-		return (lhs.c < rhs.c || lhs.c == rhs.c);
+		return (lhs < rhs || lhs == rhs);
 	}
 
 	template <class T, class Container>
 	bool operator>(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 	{
-		return (!(lhs.c < rhs.c || lhs.c == rhs.c));
+		return (!(lhs < rhs || lhs == rhs));
 	}
 
 	template <class T, class Container>
 	bool operator>=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 	{
-		return (!(lhs.c < rhs.c));
+		return (!(lhs < rhs));
 	}
 }
 
