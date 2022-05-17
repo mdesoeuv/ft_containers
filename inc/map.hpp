@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 11:15:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 11:58:00 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,29 @@ namespace ft
 					!is_valid(node->right, right_height, right_size, &right_min, &right_max))
 					return true;
 				if (std::abs(left_height - right_height) >= 2)
+				{
+					std::cout << "balance factor error" << std::endl;
 					return false;
+				}
 				const Key& key = static_cast<const Node*>(node)->pair.first;
 				if (!(
 					(!left_max || *left_max < key) &&
 					(!right_min || key < *right_min)))
+				{
+					std::cout << "misplaced node" << std::endl;
 					return false;
+				}
 				if (!(!node->left || node == node->left->parent)
 					&& (!node->right ||	node == node->right->parent))
+				{
+					std::cout << "node parent check failed" << std::endl;
 					return false;
+				}
 				if (node->height != 1 + std::max(left_height, right_height))
+				{
+					std::cout << "node height error" << std::endl;
 					return false;
+				}
 				height = node->height;
 				*min = left_min ? left_min : &key;
 				*max = right_max ? right_max : &key;
@@ -982,18 +994,21 @@ namespace ft
 			{
 				if (hint == this->end())
 					return (insert(value).first);
-				iterator temp = hint++;
-				if (!value_comp()(*temp, value))
+				// iterator temp = hint++;
+				if (!value_comp()(*hint, value))
 					return (insert(value).first);
+				++hint;
 				if (hint != this->end())
 				{
 					if (!value_comp()(value, *hint))
 						return (insert(value).first);
 				}
-				BaseNode* new_parent = hint.get_BaseNode();
-				new_parent->right = create(value, new_parent);
-				rebalance(new_parent);
-				return (Iterator(new_parent->right));
+				--hint;
+				std::cout << "//////////////////////////////////////////" << std::endl;
+				hint.get_BaseNode()->right = insert_BaseNode(hint.get_BaseNode()->right, hint.get_BaseNode(), *hint);
+				// new_parent->right = create(value, new_parent);
+				// rebalance(new_parent);
+				return (++hint);
 			}
 			
 			template <class InputIt>

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 09:50:13 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 11:48:52 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	test_map(void)
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
 	insertion_result = myMap.insert(ft::make_pair(-35, "third"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
+	myMap.display();
 	std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, ft::make_pair(-30, "INSERTED HINT"))->second << std::endl;
 	// std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, ft::make_pair(-30, "INSERTED HINT"))->second << std::endl;
 	myMap.display();
@@ -130,7 +131,7 @@ int	test_map(void)
 	if (secondMap.lower_bound(20) == secondMap.end())
 		std::cout << "end()" << std::endl;
 	std::cout << "testing if references from iterators are valid are writable : look for the ZOB" << std::endl;
-	pair_range.first->second = "ZOB";
+	secondMap.begin()->second = "ZOB";
 	secondMap.display();
 
 	std::cout << std::endl << "< testing at(key) function >" << std::endl;
@@ -204,8 +205,11 @@ int	test_map(void)
 	
 	std::cout << "testing tree validity tree 1: " << myMap.check_tree() << std::endl;
 	std::cout << "testing tree validity tree 2: " << secondMap.check_tree() << std::endl;
+	secondMap.display();
 	std::cout << "testing tree validity tree 3: " << thirdMap.check_tree() << std::endl;
+	thirdMap.display();
 	std::cout << "testing tree validity tree 4: " << fourthMap.check_tree() << std::endl;
+	fourthMap.display();
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
