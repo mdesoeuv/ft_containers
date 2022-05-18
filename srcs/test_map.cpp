@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 12:03:40 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 14:24:28 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int	test_map(void)
 	secondMap.status();
 	std::cout << std::endl << "removing root node :" << std::endl;
 	secondMap.erase(3);
+	////////////// HEREEEE //////
 	secondMap.status();
 
 	std::cout << std::endl << "< testing operator== >" << std::endl;
@@ -174,6 +175,7 @@ int	test_map(void)
 	thirdMap = secondMap;
 	std::cout << "is assigned map really equal to other map : " << (thirdMap == secondMap) << std::endl;
 	thirdMap.status();
+	secondMap.status();
 
 	std::cout << std::endl << "construction by copy :" << std::endl;
 	Map fourthMap(thirdMap);
@@ -195,6 +197,7 @@ int	test_map(void)
 	fourthMap.status();
 	
 	myMap.status();
+	std::cout << "second map status" << std::endl;
 	secondMap.status();
 	thirdMap.status();
 	fourthMap.status();
