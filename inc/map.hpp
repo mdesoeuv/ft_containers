@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 15:29:47 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 15:33:49 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,27 +255,27 @@ namespace ft
 			{
 				// node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 				int	balance = get_balance_factor(node);
-				std::cout << "balance factor for node : " << static_cast<Node*>(node)->pair.first << ", is : " << balance << std::endl;
+				// std::cout << "balance factor for node : " << static_cast<Node*>(node)->pair.first << ", is : " << balance << std::endl;
 
 				if (node == NULL)
 					return (node);
 				if (balance > 1 && get_balance_factor(node->left) == 1)
 				{
-					std::cout << "LL imbalance" << std::endl;
+					// std::cout << "LL imbalance" << std::endl;
 					node = right_rotation(node);
 					return (node);
 				}
 
 				if (balance < -1 && get_balance_factor(node->right) == -1)
 				{
-					std::cout << "RR imbalance" << std::endl;
+					// std::cout << "RR imbalance" << std::endl;
 					node = left_rotation(node);
 					return (node);
 				}
 
 				if (balance > 1 && get_balance_factor(node->left) == -1)
 				{
-					std::cout << "LR imbalance" << std::endl;
+					// std::cout << "LR imbalance" << std::endl;
 					node->left = left_rotation(node->left);
 					node = right_rotation(node);
 					return (node);
@@ -283,7 +283,7 @@ namespace ft
 
 				if (balance < -1 && get_balance_factor(node->right) == 1)
 				{
-					std::cout << "RL imbalance" << std::endl;
+					// std::cout << "RL imbalance" << std::endl;
 					node->right = right_rotation(node->right);
 					node = left_rotation(node);
 					return (node);
