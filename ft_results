@@ -1,0 +1,475 @@
+running tests with FT containers
+
+map validity status : 1
+size : 0
+
+insertion success of non double element : 1
+iterator on the inserted element : 0
+insertion success of non double element : 0
+iterator on the inserted element : 0
+insertion with operator[], inserting key 3, value HERE
+LR imbalance
+HERE
+
+map validity status : 1
+key : 0, value :fourth
+key : 3, value :HERE
+key : 5, value :third
+key : 10, value :first
+key : 15, value :second
+size : 5
+
+LL imbalance
+insertion success : 1
+LL imbalance
+insertion success : 1
+insertion success : 1
+LL imbalance
+insertion success : 1
+
+map validity status : 1
+key : -35, value :third
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 3, value :HERE
+key : 5, value :third
+key : 10, value :first
+key : 15, value :second
+size : 9
+
+inserting value with predecessor as hint : DISPLAYING TREE BEFORE REBALANCE 
+node : BF : 1 key : 3, value : HERE
+left 
+	node : BF : 1 key : -12, value : lol
+	left 
+		node : BF : 0 key : -25, value : third
+		left 
+			node : BF : -1 key : -35, value : third
+			left 
+				<empty>
+			right 
+				node : BF : 0 key : -30, value : INSERTED HINT
+				left 
+					<empty>
+				right 
+					<empty>
+		right 
+			node : BF : 0 key : -15, value : third
+			left 
+				<empty>
+			right 
+				<empty>
+	right 
+		node : BF : 0 key : 0, value : fourth
+		left 
+			<empty>
+		right 
+			<empty>
+right 
+	node : BF : 0 key : 10, value : first
+	left 
+		node : BF : 0 key : 5, value : third
+		left 
+			<empty>
+		right 
+			<empty>
+	right 
+		node : BF : 0 key : 15, value : second
+		left 
+			<empty>
+		right 
+			<empty>
+LL imbalance
+DISPLAYING TREE AFTER REBALANCE 
+node : BF : 1 key : 3, value : HERE
+left 
+	node : BF : 0 key : -25, value : third
+	left 
+		node : BF : -1 key : -35, value : third
+		left 
+			<empty>
+		right 
+			node : BF : 0 key : -30, value : INSERTED HINT
+			left 
+				<empty>
+			right 
+				<empty>
+	right 
+		node : BF : 0 key : -12, value : lol
+		left 
+			node : BF : 0 key : -15, value : third
+			left 
+				<empty>
+			right 
+				<empty>
+		right 
+			node : BF : 0 key : 0, value : fourth
+			left 
+				<empty>
+			right 
+				<empty>
+right 
+	node : BF : 0 key : 10, value : first
+	left 
+		node : BF : 0 key : 5, value : third
+		left 
+			<empty>
+		right 
+			<empty>
+	right 
+		node : BF : 0 key : 15, value : second
+		left 
+			<empty>
+		right 
+			<empty>
+INSERTED HINT
+
+map validity status : 1
+key : -35, value :third
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 3, value :HERE
+key : 5, value :third
+key : 10, value :first
+key : 15, value :second
+size : 10
+
+
+creating a second map :
+
+map validity status : 1
+key : -1000, value :minus thousand
+size : 1
+
+
+--- swaping maps ---
+displaying first map :
+
+map validity status : 1
+key : -1000, value :minus thousand
+size : 1
+
+
+displaying second map :
+
+map validity status : 1
+key : -35, value :third
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 3, value :HERE
+key : 5, value :third
+key : 10, value :first
+key : 15, value :second
+size : 10
+
+
+searching for element with key = -1000 in first map with count() : 1
+searching for element with key = 777 in first map with count () : 0
+is the first map empty ? 0
+
+testing iterators with in order display :
+key=-35, value=third
+key=-30, value=INSERTED HINT
+key=-25, value=third
+key=-15, value=third
+key=-12, value=lol
+key=0, value=fourth
+key=3, value=HERE
+key=5, value=third
+key=10, value=first
+key=15, value=second
+
+backward display :
+key=15, value=second
+key=10, value=first
+key=5, value=third
+key=3, value=HERE
+key=0, value=fourth
+key=-12, value=lol
+key=-15, value=third
+key=-25, value=third
+key=-30, value=INSERTED HINT
+key=-35, value=third
+
+testing const iterators with in order display :
+key=-35, value=third
+key=-30, value=INSERTED HINT
+key=-25, value=third
+key=-15, value=third
+key=-12, value=lol
+key=0, value=fourth
+key=3, value=HERE
+key=5, value=third
+key=10, value=first
+key=15, value=second
+
+backward display :
+key=15, value=second
+key=10, value=first
+key=5, value=third
+key=3, value=HERE
+key=0, value=fourth
+key=-12, value=lol
+key=-15, value=third
+key=-25, value=third
+key=-30, value=INSERTED HINT
+key=-35, value=third
+
+testing reverse iterator incrementation :
+key=15, value=second
+key=10, value=first
+key=5, value=third
+key=3, value=HERE
+key=0, value=fourth
+key=-12, value=lol
+key=-15, value=third
+key=-25, value=third
+key=-30, value=INSERTED HINT
+key=-35, value=third
+
+testing reverse iterator decrementation :
+key=-35, value=third
+key=-30, value=INSERTED HINT
+key=-25, value=third
+key=-15, value=third
+key=-12, value=lol
+key=0, value=fourth
+key=3, value=HERE
+key=5, value=third
+key=10, value=first
+key=15, value=second
+
+< testing find() function >
+is key 7 found ? false
+is key 10 found ? true
+
+< testing equal_range and lower_bound upper_bound function >
+displaying key of equal_range(3) : 3, 5
+displaying key of equal_range(5) : 5, 10
+displaying key of upper_bound(0) : 3
+displaying key of upper_bound(3) : 5
+displaying key of upper_bound(15) : end()
+displaying key of lower_bound(0) : 0
+displaying key of lower_bound(3) : 3
+displaying key of lower_bound(15) : 15
+displaying key of lower_bound(20) : end()
+testing if references from iterators are valid are writable : look for the ZOB
+
+map validity status : 1
+key : -35, value :ZOB
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 3, value :HERE
+key : 5, value :third
+key : 10, value :first
+key : 15, value :second
+size : 10
+
+
+< testing at(key) function >
+value at key = 5 is : third
+value at key = 12 is : key not found
+
+< testing erase functions >
+erasing the node key=5, value=ZOB
+
+map validity status : 1
+key : -35, value :ZOB
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 3, value :HERE
+key : 10, value :first
+key : 15, value :second
+size : 9
+
+
+erasing the iter=begin()
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 3, value :HERE
+key : 10, value :first
+key : 15, value :second
+size : 8
+
+
+removing root node :
+LR imbalance
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+size : 7
+
+
+< testing operator== >
+map 1 == map 2 : 0
+map 1 != map 2 : 1
+map 2 == map 2 : 1
+map 2 != map 2 : 0
+map 1 < map 2 : 1
+map 2 < map 1 : 0
+map 1 <= map 2 : 1
+map 1 <= map 1 : 1
+map 1 >= map 2 : 0
+map 1 >= map 1 : 1
+
+< testing operator= >
+before assignation :
+
+map validity status : 1
+key : 42, value :forty-two
+size : 1
+
+after assignation :
+RR imbalance
+RR imbalance
+RR imbalance
+RR imbalance
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+size : 7
+
+
+construction by copy :
+RR imbalance
+RR imbalance
+RR imbalance
+RR imbalance
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+size : 7
+
+
+changing element in previous map to prove deep copy :
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+key : 42, value :forty-two
+size : 8
+
+
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+size : 7
+
+
+removing root key: 
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 10, value :first
+key : 15, value :second
+size : 6
+
+
+erasing with iterators
+begin : -30, end : 15
+display :
+
+map validity status : 1
+size : 0
+
+
+map validity status : 1
+key : -1000, value :minus thousand
+size : 1
+
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+size : 7
+
+
+map validity status : 1
+key : -30, value :INSERTED HINT
+key : -25, value :third
+key : -15, value :third
+key : -12, value :lol
+key : 0, value :fourth
+key : 10, value :first
+key : 15, value :second
+key : 42, value :forty-two
+size : 8
+
+
+map validity status : 1
+size : 0
+
+
+--- clearing maps ---
+map 1 < map 2 : 0
+map 2 < map 1 : 0
+map 1 == map 2 : 1
+displaying first map :
+
+map validity status : 1
+size : 0
+
+displaying second map :
+
+map validity status : 1
+size : 0
+
+is the first map empty ? 1
+max_size : 288230376151711743
+end of main

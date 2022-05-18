@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 09:50:07 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 10:58:07 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ namespace ft
 
 			/* ----- display function ----- */
 			
-			public:
+			private:
 
 			void	display(void)
 			{
@@ -130,6 +130,20 @@ namespace ft
 					return (false);
 				}
 				return (true);
+			}
+
+		public:
+
+			/* this function is public to help evaluators of this project */
+		
+			void	status()
+			{
+				std::cout << std::endl << "map validity status : " << this->check_tree() << std::endl;
+				for (typename map::iterator iter = this->begin(); iter != this->end(); ++iter)
+				{
+					std::cout << "key : " << iter->first << ", value :" << iter->second << std::endl;
+				}
+				std::cout << "size : " << this->size() << std::endl << std::endl;
 			}
 		
 		private:
