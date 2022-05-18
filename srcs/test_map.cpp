@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 11:01:34 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 11:24:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,18 @@ int	test_map(void)
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 
 	std::cout << "max_size : " << secondMap.max_size() << std::endl;
+
+	Map	fifthMap;
+	std::cout << "last test with 1000 elements inserted one by one to check perfs" << std::endl;
+	for (int i = 0; i < 1000; ++i)
+	{
+		fifthMap.insert(ft::make_pair(i, "string"));
+	}
+	fifthMap.status();
+	fifthMap.erase(fifthMap.begin());
+	fifthMap.status();
+	fifthMap.erase(--fifthMap.end());
+	fifthMap.status();
 
 	std::cout << "end of main" << std::endl;
 
