@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 11:16:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 12:02:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,31 +335,36 @@ namespace ft
 
 			void	delete_BaseNode(BaseNode* node)
 			{
+				BaseNode* imbalance_node;
 				if (node->left == NULL)
 				{
+					imbalance_node = node->parent;
 					subtree_shift(node, node->right);
-					rebalance(node->right);
+					rebalance(imbalance_node);
 				}
 				else if (node->right == NULL)
 				{
+					imbalance_node = node->parent;
+
 					subtree_shift(node, node->left);
-					rebalance(node->left);
+					rebalance(imbalance_node);
 				}
 				else
 				{
 					BaseNode* y = node->next();
+					imbalance_node = y->parent;
 					if (y->parent != node)
 					{
 						subtree_shift(y, y->right);
 						y->right = node->right;
 						y->right->parent = y;
 						
-						balance_tree(y->right);
+						// rebalance(y->right);
 					}
 					subtree_shift(node, y);
 					y->left = node->left;
 					y->left->parent = y;
-					rebalance(y);
+					rebalance(imbalance_node);
 				}
 				remove_BaseNode(node);
 			}
@@ -881,11 +886,19 @@ namespace ft
 			
 			map&	operator=(const map& other)
 			{
-				clear();				
+				clear();
 
-				for (Const_Iterator iter = other.begin(); iter != other.end(); ++iter)
+				Const_Iterator iter = other.begin();
+				Iterator	hint;
+
+				if (iter != other.end())
 				{
-					insert(*iter);
+					hint = insert(*iter).first;
+					iter++;
+				}
+				for (; iter != other.end(); ++iter)
+				{
+					hint = insert(hint, *iter);
 				}
 				return (*this);
 			}

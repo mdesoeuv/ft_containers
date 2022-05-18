@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 11:24:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 12:03:40 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int	test_map(void)
 	thirdMap.status();
 	std::cout << "after assignation :" << std::endl;
 	thirdMap = secondMap;
+	std::cout << "is assigned map really equal to other map : " << (thirdMap == secondMap) << std::endl;
 	thirdMap.status();
 
 	std::cout << std::endl << "construction by copy :" << std::endl;
