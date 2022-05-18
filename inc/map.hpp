@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 10:58:07 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 11:16:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,21 +261,21 @@ namespace ft
 					return (node);
 				if (balance > 1 && get_balance_factor(node->left) == 1)
 				{
-					std::cout << "LL imbalance" << std::endl;
+					// std::cout << "LL imbalance" << std::endl;
 					node = right_rotation(node);
 					return (node);
 				}
 
 				if (balance < -1 && get_balance_factor(node->right) == -1)
 				{
-					std::cout << "RR imbalance" << std::endl;
+					// std::cout << "RR imbalance" << std::endl;
 					node = left_rotation(node);
 					return (node);
 				}
 
 				if (balance > 1 && get_balance_factor(node->left) == -1)
 				{
-					std::cout << "LR imbalance" << std::endl;
+					// std::cout << "LR imbalance" << std::endl;
 					node->left = left_rotation(node->left);
 					node = right_rotation(node);
 					return (node);
@@ -283,7 +283,7 @@ namespace ft
 
 				if (balance < -1 && get_balance_factor(node->right) == 1)
 				{
-					std::cout << "RL imbalance" << std::endl;
+					// std::cout << "RL imbalance" << std::endl;
 					node->right = right_rotation(node->right);
 					node = left_rotation(node);
 					return (node);
@@ -380,7 +380,6 @@ namespace ft
 					node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 					balance_tree(node);
 					node = node->parent;
-					// this->display();
 				}
 			}
 
@@ -1039,11 +1038,7 @@ namespace ft
 				BaseNode* new_parent = hint.get_BaseNode();
 				new_parent->right = insert_BaseNode(new_parent->right, new_parent, value);
 				++hint;
-				std::cout << "DISPLAYING TREE BEFORE REBALANCE " << std::endl;
-				this->display();
 				rebalance(new_parent);
-				std::cout << "DISPLAYING TREE AFTER REBALANCE " << std::endl;
-				this->display();
 				return (hint);
 			}
 			
