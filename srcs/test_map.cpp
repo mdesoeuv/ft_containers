@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 14:24:28 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 15:28:28 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ int	test_map(void)
 	secondMap.status();
 	std::cout << std::endl << "removing root node :" << std::endl;
 	secondMap.erase(3);
-	////////////// HEREEEE //////
 	secondMap.status();
 
 	std::cout << std::endl << "< testing operator== >" << std::endl;

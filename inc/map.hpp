@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 12:02:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 15:29:47 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,27 +255,27 @@ namespace ft
 			{
 				// node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 				int	balance = get_balance_factor(node);
-				// std::cout << "balance factor for node : " << static_cast<Node*>(node)->pair.first << ", is : " << balance << std::endl;
+				std::cout << "balance factor for node : " << static_cast<Node*>(node)->pair.first << ", is : " << balance << std::endl;
 
 				if (node == NULL)
 					return (node);
 				if (balance > 1 && get_balance_factor(node->left) == 1)
 				{
-					// std::cout << "LL imbalance" << std::endl;
+					std::cout << "LL imbalance" << std::endl;
 					node = right_rotation(node);
 					return (node);
 				}
 
 				if (balance < -1 && get_balance_factor(node->right) == -1)
 				{
-					// std::cout << "RR imbalance" << std::endl;
+					std::cout << "RR imbalance" << std::endl;
 					node = left_rotation(node);
 					return (node);
 				}
 
 				if (balance > 1 && get_balance_factor(node->left) == -1)
 				{
-					// std::cout << "LR imbalance" << std::endl;
+					std::cout << "LR imbalance" << std::endl;
 					node->left = left_rotation(node->left);
 					node = right_rotation(node);
 					return (node);
@@ -283,7 +283,7 @@ namespace ft
 
 				if (balance < -1 && get_balance_factor(node->right) == 1)
 				{
-					// std::cout << "RL imbalance" << std::endl;
+					std::cout << "RL imbalance" << std::endl;
 					node->right = right_rotation(node->right);
 					node = left_rotation(node);
 					return (node);
@@ -323,28 +323,18 @@ namespace ft
 					new_node->parent = node->parent;
 			}
 
-			// void	subtree_shift(BaseNode* node, BaseNode* new_node)
-			// {
-			// 	BaseNode* parent = node->parent;
-			// 	(node == parent->left)
-			// 		? parent->left
-			// 		: parent->right = new_node;
-			// 	if (new_node != NULL)
-			// 		new_node->parent = parent;
-			// }
-
 			void	delete_BaseNode(BaseNode* node)
 			{
 				BaseNode* imbalance_node;
 				if (node->left == NULL)
 				{
-					imbalance_node = node->parent;
+					imbalance_node = node;
 					subtree_shift(node, node->right);
 					rebalance(imbalance_node);
 				}
 				else if (node->right == NULL)
 				{
-					imbalance_node = node->parent;
+					imbalance_node = node;
 
 					subtree_shift(node, node->left);
 					rebalance(imbalance_node);
@@ -352,15 +342,16 @@ namespace ft
 				else
 				{
 					BaseNode* y = node->next();
-					imbalance_node = y->parent;
 					if (y->parent != node)
 					{
+						imbalance_node = y->parent;
 						subtree_shift(y, y->right);
 						y->right = node->right;
 						y->right->parent = y;
 						
-						// rebalance(y->right);
+						rebalance(imbalance_node);
 					}
+					imbalance_node = y;
 					subtree_shift(node, y);
 					y->left = node->left;
 					y->left->parent = y;
