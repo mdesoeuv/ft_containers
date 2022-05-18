@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#define CHOICE
 #include "../inc/tests.hpp"
-#if LIB
+#define STL 1
+#define FT 0
+#ifndef CHOICE
+# define CHOICE 0
+#endif
+#if CHOICE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -18,8 +22,6 @@
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
-#define STL 1
-#define FT 0
 
 struct Buffer
 {
@@ -58,10 +60,10 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	// if (LIB == STL)
-	// 	std::cout << "running tests with STL containers" << std::endl;
-	// else if (LIB == FT)
-	// 	std::cout << "running tests with FT containers" << std::endl;
+	if (CHOICE == STL)
+		std::cout << "running tests with STL containers" << std::endl;
+	else if (CHOICE == FT)
+		std::cout << "running tests with FT containers" << std::endl;
 
 	const int seed = atoi(argv[1]);
 	srand(seed);

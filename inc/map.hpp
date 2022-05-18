@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 16:40:49 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/18 09:50:07 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,10 @@ namespace ft
 					root() = y;
 
 				y->parent = node->parent;
+				if (node == node->parent->left)
+					node->parent->left = y;
+				else
+					node->parent->right = y;
 				if (t2)
 					t2->parent = node;
 				node->parent = y;
@@ -215,9 +219,13 @@ namespace ft
 					root() = y;
 				
 				y->parent = node->parent;
-				node->left = t3;
+				if (node == node->parent->left)
+					node->parent->left = y;
+				else
+					node->parent->right = y;
 				if (t3)
 					t3->parent = node;
+				node->left = t3;
 				y->right = node;
 
 				node->parent = y;
@@ -229,36 +237,42 @@ namespace ft
 			}
 
 
-			BaseNode*	balance_tree(BaseNode* node)
+			BaseNode*	balance_tree(BaseNode*& node)
 			{
+				// node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 				int	balance = get_balance_factor(node);
+				// std::cout << "balance factor for node : " << static_cast<Node*>(node)->pair.first << ", is : " << balance << std::endl;
 
 				if (node == NULL)
 					return (node);
-				if (balance == 2 && get_balance_factor(node->left) == 1)
+				if (balance > 1 && get_balance_factor(node->left) == 1)
 				{
 					std::cout << "LL imbalance" << std::endl;
-					return (right_rotation(node));
+					node = right_rotation(node);
+					return (node);
 				}
 
-				if (balance == -2 && get_balance_factor(node->right) == -1)
+				if (balance < -1 && get_balance_factor(node->right) == -1)
 				{
 					std::cout << "RR imbalance" << std::endl;
-					return (left_rotation(node));
+					node = left_rotation(node);
+					return (node);
 				}
 
-				if (balance == 2 && get_balance_factor(node->left) == -1)
+				if (balance > 1 && get_balance_factor(node->left) == -1)
 				{
 					std::cout << "LR imbalance" << std::endl;
 					node->left = left_rotation(node->left);
-					return (right_rotation(node));
+					node = right_rotation(node);
+					return (node);
 				}
 
-				if (balance == -2 && get_balance_factor(node->right) == 1)
+				if (balance < -1 && get_balance_factor(node->right) == 1)
 				{
 					std::cout << "RL imbalance" << std::endl;
 					node->right = right_rotation(node->right);
-					return (left_rotation(node));
+					node = left_rotation(node);
+					return (node);
 				}
 
 				return (node);
@@ -352,6 +366,7 @@ namespace ft
 					node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 					balance_tree(node);
 					node = node->parent;
+					// this->display();
 				}
 			}
 
@@ -1012,7 +1027,7 @@ namespace ft
 				++hint;
 				std::cout << "DISPLAYING TREE BEFORE REBALANCE " << std::endl;
 				this->display();
-				rebalance(hint.get_BaseNode()->parent);
+				rebalance(new_parent);
 				std::cout << "DISPLAYING TREE AFTER REBALANCE " << std::endl;
 				this->display();
 				return (hint);

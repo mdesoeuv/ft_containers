@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/05/17 10:20:22 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/18 08:58:45 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,23 +36,17 @@ HEADERS	:= stack.hpp vector.hpp map.hpp
 
 INC_DIR		:= inc/
 
-CHOICE		:= 0
-
-FT			:= 0
-
-STL			:= 1
-
 $(OBJS_DIR)%.o:	$(SRCS_DIR)%.cpp Makefile $(addprefix $(INC_DIR), $(HEADERS))
 				mkdir -p $(OBJS_DIR)
-				$(CXX) $(CXXFLAGS) $(DEBUG) -D LIB=$(CHOICE) -c $< -o $@
+				$(CXX) $(CXXFLAGS) $(DEBUG) -c $< -o $@
 
 all			:	$(NAME)
 
 stl			:	$(OBJS_FILES)
-				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
+				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) -DCHOICE=1 $(OBJS_FILES) -o $(NAME)_STL
 
 ft			:	$(OBJS_FILES)
-				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
+				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) -DCHOICE=0 $(OBJS_FILES) -o $(NAME)_FT
 
 $(NAME)		:	$(OBJS_FILES)
 				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
