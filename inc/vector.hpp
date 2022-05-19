@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 13:28:43 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 15:36:19 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,19 +284,16 @@ namespace ft
 					typedef std::random_access_iterator_tag iterator_category;
 					typedef typename vector::difference_type difference_type;
 
-					Const_Iterator(void)
+					Const_Iterator(void) : ptr(NULL)
 					{
-						ptr = NULL;
 					}
 
-					Const_Iterator(const vector& vector)
+					Const_Iterator(const vector& vector) : ptr(vector.data())
 					{
-						ptr = vector.data();
 					}
 
-					Const_Iterator(const vector& vector, size_type offset)
+					Const_Iterator(const vector& vector, size_type offset) : ptr(vector.data() + offset)
 					{
-						ptr = vector.data() + offset;
 					}
 					
 					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
@@ -305,10 +302,8 @@ namespace ft
 					~Const_Iterator(void)
 					{}
 					
-					Const_Iterator&	operator=(const Const_Iterator& rhs)
+					Const_Iterator&	operator=(const Const_Iterator& rhs) : ptr(rhs.ptr)
 					{
-						ptr = rhs.ptr;
-
 						return (*this);
 					}
 
