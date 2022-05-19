@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/18 15:33:49 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 15:46:48 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -619,19 +619,16 @@ namespace ft
 					typedef	value_type*						pointer;
 					typedef std::bidirectional_iterator_tag iterator_category;
 
-					Iterator()
+					Iterator() : ptr(NULL)
 					{
-						ptr = NULL;
 					} 
 
-					Iterator(BaseNode* base_node)
+					Iterator(BaseNode* base_node) : ptr(static_cast<Node*>(base_node))
 					{
-						ptr = static_cast<Node*>(base_node);
 					}
 
-					Iterator(Node* node)
+					Iterator(Node* node) : ptr(node)
 					{
-						ptr = node;
 					}
 
 					Iterator(const Iterator& other) : ptr(other.ptr)
@@ -642,10 +639,8 @@ namespace ft
 					{
 					}
 
-					Iterator&	operator=(const Iterator& rhs)
+					Iterator&	operator=(const Iterator& rhs) : ptr(rhs.ptr)
 					{
-						ptr = rhs.ptr;
-
 						return (*this);
 					}
 
