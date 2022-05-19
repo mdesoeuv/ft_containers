@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/05/19 11:03:46 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/19 11:47:47 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,6 @@ HEADERS			:=	stack.hpp \
 					iterator_traits.hpp \
 					lexicographical_compare.hpp \
 					pair.hpp \
-					Recorder.hpp \
 					Reverse_Iterator.hpp \
 					tests.hpp
 

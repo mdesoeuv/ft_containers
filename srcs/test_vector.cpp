@@ -6,16 +6,14 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 09:49:59 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 11:48:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <memory>
-#include <vector> // for comparison
 #include "../inc/stack.hpp"
 #include "../inc/vector.hpp"
-#include "../inc/Recorder.hpp"
 #include "../inc/is_integral.hpp"
 #include "../inc/Reverse_Iterator.hpp"
 
@@ -383,7 +381,7 @@ int test_vector(void)
 	for (ft::vector<int >::iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 
-	std::vector<int> testvect;
+	ft::vector<int> testvect;
 	for (int i = 0; i < 5; ++i)
 		testvect.push_back(i);
 	std::cout << "initial vector :" << std::endl;
@@ -416,8 +414,6 @@ int test_vector(void)
 	
 }
 {
-	Recorder<int>::show_stats();
-	Recorder<std::string>::show_stats();
 
 	std::cout << ft::is_integral<std::string>::value << std::endl;
 	std::cout << ft::is_integral<int>::value << std::endl;
