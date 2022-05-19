@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 15:46:48 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 15:48:15 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -722,19 +722,16 @@ namespace ft
 
 
 
-					Const_Iterator()
+					Const_Iterator() : ptr(NULL)
 					{
-						ptr = NULL;
 					} 
 
-					Const_Iterator(const BaseNode* base_node)
+					Const_Iterator(const BaseNode* base_node) : ptr(static_cast<const Node*>(base_node))
 					{
-						ptr = static_cast<const Node*>(base_node);
 					}
 
-					Const_Iterator(const Node* node)
+					Const_Iterator(const Node* node) : ptr(node)
 					{
-						ptr = node;
 					}
 
 					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
