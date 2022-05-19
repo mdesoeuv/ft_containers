@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 11:27:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 11:53:48 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,6 @@ namespace ft
 				while (cursor != start)
 					alloc.destroy(&*--cursor);
 			}
-		
-			void destroy(T* start, T* end, Allocator alloc = Allocator())
-			{
-				T* cursor = end;
-				while (cursor != start)
-					alloc.destroy(--cursor);
-			}
-
 
 		private:
 
@@ -113,19 +105,16 @@ namespace ft
 					typedef std::random_access_iterator_tag iterator_category;
 					typedef typename vector::difference_type difference_type;
 
-					Iterator(void)
+					Iterator(void) : ptr(NULL)
 					{
-						ptr = NULL;
 					}
 
-					Iterator(vector& vector)
+					Iterator(vector& vector) : ptr(vector.data())
 					{
-						ptr = vector.data();
 					}
 
-					Iterator(vector& vector, size_type offset)
+					Iterator(vector& vector, size_type offset) : ptr(vector.data() + offset)
 					{
-						ptr = vector.data() + offset;
 					}
 					
 					Iterator(const Iterator& other) : ptr(other.ptr)
