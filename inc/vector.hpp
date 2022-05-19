@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 16:13:17 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 17:47:48 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ namespace ft
 			}
 		
 			template <typename BidirectionalItA>
-			void init(BidirectionalItA start, BidirectionalItA end, T value = T(), Allocator alloc = Allocator()) {
+			void init(BidirectionalItA start, BidirectionalItA end, T value) {
 				BidirectionalItA cursor = start;
 				try {
 					for (; cursor != end; ++cursor)
@@ -466,19 +466,17 @@ namespace ft
 
 			explicit vector( size_type count, const T& value = T(), const Allocator& alloc = Allocator()) : _size(count), allocated_size(count), alloc(alloc)
 			{
+				c = this->alloc.allocate(count);
 				try
 				{
-					c = this->alloc.allocate(count);
 					
 					Iterator	start = this->begin();
 					
-					init(start, start + count, value, alloc);
+					init(start, start + count, value);
 				}
 				catch(...)
 				{
 					this->alloc.deallocate(c, count);
-					_size = 0;
-					allocated_size = 0;
 					throw ;
 				}
 			}
@@ -489,20 +487,16 @@ namespace ft
 				size_type	count = 0;
 				
 				for (InputIt inc = first; inc != last; ++inc)
-				{
 					count++;
-				}
+				c = this->alloc.allocate(count);
 				try
 				{
-					c = this->alloc.allocate(count);
 					Iterator start = this->begin();
 					init(start, first, last, this->alloc);
 				}
 				catch(...)
 				{
 					this->alloc.deallocate(c, count);
-					_size = 0;
-					allocated_size = 0;
 					throw ;
 				}
 				allocated_size = count;
@@ -513,9 +507,9 @@ namespace ft
 
 			vector(const vector& other) : _size(0), allocated_size(other.allocated_size), alloc(other.alloc)
 			{
+				c = this->alloc.allocate(allocated_size);
 				try
 				{
-					c = this->alloc.allocate(allocated_size);
 					init(begin(), other.begin(), other.end(), alloc);
 				} 
 				catch (...)
@@ -540,18 +534,17 @@ namespace ft
 			vector&	operator=(const vector& other)
 			{
 				assign(other.begin(), other.end());
+				_size = other._size;
 				return (*this);
-			}
+			} 
 
 			void	assign(size_type count, const T& value)
 			{
-				T*	old_c = c;
-				
-				if (allocated_size < count)
-					prepare_alloc(count);
-				else
-					destroy(this->begin(), this->end(), alloc);
-				init(this->begin(), this->begin() + count, value);
+				prepare_alloc(count);
+				if (_size > count)
+					destroy(begin() + count, end());
+				for (size_type i = 0; i < count; ++i)
+					c[i] = value;
 				_size = count;
 				return ;
 			}
@@ -561,22 +554,20 @@ namespace ft
 			void assign(typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last)
 			{
 				size_type	count = 0;
-				T*			old_c = c;
 				
 				for (InputIt inc = first; inc != last; ++inc)
 					count++;
-				if (allocated_size < count)
-					prepare_alloc(count);
-				else
+				prepare_alloc(count);
+
+				Iterator this_iter = this->begin();
+				for (InputIt iter = first; iter != last; ++iter)
 				{
-					Iterator this_iter = this->begin();
-					for (InputIt iter = first; iter != last && this_iter != this->end(); ++iter)
-					{
-						*this_iter = *iter;
-						++this_iter;
-					}
-					destroy(this_iter, this->end(), alloc);					
+					*this_iter = *iter;
+					std::cout << "iter value = " << *this_iter << std::endl;
+					++this_iter;
 				}
+				if (_size > count)
+					destroy(this_iter, this->end(), alloc);					
 				_size = count;
 				return ;
 			}
@@ -729,6 +720,7 @@ namespace ft
 					c = old_c;
 					throw ;
 				}
+				std::cout << "reserved : " << new_cap << std::endl;
 			}
 
 			size_type	capacity(void) const
@@ -760,13 +752,13 @@ namespace ft
 				}
 				if (_size == allocated_size)
 				{
+					if (allocated_size != 0)
+						count = allocated_size * 2;
+					else
+						count = 1;
+					c = alloc.allocate(count);
 					try
 					{
-						if (allocated_size != 0)
-							count = allocated_size * 2;
-						else
-							count = 1;
-						c = alloc.allocate(count);
 						init(c, old_c, old_c + index, alloc);
 						for (size_type end = _size; end != index; --end)
 						{
@@ -785,7 +777,6 @@ namespace ft
 						alloc.deallocate(c, count);
 						c = old_c;
 						throw ;
-						return (pos);
 					}
 				}
 				else
@@ -818,13 +809,13 @@ namespace ft
 				size_type	nb_to_move = _size - index;		
 				if (_size + count > allocated_size)
 				{
+					if (allocated_size != 0)
+						count_alloc = allocated_size + count;
+					else
+						count_alloc = count;
+					c = alloc.allocate(count_alloc);
 					try
 					{
-						if (allocated_size != 0)
-							count_alloc = allocated_size + count;
-						else
-							count_alloc = count;
-						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
 						for (size_type i = 0; i < count; ++i)
 						{
@@ -839,7 +830,7 @@ namespace ft
 						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
 						allocated_size = count_alloc;
-						}
+					}
 					catch (...)
 					{
 						alloc.deallocate(c, count_alloc);
@@ -881,13 +872,13 @@ namespace ft
 					count++;
 				if (_size + count > allocated_size)
 				{
+					if (allocated_size != 0)
+						count_alloc = allocated_size + count;
+					else
+						count_alloc = count;
+					c = alloc.allocate(count_alloc);
 					try
 					{
-						if (allocated_size != 0)
-							count_alloc = allocated_size + count;
-						else
-							count_alloc = count;
-						c = alloc.allocate(count_alloc);
 						init(c, old_c, old_c + index, alloc);
 						for (size_type i = 0; i < count; ++i)
 						{
@@ -938,9 +929,7 @@ namespace ft
 				Iterator	save_pos = pos;
 
 				if (pos == this->end())
-				{
 					return (pos);
-				}
 				while (index != pos)
 					++index;
 				++pos;
@@ -990,31 +979,28 @@ namespace ft
 
 			void	push_back(const T& value)
 			{
-				T*	old_c = c;
+				T*			old_c = c;
+				size_type	count;
 				
 				if (_size == allocated_size)
 				{
+					if (allocated_size != 0)
+						count = allocated_size * 2;
+					else
+						count = 1;
+					c = alloc.allocate(count);
 					try
 					{
-						if (allocated_size != 0)
-						{
-							c = alloc.allocate(allocated_size * 2);
-						}
-						else
-							c = alloc.allocate(1);
 						init(c, old_c, old_c + _size, alloc);
 						destroy(old_c, old_c + _size);
 						alloc.deallocate(old_c, allocated_size);
-						if (_size != 0)
-							allocated_size = allocated_size * 2;
-						else
-							allocated_size = 1;
+						allocated_size = count;
 					}
 					catch (...)
 					{
+						alloc.deallocate(c, count);
 						c = old_c;
 						throw ;
-						return ;
 					}
 				}
 				alloc.construct(&c[_size], value);
