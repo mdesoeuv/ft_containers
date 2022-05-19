@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 15:53:45 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 16:01:32 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ namespace ft
 
 			void	prepare_alloc(size_type required_size)
 			{
-				reserve(std::max(allocated_size * 2, required));
+				reserve(std::max(allocated_size * 2, required_size));
 			}
 
 		private:
@@ -764,9 +764,9 @@ namespace ft
 				
 				if (new_cap <= allocated_size)
 					return ;
+				c = alloc.allocate(new_cap);
 				try
 				{
-					c = alloc.allocate(new_cap);
 					init(c, old_c, old_c + _size, alloc);
 					destroy(old_c, old_c + _size, alloc);
 					alloc.deallocate(old_c, allocated_size);
@@ -774,6 +774,7 @@ namespace ft
 				}
 				catch  (...)
 				{
+					alloc.deallocate(c, new_cap);
 					c = old_c;
 					throw ;
 				}
