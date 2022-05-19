@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 16:01:32 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 16:13:17 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -548,33 +548,9 @@ namespace ft
 				T*	old_c = c;
 				
 				if (allocated_size < count)
-				{
-					try
-					{
-						try
-						{
-							c = alloc.allocate(count);
-						}
-						catch (...)
-						{
-							alloc.deallocate(c, count);
-							throw ;
-						}
-						destroy(old_c, old_c + _size, alloc);
-						alloc.deallocate(old_c, allocated_size);
-					}
-					catch (...)
-					{
-						c = old_c;
-						throw ;
-						return ;
-					}
-					allocated_size = count;
-				}
+					prepare_alloc(count);
 				else
-				{
 					destroy(this->begin(), this->end(), alloc);
-				}
 				init(this->begin(), this->begin() + count, value);
 				_size = count;
 				return ;
@@ -588,34 +564,9 @@ namespace ft
 				T*			old_c = c;
 				
 				for (InputIt inc = first; inc != last; ++inc)
-				{
 					count++;
-				}
 				if (allocated_size < count)
-				{
-					try
-					{
-						try
-						{
-							c = alloc.allocate(count);
-						}
-						catch (...)
-						{
-							alloc.deallocate(c, count);
-							throw ;
-						}
-						init(this->begin(), first, last, alloc);
-						destroy(old_c, old_c + _size, alloc);
-						this->alloc.deallocate(old_c, allocated_size);
-					}
-					catch (...)
-					{
-						c = old_c;
-						throw ;
-						return ;
-					}
-					allocated_size = count;
-				}
+					prepare_alloc(count);
 				else
 				{
 					Iterator this_iter = this->begin();
