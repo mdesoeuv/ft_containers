@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 15:48:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 15:48:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -639,8 +639,10 @@ namespace ft
 					{
 					}
 
-					Iterator&	operator=(const Iterator& rhs) : ptr(rhs.ptr)
+					Iterator&	operator=(const Iterator& rhs)
 					{
+						ptr = rhs.ptr;
+						
 						return (*this);
 					}
 
