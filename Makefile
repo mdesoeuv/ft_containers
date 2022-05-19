@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/05/18 10:24:21 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/19 11:03:46 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME	:=	ft_containers
 
 CXX		:=	c++
 
-DEBUG		:=	-fsanitize=address -g3
-CXXFLAGS	:=	-Wall -Werror -Wextra -std=c++98 $(DEBUG)
+# DEBUG		:=	-fsanitize=address
+CXXFLAGS	:=	 -g3 -O3 -Wall -Werror -Wextra -std=c++98 $(DEBUG)
 
 SRCS	:=	test_map.cpp \
 			test_vector.cpp \

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/10 10:15:35 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 11:27:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -549,35 +549,10 @@ namespace ft
 			/* original alloc is preserved */
 			vector&	operator=(const vector& other)
 			{
-				T*	old_c = c;
-				
-				if (allocated_size < other.allocated_size)
-				{
-					try
-					{
-						c = alloc.allocate(other.allocated_size);
-						destroy(old_c, old_c + _size, alloc);
-						alloc.deallocate(old_c, allocated_size);
-						allocated_size = other.allocated_size;
-					}
-					catch (...)
-					{
-						c = old_c;
-						throw ;
-						return (*this);
-					}
-				}
-				Iterator start = this->begin();
-				for (Const_Iterator cursor = other.begin(); cursor != other.end(); ++cursor)
-				{
-					*start = *cursor;
-					++start;
-				}
-				_size = other._size;
+				assign(other.begin(), other.end());
 				return (*this);
 			}
 
-			/* old elements are always destroyed by assign */
 			void	assign(size_type count, const T& value)
 			{
 				T*	old_c = c;
@@ -623,6 +598,7 @@ namespace ft
 					try
 					{
 						c = this->alloc.allocate(count);
+						init(this->begin(), first, last, alloc);
 						destroy(old_c, old_c + _size, alloc);
 						this->alloc.deallocate(old_c, allocated_size);
 					}
@@ -636,9 +612,14 @@ namespace ft
 				}
 				else
 				{
-					destroy(this->begin(), this->end(), alloc);
+					Iterator this_iter = this->begin();
+					for (InputIt iter = first; iter != last && this_iter != this->end(); ++iter)
+					{
+						*this_iter = *iter;
+						++this_iter;
+					}
+					destroy(this_iter, this->end(), alloc);					
 				}
-				init(this->begin(), first, last, alloc);
 				_size = count;
 				return ;
 			}
