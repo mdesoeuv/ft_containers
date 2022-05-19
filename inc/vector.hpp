@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 11:53:48 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 13:28:43 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -550,7 +550,15 @@ namespace ft
 				{
 					try
 					{
-						c = alloc.allocate(count);
+						try
+						{
+							c = alloc.allocate(count);
+						}
+						catch (...)
+						{
+							alloc.deallocate(c, count);
+							throw ;
+						}
 						destroy(old_c, old_c + _size, alloc);
 						alloc.deallocate(old_c, allocated_size);
 					}
@@ -586,7 +594,15 @@ namespace ft
 				{
 					try
 					{
-						c = this->alloc.allocate(count);
+						try
+						{
+							c = alloc.allocate(count);
+						}
+						catch (...)
+						{
+							alloc.deallocate(c, count);
+							throw ;
+						}
 						init(this->begin(), first, last, alloc);
 						destroy(old_c, old_c + _size, alloc);
 						this->alloc.deallocate(old_c, allocated_size);
