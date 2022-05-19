@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 15:49:34 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/19 15:53:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ namespace ft
 				BidirectionalItA cursor = end;
 				while (cursor != start)
 					alloc.destroy(&*--cursor);
+			}
+
+			void	prepare_alloc(size_type required_size)
+			{
+				reserve(std::max(allocated_size * 2, required));
 			}
 
 		private:
