@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 16:41:39 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:26:40 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ namespace ft
 				return (iter);
 			}
 
-			friend Reverse_Iterator operator+ (difference_type n, const Reverse_Iterator& rhs)
+			friend Reverse_Iterator operator+ (difference_type n, const Reverse_Iterator rhs)
 			{
 				return (rhs + n);
 			}
@@ -129,7 +129,7 @@ namespace ft
 				return (iter);
 			}
 
-			friend difference_type	operator-(const Reverse_Iterator& lhs, const Reverse_Iterator& rhs)
+			friend difference_type	operator-(const Reverse_Iterator lhs, const Reverse_Iterator rhs)
 			{
 				return (rhs.current - lhs.current);
 			}

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 17:04:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:22:47 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,16 +139,6 @@ namespace ft
 						return (*this);
 					}
 
-					bool	operator==(const Iterator& rhs)
-					{
-						return (ptr == rhs.ptr);
-					}
-
-					bool	operator!=(const Iterator& rhs)
-					{
-						return (!(ptr == rhs.ptr));
-					}
-
 					Iterator&	operator++(void)
 					{
 						ptr++;
@@ -189,7 +179,7 @@ namespace ft
 						return (*this);
 					}
 
-					friend Iterator	operator+(const Iterator& lhs, difference_type n)
+					friend Iterator	operator+(const Iterator lhs, difference_type n)
 					{
 						Iterator	iter(lhs);
 						
@@ -197,7 +187,7 @@ namespace ft
 						return (iter);
 					}
 
-					friend Iterator	operator+(difference_type n, const Iterator& rhs)
+					friend Iterator	operator+(difference_type n, const Iterator rhs)
 					{
 						Iterator	iter(rhs);
 						
@@ -205,7 +195,7 @@ namespace ft
 						return (iter);
 					}
 
-					friend Iterator	operator-(const Iterator& lhs, difference_type n)
+					friend Iterator	operator-(const Iterator lhs, difference_type n)
 					{
 						Iterator	iter(lhs);
 						
@@ -213,7 +203,7 @@ namespace ft
 						return (iter);
 					}
 
-					friend difference_type	operator-(const Iterator& lhs, const Iterator& rhs)
+					friend difference_type	operator-(const Iterator lhs, const Iterator rhs)
 					{
 						return (lhs.ptr - rhs.ptr);
 					}
@@ -228,24 +218,34 @@ namespace ft
 						return (ptr);
 					}
 
-					bool	operator<(const Iterator& rhs)
+					friend bool	operator==(const Iterator lhs, const Iterator rhs)
 					{
-						return (ptr < rhs.ptr);
+						return (lhs.ptr == rhs.ptr);
 					}
 
-					bool	operator<=(const Iterator& rhs)
+					friend bool	operator!=(const Iterator lhs, const Iterator rhs)
 					{
-						return (ptr <= rhs.ptr);
+						return (!(lhs.ptr == rhs.ptr));
 					}
 
-					bool	operator>(const Iterator& rhs)
+					friend bool	operator<(const Iterator lhs, const Iterator rhs)
 					{
-						return (ptr > rhs.ptr);
+						return (lhs.ptr < rhs.ptr);
 					}
 
-					bool	operator>=(const Iterator& rhs)
+					friend bool	operator<=(const Iterator lhs, const Iterator rhs)
 					{
-						return (ptr >= rhs.ptr);
+						return (lhs.ptr <= rhs.ptr);
+					}
+
+					friend bool	operator>(const Iterator lhs, const Iterator rhs)
+					{
+						return (lhs.ptr > rhs.ptr);
+					}
+
+					friend bool	operator>=(const Iterator lhs, const Iterator rhs)
+					{
+						return (lhs.ptr >= rhs.ptr);
 					}
 
 					T&		operator[](difference_type	n)
@@ -295,14 +295,14 @@ namespace ft
 						return (*this);
 					}
 
-					bool	operator==(const Const_Iterator& rhs)
+					friend bool	operator==(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (ptr == rhs.ptr);
+						return (lhs.ptr == rhs.ptr);
 					}
 
-					bool	operator!=(const Const_Iterator& rhs)
+					friend bool	operator!=(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (!(ptr == rhs.ptr));
+						return (!(lhs.ptr == rhs.ptr));
 					}
 
 					Const_Iterator&	operator++(void)
@@ -355,7 +355,7 @@ namespace ft
 						return (*this);
 					}
 
-					friend Const_Iterator	operator+(const Const_Iterator& lhs, difference_type n)
+					friend Const_Iterator	operator+(const Const_Iterator lhs, difference_type n)
 					{
 						Const_Iterator	iter(lhs);
 						
@@ -363,7 +363,7 @@ namespace ft
 						return (iter);
 					}
 
-					friend Const_Iterator	operator+(difference_type n, const Const_Iterator& rhs)
+					friend Const_Iterator	operator+(difference_type n, const Const_Iterator rhs)
 					{
 						Const_Iterator	iter(rhs);
 						
@@ -372,7 +372,7 @@ namespace ft
 					}
 
 
-					friend Const_Iterator	operator-(const Const_Iterator& lhs, difference_type n)
+					friend Const_Iterator	operator-(const Const_Iterator lhs, difference_type n)
 					{
 						Const_Iterator	iter(lhs);
 						
@@ -380,52 +380,30 @@ namespace ft
 						return (iter);
 					}
 
-					friend difference_type	operator-(const Const_Iterator& lhs, const Const_Iterator& rhs)
+					friend difference_type	operator-(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						difference_type	n = 0;
-						Const_Iterator	lhs_iter(lhs);
-						Const_Iterator	rhs_iter(rhs);
-						
-						if (lhs_iter.ptr == rhs_iter.ptr)
-							return (0);
-						if (lhs_iter.ptr < rhs_iter.ptr)
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr++;
-								n++;
-							}
-						}
-						else
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr--;
-								n++;
-							}
-						}
-						return (n);
+						return (lhs.ptr - rhs.ptr);
 					}
 
 
-					bool	operator<(const Const_Iterator& rhs)
+					friend bool	operator<(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (ptr < rhs.ptr);
+						return (lhs.ptr < rhs.ptr);
 					}
 
-					bool	operator<=(const Const_Iterator& rhs)
+					friend bool	operator<=(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (ptr <= rhs.ptr);
+						return (lhs.tr <= rhs.ptr);
 					}
 
-					bool	operator>(const Const_Iterator& rhs)
+					friend bool	operator>(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (ptr > rhs.ptr);
+						return (lhs.ptr > rhs.ptr);
 					}
 
-					bool	operator>=(const Const_Iterator& rhs)
+					friend bool	operator>=(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (ptr >= rhs.ptr);
+						return (lhs.ptr >= rhs.ptr);
 					}
 
 					const T&	operator[](difference_type	n)
@@ -434,6 +412,8 @@ namespace ft
 					}
 
 			};
+
+			
 
 	public:
 		
