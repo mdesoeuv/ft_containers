@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 16:54:56 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 16:57:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,10 +471,7 @@ namespace ft
 				c = this->alloc.allocate(count);
 				try
 				{
-					
-					Iterator	start = this->begin();
-					
-					init(start, start + count, value, this->alloc);
+					init(this->begin(), this->begin() + count, value, this->alloc);
 				}
 				catch(...)
 				{
@@ -493,8 +490,7 @@ namespace ft
 				c = this->alloc.allocate(count);
 				try
 				{
-					Iterator start = this->begin();
-					init(start, first, last, this->alloc);
+					init(this->begin(), first, last, this->alloc);
 				}
 				catch(...)
 				{
