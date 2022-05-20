@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 17:00:17 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:04:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ namespace ft
 					}
 					
 					Iterator(const Iterator& other) : ptr(other.ptr)
+					{}
+					
+					Iterator(const Const_Iterator& other) : ptr(other.ptr)
 					{}
 					
 					~Iterator(void)
