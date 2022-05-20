@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:23:27 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:50:29 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ namespace ft
 
 				public:
 
-					typedef T	value_type;
-					typedef T&	reference_type;
-					typedef const T& const_reference;
-					typedef T*	pointer;
-					typedef std::random_access_iterator_tag iterator_category;
-					typedef typename vector::difference_type difference_type;
+					typedef T									value_type;
+					typedef T&									reference;
+					typedef const T& 							const_reference;
+					typedef T*									pointer;
+					typedef std::random_access_iterator_tag 	iterator_category;
+					typedef typename vector::difference_type	difference_type;
 
 					Iterator(void) : ptr(NULL)
 					{
@@ -283,11 +283,11 @@ namespace ft
 
 				public:
 
-					typedef const T		value_type;
-					typedef const T&	reference_type;
-					typedef const T*	pointer;
-					typedef std::random_access_iterator_tag iterator_category;
-					typedef typename vector::difference_type difference_type;
+					typedef const T								value_type;
+					typedef const T&							reference;
+					typedef const T*							pointer;
+					typedef std::random_access_iterator_tag		iterator_category;
+					typedef typename vector::difference_type	difference_type;
 
 					Const_Iterator(void) : ptr(NULL)
 					{
@@ -751,14 +751,10 @@ namespace ft
 
 			Iterator	insert(Iterator pos, const T& value)
 			{
-				T*			old_c = c;
-				size_type	index = 0;
-				size_type	count;
+				T*				old_c = c;
+				size_type		index = std::distance(begin(), pos);
+				size_type		count;
 				
-				for (Iterator iter = this->begin(); iter != pos; ++iter)
-				{
-					index++;
-				}
 				if (_size == allocated_size)
 				{
 					if (allocated_size != 0)

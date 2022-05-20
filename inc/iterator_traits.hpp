@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:13 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/04 14:45:14 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:42:30 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ namespace ft
 	template <class Iter>
 	struct iterator_traits
 	{
-		typedef Iter::difference_type difference_type;
-		typedef Iter::value_type value_type;
-		typedef Iter::pointer pointer;
-		typedef Iter::reference reference;
-		typedef Iter::iterator_category iterator_category;
+		typedef typename Iter::difference_type		difference_type;
+		typedef typename Iter::value_type			value_type;
+		typedef typename Iter::pointer				pointer;
+		typedef typename Iter::reference			reference;
+		typedef typename Iter::iterator_category	iterator_category;
 	};
 
 	template <class T>

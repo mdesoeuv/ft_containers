@@ -6,32 +6,35 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:15:53 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:44:33 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include "iterator_traits.hpp"
+
 namespace ft
 {
-	template <typename Iterator>
+	template <typename Iter>
 	class	Reverse_Iterator
 	{
 		protected:
 
-			Iterator	current;
+			Iter	current;
 
 		public:
 
-			typedef typename Iterator::difference_type difference_type;
-			typedef typename Iterator::reference_type reference_type;
-			typedef typename Iterator::value_type value_type;
-			typedef typename Iterator::pointer pointer;
+			typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
+			typedef typename ft::iterator_traits<Iter>::value_type			value_type;
+			typedef typename ft::iterator_traits<Iter>::difference_type		difference_type;
+			typedef typename ft::iterator_traits<Iter>::pointer				pointer;
+			typedef typename ft::iterator_traits<Iter>::reference			reference;	
 
 			Reverse_Iterator(void) : current()
 			{}
 
-			Reverse_Iterator(Iterator iter) : current(iter)
+			Reverse_Iterator(Iter iter) : current(iter)
 			{}
 
 			Reverse_Iterator(const Reverse_Iterator& other) : current(other.current)
@@ -51,7 +54,7 @@ namespace ft
 				return (*this);
 			}
 
-			Iterator	base(void) const
+			Iter	base(void) const
 			{
 				return (current);
 			}
@@ -84,9 +87,9 @@ namespace ft
 				return (temp);
 			}
 
-			reference_type	operator*(void)
+			reference	operator*(void)
 			{
-				Iterator temp(current);
+				Iter temp(current);
 				
 				temp--;
 				return (*(temp));
@@ -131,7 +134,7 @@ namespace ft
 				return (rhs.current - lhs.current);
 			}
 
-			reference_type	operator[](difference_type n) const
+			reference	operator[](difference_type n) const
 			{
 				return (*(current - n - 1));
 			}
