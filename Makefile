@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/05/20 15:00:38 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/20 16:18:57 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,12 @@ NAME	:=	ft_containers
 
 CXX		:=	c++
 
-# DEBUG		:=	-fsanitize=address
-CXXFLAGS	:=	 -g3 -O3 -Wall -Werror -Wextra -std=c++98 $(DEBUG)
+DEBUG		:=	-fsanitize=address
+CXXFLAGS	:= -g3 -O3 -Wall -Werror -Wextra -std=c++98 $(DEBUG)
+
+ifeq ($(CHECK_STATUS), 1)
+	CXXFLAGS += -DCHECK_STATUS_ON
+endif
 
 SRCS	:=	test_map.cpp \
 			test_vector.cpp \
@@ -85,6 +89,7 @@ clean		:
 fclean		:	clean
 				rm -f $(NAME) $(NAME)_FT $(NAME)_STL
 
-re			:	fclean all
+re			:	fclean
+	$(MAKE) all
 
 .PHONY		:	all re clean fclean ft stl

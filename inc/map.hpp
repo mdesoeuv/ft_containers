@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 15:18:13 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:40:18 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ namespace ft
 			
 			private:
 
+#ifdef CHECK_STATUS_ON
 			void	display(void)
 			{
 				display_BaseNode(root(), 0);
@@ -132,6 +133,7 @@ namespace ft
 				return (true);
 			}
 
+
 		public:
 
 			/* this function is public to help evaluators of this project */
@@ -145,7 +147,8 @@ namespace ft
 				}
 				std::cout << "size : " << this->size() << std::endl << std::endl;
 			}
-		
+#endif /* CHECK_STATUS_ON */
+
 		private:
 
 			key_compare			comp;
