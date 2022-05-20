@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 16:33:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 16:43:56 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,9 +524,7 @@ namespace ft
 
 			~vector(void)
 			{
-				Iterator	start = this->begin();
-				Iterator	end = this->end();
-				destroy(start, end, alloc);
+				destroy(this->begin(), this->end(), alloc);
 				alloc.deallocate(c, allocated_size);
 			}
 
