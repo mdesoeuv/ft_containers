@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/11 15:11:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:09:15 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ namespace ft
 			{}
 
 			Reverse_Iterator(const Reverse_Iterator& other) : current(other.current)
+			{}
+
+			template <class U>
+			Reverse_Iterator(const Reverse_Iterator<U>& other) : current(other.current)
 			{}
 
 			~Reverse_Iterator(void)

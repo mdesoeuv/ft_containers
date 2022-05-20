@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 10:28:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 10:38:06 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,7 +458,8 @@ namespace ft
 		/* ---------- constructors + destructor ---------- */
 		
 			vector(void) : c(NULL), _size(0), allocated_size(0)
-			{}
+			{
+			}
 
 			explicit vector(const Allocator& alloc) : c(NULL), _size(0), allocated_size(0), alloc(alloc)
 			{	
