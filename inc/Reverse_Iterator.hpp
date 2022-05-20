@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:09:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:11:03 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace ft
 			typedef typename Iterator::value_type value_type;
 			typedef typename Iterator::pointer pointer;
 
-			Reverse_Iterator(void)
+			Reverse_Iterator(void) : current()
 			{}
 
 			Reverse_Iterator(Iterator iter) : current(iter)
