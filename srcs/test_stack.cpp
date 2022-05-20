@@ -6,18 +6,16 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 09:50:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:05:14 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "../inc/stack.hpp"
-#include "../inc/vector.hpp"
+#include "../inc/tests.hpp"
 
 int test_stack(void)
 {
 
-	ft::stack<int> test_stack;
+	lib::stack<int> test_stack;
 
 	std::cout << "testing stack implementation :" << std::endl << std::endl;
 	for (int i = 0; i < 10; ++i)
@@ -25,7 +23,7 @@ int test_stack(void)
 		test_stack.push(i);
 	}
 
-	ft::stack<int> copy_stack(test_stack);
+	lib::stack<int> copy_stack(test_stack);
 
 	std::cout << "is the copy identical ?" << std::endl;
 	if (copy_stack == test_stack)

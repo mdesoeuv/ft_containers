@@ -6,59 +6,58 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 16:35:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 11:47:32 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:09:04 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "../inc/map.hpp" 
+#include "../inc/tests.hpp" 
 
 int	test_map(void)
 {
 	
-	typedef ft::map<int, std::string> Map;
+	typedef lib::map<int, std::string> Map;
 	Map	myMap;
-	myMap.status();
-	myMap.insert(ft::make_pair(10, "first"));
-	myMap.insert(ft::make_pair(15, "second"));
-	myMap.insert(ft::make_pair(5, "third"));
-	ft::pair<Map::iterator, bool> insertion_result;
-	insertion_result = myMap.insert(ft::make_pair(0, "fourth"));
+	// myMap.status();
+	myMap.insert(lib::make_pair(10, "first"));
+	myMap.insert(lib::make_pair(15, "second"));
+	myMap.insert(lib::make_pair(5, "third"));
+	lib::pair<Map::iterator, bool> insertion_result;
+	insertion_result = myMap.insert(lib::make_pair(0, "fourth"));
 	std::cout << "insertion success of non double element : " << insertion_result.second << std::endl;
 	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
-	insertion_result = myMap.insert(ft::make_pair(0, "fourth"));
+	insertion_result = myMap.insert(lib::make_pair(0, "fourth"));
 	std::cout << "insertion success of non double element : " << insertion_result.second << std::endl;
 	std::cout << "iterator on the inserted element : " << insertion_result.first->first << std::endl;
-	// myMap.insert(ft::make_pair(30, "lol"));
-	// myMap.insert(ft::make_pair(42, "lol2"));
+	// myMap.insert(lib::make_pair(30, "lol"));
+	// myMap.insert(lib::make_pair(42, "lol2"));
 	std::cout << "insertion with operator[], inserting key 3, value HERE" << std::endl;
 	myMap[3] = "HERE";
 	std::cout << myMap[3] << std::endl;
-	myMap.status();
-	insertion_result = myMap.insert(ft::make_pair(-12, "lol"));
+	// myMap.status();
+	insertion_result = myMap.insert(lib::make_pair(-12, "lol"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
-	insertion_result = myMap.insert(ft::make_pair(-15, "third"));
+	insertion_result = myMap.insert(lib::make_pair(-15, "third"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
-	insertion_result = myMap.insert(ft::make_pair(-25, "third"));
+	insertion_result = myMap.insert(lib::make_pair(-25, "third"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
-	insertion_result = myMap.insert(ft::make_pair(-35, "third"));
+	insertion_result = myMap.insert(lib::make_pair(-35, "third"));
 	std::cout << "insertion success : " << insertion_result.second << std::endl;
-	myMap.status();
-	std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, ft::make_pair(-30, "INSERTED HINT"))->second << std::endl;
-	// std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, ft::make_pair(-30, "INSERTED HINT"))->second << std::endl;
-	myMap.status();
+	// myMap.status();
+	std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, lib::make_pair(-30, "INSERTED HINT"))->second << std::endl;
+	// std::cout << "inserting value with predecessor as hint : " << myMap.insert(insertion_result.first, lib::make_pair(-30, "INSERTED HINT"))->second << std::endl;
+	// myMap.status();
 	
 	std::cout << std::endl << "creating a second map :" << std::endl;
 	Map secondMap;
-	secondMap.insert(ft::make_pair(-1000, "minus thousand"));
-	secondMap.status();
+	secondMap.insert(lib::make_pair(-1000, "minus thousand"));
+	// secondMap.status();
 
 	std::cout << std::endl << "--- swaping maps ---" << std::endl;
 	myMap.swap(secondMap);
 	std::cout << "displaying first map :" << std::endl;
-	myMap.status();
+	// myMap.status();
 	std::cout << std::endl << "displaying second map :" << std::endl;
-	secondMap.status();
+	// secondMap.status();
 
 	std::cout << std::endl << "searching for element with key = -1000 in first map with count() : " <<  myMap.count(-1000) << std::endl;
 	std::cout << "searching for element with key = 777 in first map with count () : " <<  myMap.count(777) << std::endl;
@@ -108,7 +107,7 @@ int	test_map(void)
 		std::cout << "false" << std::endl;
 
 	std::cout << std::endl << "< testing equal_range and lower_bound upper_bound function >" << std::endl;
-	ft::pair<Map::iterator, Map::iterator> pair_range = secondMap.equal_range(3);
+	lib::pair<Map::iterator, Map::iterator> pair_range = secondMap.equal_range(3);
 	std::cout << "displaying key of equal_range(3) : " << pair_range.first->first << ", " << pair_range.second->first << std::endl;
 	pair_range = secondMap.equal_range(5);
 	std::cout << "displaying key of equal_range(5) : " << pair_range.first->first << ", " << pair_range.second->first << std::endl;
@@ -125,7 +124,7 @@ int	test_map(void)
 		std::cout << "end()" << std::endl;
 	std::cout << "testing if references from iterators are valid are writable : look for the ZOB" << std::endl;
 	secondMap.begin()->second = "ZOB";
-	secondMap.status();
+	// secondMap.status();
 
 	std::cout << std::endl << "< testing at(key) function >" << std::endl;
 	std::cout << "value at key = 5 is : " << secondMap.at(5) << std::endl;
@@ -142,14 +141,14 @@ int	test_map(void)
 	std::cout << std::endl << "< testing erase functions >" << std::endl;
 	std::cout << "erasing the node key=5, value=ZOB" << std::endl;
 	secondMap.erase(5);
-	secondMap.status();
+	// secondMap.status();
 
 	std::cout << std::endl << "erasing the iter=begin()" << std::endl;
 	secondMap.erase(secondMap.begin());
-	secondMap.status();
+	// secondMap.status();
 	std::cout << std::endl << "removing root node :" << std::endl;
 	secondMap.erase(3);
-	secondMap.status();
+	// secondMap.status();
 
 	std::cout << std::endl << "< testing operator== >" << std::endl;
 	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
@@ -165,39 +164,39 @@ int	test_map(void)
 	
 	std::cout << std::endl << "< testing operator= >" << std::endl;
 	Map	thirdMap;
-	thirdMap.insert(ft::make_pair(42, "forty-two"));
+	thirdMap.insert(lib::make_pair(42, "forty-two"));
 	std::cout << "before assignation :" << std::endl;
-	thirdMap.status();
+	// thirdMap.status();
 	std::cout << "after assignation :" << std::endl;
 	thirdMap = secondMap;
 	std::cout << "is assigned map really equal to other map : " << (thirdMap == secondMap) << std::endl;
-	thirdMap.status();
-	secondMap.status();
+	// thirdMap.status();
+	// secondMap.status();
 
 	std::cout << std::endl << "construction by copy :" << std::endl;
 	Map fourthMap(thirdMap);
-	fourthMap.status();
+	// fourthMap.status();
 
 	std::cout << std::endl << "changing element in previous map to prove deep copy :" << std::endl;
-	thirdMap.insert(ft::make_pair(42, "forty-two"));
-	thirdMap.status();
+	thirdMap.insert(lib::make_pair(42, "forty-two"));
+	// thirdMap.status();
 	std::cout << std::endl;
-	fourthMap.status(); 
+	// fourthMap.status(); 
 	std::cout << std::endl << "removing root key: " << std::endl;
 	fourthMap.erase(0);
-	fourthMap.status();
+	// fourthMap.status();
 
 	std::cout << std::endl << "erasing with iterators" << std::endl;
 	std::cout << "begin : " << fourthMap.begin()->first << ", end : " << fourthMap.rbegin()->first << std::endl;
 	fourthMap.erase(fourthMap.begin(), fourthMap.end());
 	std::cout << "display :" << std::endl;
-	fourthMap.status();
+	// fourthMap.status();
 	
-	myMap.status();
+	// myMap.status();
 	std::cout << "second map status" << std::endl;
-	secondMap.status();
-	thirdMap.status();
-	fourthMap.status();
+	// secondMap.status();
+	// thirdMap.status();
+	// fourthMap.status();
 	
 	std::cout << std::endl << "--- clearing maps ---" << std::endl;
 	myMap.clear();
@@ -206,9 +205,9 @@ int	test_map(void)
 	std::cout << "map 2 < map 1 : " << (secondMap < myMap) << std::endl;
 	std::cout << "map 1 == map 2 : " << (myMap == secondMap) << std::endl;
 	std::cout << "displaying first map :" << std::endl;
-	myMap.status();
+	// myMap.status();
 	std::cout << "displaying second map :" << std::endl;
-	secondMap.status();
+	// secondMap.status();
 	std::cout << "is the first map empty ? " << myMap.empty() << std::endl;
 
 	std::cout << "max_size : " << secondMap.max_size() << std::endl;
@@ -217,13 +216,13 @@ int	test_map(void)
 	std::cout << "last test with 1000 elements inserted one by one to check perfs" << std::endl;
 	for (int i = 0; i < 1000; ++i)
 	{
-		fifthMap.insert(ft::make_pair(i, "string"));
+		fifthMap.insert(lib::make_pair(i, "string"));
 	}
-	fifthMap.status();
+	// fifthMap.status();
 	fifthMap.erase(fifthMap.begin());
-	fifthMap.status();
+	// fifthMap.status();
 	fifthMap.erase(--fifthMap.end());
-	fifthMap.status();
+	// fifthMap.status();
 
 	std::cout << "end of main" << std::endl;
 

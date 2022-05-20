@@ -6,11 +6,14 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:13 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:42:30 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:07:20 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include <iterator>
+#include <stdint.h>
 
 namespace ft
 {

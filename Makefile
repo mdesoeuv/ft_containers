@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/05/19 11:47:47 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/20 15:00:38 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,10 +71,10 @@ $(OBJS_DIR)$(FT_DIR)%.o:	$(SRCS_DIR)%.cpp Makefile $(addprefix $(INC_DIR), $(HEA
 all			:	ft stl $(NAME)
 
 stl			:	$(OBJS_FILES_STL)
-				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES_STL) -o $(NAME)_STL
+				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR)  $(OBJS_FILES_STL) -o $(NAME)_STL
 
 ft			:	$(OBJS_FILES_FT)
-				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) -DCHOICE=0 $(OBJS_FILES_FT) -o $(NAME)_FT
+				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES_FT) -o $(NAME)_FT
 
 $(NAME)		:	$(OBJS_FILES)
 				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
