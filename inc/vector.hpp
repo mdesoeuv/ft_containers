@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 16:43:56 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 16:54:56 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 			allocator_type	alloc;
 		
 			template <typename BidirectionalItA, typename InputItB>
-			void init(BidirectionalItA start_a, InputItB start_b, InputItB end_b, Allocator alloc) {
+			void init(BidirectionalItA start_a, InputItB start_b, InputItB end_b, Allocator& alloc) {
 				BidirectionalItA cursor = start_a;
 				try {
 					for (; start_b != end_b; ++cursor, ++start_b)
@@ -65,7 +65,7 @@ namespace ft
 			}
 		
 			template <typename BidirectionalItA>
-			void init(BidirectionalItA start, BidirectionalItA end, T value) {
+			void init(BidirectionalItA start, BidirectionalItA end, T value, Allocator& alloc) {
 				BidirectionalItA cursor = start;
 				try {
 					for (; cursor != end; ++cursor)
@@ -80,7 +80,7 @@ namespace ft
 			}
 		
 			template <typename BidirectionalItA>
-			void destroy(BidirectionalItA start, BidirectionalItA end, Allocator alloc = Allocator())
+			void destroy(BidirectionalItA start, BidirectionalItA end, Allocator& alloc)
 			{
 				BidirectionalItA cursor = end;
 				while (cursor != start)
@@ -474,7 +474,7 @@ namespace ft
 					
 					Iterator	start = this->begin();
 					
-					init(start, start + count, value);
+					init(start, start + count, value, this->alloc);
 				}
 				catch(...)
 				{
@@ -512,7 +512,7 @@ namespace ft
 				c = this->alloc.allocate(allocated_size);
 				try
 				{
-					init(begin(), other.begin(), other.end(), alloc);
+					init(begin(), other.begin(), other.end(), this->alloc);
 				} 
 				catch (...)
 				{
@@ -524,7 +524,7 @@ namespace ft
 
 			~vector(void)
 			{
-				destroy(this->begin(), this->end(), alloc);
+				destroy(this->begin(), this->end(), this->alloc);
 				alloc.deallocate(c, allocated_size);
 			}
 
@@ -542,7 +542,7 @@ namespace ft
 			{
 				prepare_alloc(count);
 				if (_size > count)
-					destroy(begin() + count, end());
+					destroy(begin() + count, end(), alloc);
 				size_type i = 0;
 				for (; i < count && i < _size; ++i)
 					c[i] = value;
@@ -719,8 +719,8 @@ namespace ft
 				c = alloc.allocate(new_cap);
 				try
 				{
-					init(c, old_c, old_c + _size, alloc);
-					destroy(old_c, old_c + _size, alloc);
+					init(c, old_c, old_c + _size, this->alloc);
+					destroy(old_c, old_c + _size, this->alloc);
 					alloc.deallocate(old_c, allocated_size);
 					allocated_size = new_cap;
 				}
@@ -764,7 +764,7 @@ namespace ft
 					c = alloc.allocate(count);
 					try
 					{
-						init(c, old_c, old_c + index, alloc);
+						init(c, old_c, old_c + index, this->alloc);
 						for (size_type end = _size; end != index; --end)
 						{
 							if (end != _size)
@@ -821,7 +821,7 @@ namespace ft
 					c = alloc.allocate(count_alloc);
 					try
 					{
-						init(c, old_c, old_c + index, alloc);
+						init(c, old_c, old_c + index, this->alloc);
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], value);
@@ -832,7 +832,7 @@ namespace ft
 							alloc.construct(&c[end], old_c[end - count]);
 							nb_to_move--;
 						}
-						destroy(old_c, old_c + _size);
+						destroy(old_c, old_c + _size, alloc);
 						alloc.deallocate(old_c, allocated_size);
 						allocated_size = count_alloc;
 					}
@@ -884,7 +884,7 @@ namespace ft
 					c = alloc.allocate(count_alloc);
 					try
 					{
-						init(c, old_c, old_c + index, alloc);
+						init(c, old_c, old_c + index, this->alloc);
 						for (size_type i = 0; i < count; ++i)
 						{
 							alloc.construct(&c[index], *first);
@@ -896,7 +896,7 @@ namespace ft
 							alloc.construct(&c[end], old_c[end - count]);
 							nb_to_move--;
 						}
-						destroy(old_c, old_c + _size);
+						destroy(old_c, old_c + _size, alloc);
 						alloc.deallocate(old_c, allocated_size);
 						allocated_size = count_alloc;
 					}
@@ -996,8 +996,8 @@ namespace ft
 					c = alloc.allocate(count);
 					try
 					{
-						init(c, old_c, old_c + _size, alloc);
-						destroy(old_c, old_c + _size);
+						init(c, old_c, old_c + _size, this->alloc);
+						destroy(old_c, old_c + _size, this->alloc);
 						alloc.deallocate(old_c, allocated_size);
 						allocated_size = count;
 					}
@@ -1041,8 +1041,8 @@ namespace ft
 						}
 						else
 							c = alloc.allocate(count);
-						init(c, old_c, old_c + _size, alloc);
-						destroy(old_c, old_c + _size);
+						init(c, old_c, old_c + _size, this->alloc);
+						destroy(old_c, old_c + _size, this->alloc);
 						alloc.deallocate(old_c, allocated_size);
 						if (allocated_size != 0)
 							allocated_size = allocated_size * 2;
