@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/19 17:47:48 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 10:28:15 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,12 +560,21 @@ namespace ft
 				prepare_alloc(count);
 
 				Iterator this_iter = this->begin();
-				for (InputIt iter = first; iter != last; ++iter)
+				InputIt iter = first;
+				for (; iter != last && this_iter != end(); ++iter)
 				{
 					*this_iter = *iter;
 					std::cout << "iter value = " << *this_iter << std::endl;
 					++this_iter;
 				}
+				for (; iter != last; ++iter)
+				{
+					alloc.construct(&*this_iter, *iter);
+					*this_iter = *iter;
+					std::cout << "iter value = " << *this_iter << std::endl;
+					++this_iter;
+				}
+				
 				if (_size > count)
 					destroy(this_iter, this->end(), alloc);					
 				_size = count;
