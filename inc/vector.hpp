@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 10:38:06 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:23:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -730,7 +730,6 @@ namespace ft
 					c = old_c;
 					throw ;
 				}
-				std::cout << "reserved : " << new_cap << std::endl;
 			}
 
 			size_type	capacity(void) const
@@ -742,9 +741,9 @@ namespace ft
 			
 			void	clear(void)
 			{
-				for (size_type i = 0; i < _size; ++i)
+				for (size_type i = _size; i != 0 ;)
 				{
-					alloc.destroy(&c[i]);
+					alloc.destroy(&c[--i]);
 				}
 				_size = 0;
 
