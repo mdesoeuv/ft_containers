@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 15:51:37 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 16:38:45 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,19 @@ int test_vector(void)
 	std::cout << "vector size : " << str_temp.size() << ", vector capacity : " << str_temp.capacity() << std::endl;
 	for (size_t i = 0; i < str_temp.size(); ++i)
 		std::cout << str_temp[i] << std::endl;
+
+	
+	std::cout << std::endl << "< testing at() function >" << std::endl;
+	std::cout << "value at 0 is : " << str_temp.at(0) << std::endl;
+	std::cout << "value at 9999 is : ";
+	try
+	{
+		std::cout << str_temp.at(9999) << std::endl;
+	}
+	catch (std::out_of_range& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	
 	std::cout << std::endl << "testing vector swap :" << std::endl;
 	lib::vector<std::string>	vs1;

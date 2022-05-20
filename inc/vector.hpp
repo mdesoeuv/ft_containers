@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 15:30:29 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 16:33:01 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -594,14 +594,14 @@ namespace ft
 			reference	at(size_type pos)
 			{
 				if (pos >= _size)
-					throw std::out_of_range("position out of vector's range");
+					throw std::out_of_range("vector");
 				return (c[pos]);
 			}
 			
 			const_reference	at(size_type pos) const
 			{
 				if (pos >= _size)
-					throw std::out_of_range("position out of vector's range");
+					throw std::out_of_range("vector");
 				return (c[pos]);
 			}
 			
