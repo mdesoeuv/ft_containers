@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 15:40:18 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:30:59 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -649,14 +649,14 @@ namespace ft
 						return (*this);
 					}
 
-					bool	operator==(const Iterator& rhs)
+					friend bool	operator==(const Iterator lhs, const Iterator rhs)
 					{
-						return (ptr == rhs.ptr);
+						return (lhs.ptr == rhs.ptr);
 					}
 
-					bool	operator!=(const Iterator& rhs)
+					friend bool	operator!=(const Iterator lhs, const Iterator& rhs)
 					{
-						return (!(ptr == rhs.ptr));
+						return (!(lhs.ptr == rhs.ptr));
 					}
 
 					
@@ -758,14 +758,14 @@ namespace ft
 						return (*this);
 					}
 
-					bool	operator==(const Const_Iterator& rhs)
+					friend bool	operator==(const Const_Iterator lhs, const Const_Iterator& rhs)
 					{
-						return (ptr == rhs.ptr);
+						return (lhs.ptr == rhs.ptr);
 					}
 
-					bool	operator!=(const Const_Iterator& rhs)
+					friend bool	operator!=(const Const_Iterator lhs, const Const_Iterator& rhs)
 					{
-						return (!(ptr == rhs.ptr));
+						return (!(lhs.ptr == rhs.ptr));
 					}
 
 					
