@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:50:29 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:58:42 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -544,8 +544,11 @@ namespace ft
 				prepare_alloc(count);
 				if (_size > count)
 					destroy(begin() + count, end());
-				for (size_type i = 0; i < count; ++i)
+				size_type i = 0;
+				for (; i < count && i < _size; ++i)
 					c[i] = value;
+				for (; i < count; ++i)
+					alloc.construct(&c[i], value);
 				_size = count;
 				return ;
 			}
@@ -572,7 +575,6 @@ namespace ft
 				{
 					alloc.construct(&*this_iter, *iter);
 					*this_iter = *iter;
-					std::cout << "iter value = " << *this_iter << std::endl;
 					++this_iter;
 				}
 				
