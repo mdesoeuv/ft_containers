@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 16:57:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:00:17 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,29 +212,7 @@ namespace ft
 
 					friend difference_type	operator-(const Iterator& lhs, const Iterator& rhs)
 					{
-						difference_type	n = 0;
-						Iterator lhs_iter(lhs);
-						Iterator rhs_iter(rhs);
-						
-						if (lhs_iter.ptr == rhs_iter.ptr)
-							return (0);
-						if (lhs_iter.ptr < rhs_iter.ptr)
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr++;
-								n++;
-							}
-						}
-						else
-						{
-							while (lhs_iter.ptr != rhs_iter.ptr)
-							{
-								lhs_iter.ptr--;
-								n++;
-							}
-						}
-						return (n);
+						return (lhs.ptr - rhs.ptr);
 					}
 
 					T&	operator*(void)
