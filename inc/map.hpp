@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 17:30:59 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:52:12 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -624,7 +624,7 @@ namespace ft
 
 					Iterator() : ptr(NULL)
 					{
-					} 
+					}
 
 					Iterator(BaseNode* base_node) : ptr(static_cast<Node*>(base_node))
 					{

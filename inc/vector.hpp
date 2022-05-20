@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 17:22:47 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 17:52:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,11 @@ namespace ft
 					typedef T*									pointer;
 					typedef std::random_access_iterator_tag 	iterator_category;
 					typedef typename vector::difference_type	difference_type;
-
-					Iterator(void) : ptr(NULL)
-					{
-					}
-
-					Iterator(vector& vector) : ptr(vector.data())
-					{
-					}
-
-					Iterator(vector& vector, size_type offset) : ptr(vector.data() + offset)
-					{
-					}
 					
+					explicit Iterator(T* ptr = NULL) : ptr(ptr)
+					{
+					}
+
 					Iterator(const Iterator& other) : ptr(other.ptr)
 					{}
 					
@@ -271,15 +263,8 @@ namespace ft
 					typedef std::random_access_iterator_tag		iterator_category;
 					typedef typename vector::difference_type	difference_type;
 
-					Const_Iterator(void) : ptr(NULL)
-					{
-					}
 
-					Const_Iterator(const vector& vector) : ptr(vector.data())
-					{
-					}
-
-					Const_Iterator(const vector& vector, size_type offset) : ptr(vector.data() + offset)
+					explicit Const_Iterator(const T* ptr = NULL) : ptr(ptr)
 					{
 					}
 					
@@ -604,25 +589,25 @@ namespace ft
 
 			Iterator	begin(void)
 			{
-				Iterator it(*this, 0);
+				Iterator it(this->data());
 				return (it);
 			}
 			
 			Const_Iterator begin(void) const
 			{
-				Const_Iterator It(*this, 0);
+				Const_Iterator It(this->data());
 				return (It);
 			}
 
 			Iterator	end(void)
 			{
-				Iterator it(*this, _size);
+				Iterator it(this->data() + _size);
 				return (it);
 			}
 
 			Const_Iterator	end(void) const
 			{
-				Const_Iterator It(*this, _size);
+				Const_Iterator It(this->data() + _size);
 				return (It);
 			}
 
@@ -754,7 +739,7 @@ namespace ft
 					alloc.construct(&c[index], value);
 				}
 				_size++;
-				Iterator insert_pos(*this, index);
+				Iterator insert_pos(this->data() + index);
 				return (insert_pos);
 			}
 			
