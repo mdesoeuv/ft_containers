@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:11:03 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 11:15:53 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,6 @@ namespace ft
 			pointer	operator->(void)
 			{
 				return (&(operator*()));
-			}
-
-			bool	operator==(const Reverse_Iterator& rhs) // non-member functions ??
-			{
-				return (current == rhs.current);
-			}
-
-			bool	operator!=(const Reverse_Iterator& rhs)
-			{
-				return (!(current == rhs.current));
 			}
 
 			Reverse_Iterator operator+ (difference_type n) const
