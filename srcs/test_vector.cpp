@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 14:33:31 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 15:10:16 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:26:44 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,9 +344,11 @@ int test_vector(void)
 	for (lib::vector<int >::iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)
 		std::cout << *iter << std::endl;
 	std::cout << "assigning a smaller vector without reallocation :" << std::endl;
-	lib::vector<int > smallInt;
+	lib::vector<int> smallInt;
 	smallInt.push_back(1000);
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	copyInt = smallInt;
+	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	std::cout << "vector size : " << smallInt.size() << ", vector capacity : " << smallInt.capacity() << std::endl;
 	std::cout << "vector size : " << copyInt.size() << ", vector capacity : " << copyInt.capacity() << std::endl;
 	for (lib::vector<int >::iterator iter = copyInt.begin(); iter != copyInt.end(); ++iter)

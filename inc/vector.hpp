@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:58:42 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:30:29 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ namespace ft
 
 			void	prepare_alloc(size_type required_size)
 			{
-				reserve(std::max(allocated_size * 2, required_size));
+				if (allocated_size < required_size)
+					reserve(std::max(allocated_size * 2, required_size));
 			}
 
 		private:
@@ -568,7 +569,6 @@ namespace ft
 				for (; iter != last && this_iter != end(); ++iter)
 				{
 					*this_iter = *iter;
-					std::cout << "iter value = " << *this_iter << std::endl;
 					++this_iter;
 				}
 				for (; iter != last; ++iter)

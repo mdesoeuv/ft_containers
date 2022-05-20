@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 11:49:22 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/20 15:18:13 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -899,7 +899,7 @@ namespace ft
 			{
 				Iterator	it = find(key);
 				if (it == end())
-					throw (std::out_of_range("key not found"));
+					throw (std::out_of_range("map::at:  key not found"));
 				return (it->second);
 			}
 
