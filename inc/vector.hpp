@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 17:55:39 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 11:30:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ namespace ft
 		
 		public:
 		
-			typedef	T value_type;
-			typedef Allocator allocator_type;
-			typedef std::size_t size_type;
-			typedef std::ptrdiff_t difference_type;
-			typedef value_type& reference;
-			typedef const value_type& const_reference;
-			typedef typename Allocator::pointer pointer;
-			typedef typename Allocator::const_pointer const_pointer;
-			typedef Iterator iterator;
-			typedef Const_Iterator const_iterator;
-			typedef typename ft::Reverse_Iterator<Iterator> reverse_iterator;
-			typedef typename ft::Reverse_Iterator<Const_Iterator> const_reverse_iterator;
+			typedef	T 												value_type;
+			typedef Allocator 										allocator_type;
+			typedef std::size_t 									size_type;
+			typedef std::ptrdiff_t 									difference_type;
+			typedef value_type& 									reference;
+			typedef const value_type& 								const_reference;
+			typedef typename Allocator::pointer 					pointer;
+			typedef typename Allocator::const_pointer 				const_pointer;
+			typedef Iterator 										iterator;
+			typedef Const_Iterator 									const_iterator;
+			typedef typename ft::Reverse_Iterator<Iterator> 		reverse_iterator;
+			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
 		
 		private:
 
@@ -1050,24 +1050,9 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
-  	bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) // revient a utilser lexigraphical compare
+  	bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		typename ft::vector<T, Alloc>::const_iterator	start_l = lhs.begin();
-		typename ft::vector<T, Alloc>::const_iterator	start_r = rhs.begin();
-		typename ft::vector<T, Alloc>::const_iterator	end_l = lhs.end();
-		typename ft::vector<T, Alloc>::const_iterator	end_r = rhs.end();
-		
-		
-		while (start_l != end_l && start_r != end_r)
-		{
-			if (start_r == end_r || *start_r < *start_l)
-				return (false);
-			else if (*start_l < *start_r)
-				return (true);
-			++start_l;
-			++start_r;
-		}
-		return (start_r != end_r); // returns true if lhs is shorter than rhs
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template <class T, class Alloc>

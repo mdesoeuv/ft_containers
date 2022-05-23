@@ -6,7 +6,7 @@
 #    By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/22 12:05:49 by mdesoeuv          #+#    #+#              #
-#    Updated: 2022/05/20 16:18:57 by mdesoeuv         ###   ########lyon.fr    #
+#    Updated: 2022/05/23 12:07:53 by mdesoeuv         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	:=	ft_containers
 
 CXX		:=	c++
 
-DEBUG		:=	-fsanitize=address
+#DEBUG		:=	-fsanitize=address
 CXXFLAGS	:= -g3 -O3 -Wall -Werror -Wextra -std=c++98 $(DEBUG)
 
 ifeq ($(CHECK_STATUS), 1)
@@ -72,7 +72,7 @@ $(OBJS_DIR)$(FT_DIR)%.o:	$(SRCS_DIR)%.cpp Makefile $(addprefix $(INC_DIR), $(HEA
 							mkdir -p $(OBJS_DIR)$(FT_DIR)
 							$(CXX) $(CXXFLAGS) $(DEBUG) -DCHOICE=0  -c $< -o $@
 
-all			:	ft stl $(NAME)
+all			:	ft stl
 
 stl			:	$(OBJS_FILES_STL)
 				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR)  $(OBJS_FILES_STL) -o $(NAME)_STL
@@ -80,16 +80,13 @@ stl			:	$(OBJS_FILES_STL)
 ft			:	$(OBJS_FILES_FT)
 				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES_FT) -o $(NAME)_FT
 
-$(NAME)		:	$(OBJS_FILES)
-				$(CXX) $(CXXFLAGS) $(DEBUG) -I$(INC_DIR) $(OBJS_FILES) -o $(NAME)
-
 clean		:
 				rm -rf $(OBJS_DIR)
 
 fclean		:	clean
-				rm -f $(NAME) $(NAME)_FT $(NAME)_STL
+				rm -f $(NAME)_FT $(NAME)_STL
 
 re			:	fclean
-	$(MAKE) all
+				$(MAKE) all
 
 .PHONY		:	all re clean fclean ft stl

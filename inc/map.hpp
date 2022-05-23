@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/20 17:52:12 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 12:04:26 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 
 namespace ft
 {
-	int	max(int a, int b);
-
 	template<
     class Key,
     class T,
@@ -42,22 +40,22 @@ namespace ft
 		
 			/* ----- member types ----- */
 
-			typedef Key 											key_type;
-			typedef T												mapped_type;
-			typedef typename ft::pair<const Key, T> 				value_type;		
-			typedef std::size_t										size_type;
-			typedef std::ptrdiff_t									difference_type;
-			typedef Compare											key_compare;
-			typedef Allocator										allocator_type;
-			typedef value_type&										reference;
-			typedef const value_type&								const_reference;
-			typedef typename Allocator::pointer						pointer;
-			typedef typename Allocator::const_pointer				const_pointer;
-			typedef Iterator										iterator;
-			typedef Const_Iterator									const_iterator;
-			typedef typename ft::Reverse_Iterator<Iterator>			reverse_iterator;
-			typedef typename ft::Reverse_Iterator<Const_Iterator>	const_reverse_iterator;
-			typedef typename allocator_type::template rebind<Node>::other node_allocator_type;
+			typedef Key 													key_type;
+			typedef T														mapped_type;
+			typedef typename ft::pair<const Key, T> 						value_type;		
+			typedef std::size_t												size_type;
+			typedef std::ptrdiff_t											difference_type;
+			typedef Compare													key_compare;
+			typedef Allocator												allocator_type;
+			typedef value_type&												reference;
+			typedef const value_type&										const_reference;
+			typedef typename Allocator::pointer								pointer;
+			typedef typename Allocator::const_pointer						const_pointer;
+			typedef Iterator												iterator;
+			typedef Const_Iterator											const_iterator;
+			typedef typename ft::Reverse_Iterator<Iterator>					reverse_iterator;
+			typedef typename ft::Reverse_Iterator<Const_Iterator>			const_reverse_iterator;
+			typedef typename allocator_type::template rebind<Node>::other	node_allocator_type;
 
 			/* ----- display function ----- */
 			
@@ -194,8 +192,6 @@ namespace ft
 
 			BaseNode*	left_rotation(BaseNode* node)
 			{
-				// std::cout << "left rotation" << std::endl;
-				
 				if (node == NULL)
 					return (node);
 				
@@ -225,8 +221,6 @@ namespace ft
 
 			BaseNode*	right_rotation(BaseNode* node)
 			{
-				// std::cout << "right rotation" << std::endl;
-				
 				if (node == NULL)
 					return (node);
 				
@@ -256,9 +250,7 @@ namespace ft
 
 			BaseNode*	balance_tree(BaseNode*& node)
 			{
-				// node->height = 1 + std::max(get_height(node->left), get_height(node->right));
 				int	balance = get_balance_factor(node);
-				// std::cout << "balance factor for node : " << static_cast<Node*>(node)->pair.first << ", is : " << balance << std::endl;
 
 				if (node == NULL)
 					return (node);
@@ -449,7 +441,7 @@ namespace ft
 
 			class BaseNode
 			{
-				public:				// a voir pour protected ?
+				public:
 				
 				BaseNode*	left;
 				BaseNode*	right;
@@ -594,7 +586,7 @@ namespace ft
 
 			class Node : public BaseNode
 			{
-				public: // a voir
+				public:
 				
 					value_type  pair;
 					
@@ -912,7 +904,7 @@ namespace ft
 				if (it != end())
 					return ((*it).second);
 				else
-					return (insert(value_type(key, T())).first->second);
+					return (insert(ft::make_pair(key, T())).first->second);
 			}
 
 			/* ----- Iterators ----- */
@@ -983,13 +975,11 @@ namespace ft
 			bool	empty(void) const
 			{
 				return (_size == 0);
-				// return (begin() == end());
 			}
 
 			size_type	size(void) const
 			{
 				return (_size);
-				// return (end() - begin()); really usefull ?
 			}
 
 			size_type	max_size(void) const
@@ -1191,9 +1181,7 @@ namespace ft
 				while (cursor != this->end())
 				{
 					if (!comp(cursor->first, key))
-					{
 						return (cursor);
-					}
 					++cursor;
 				}
 				return (cursor);
@@ -1206,9 +1194,7 @@ namespace ft
 				while (cursor != this->end())
 				{
 					if (!comp(cursor->first, key))
-					{
 						return (cursor);
-					}
 					++cursor;
 				}
 				return (cursor);
@@ -1221,9 +1207,7 @@ namespace ft
 				while (cursor != this->end())
 				{
 					if (comp(key, cursor->first))
-					{
 						return (cursor);
-					}
 					++cursor;
 				}
 				return (cursor);
@@ -1236,9 +1220,7 @@ namespace ft
 				while (cursor != this->end())
 				{
 					if (comp(key, cursor->first))
-					{
 						return (cursor);
-					}
 					++cursor;
 				}
 				return (cursor);
@@ -1262,13 +1244,9 @@ namespace ft
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
 	{
-		typename ft::map<Key,T,Compare,Alloc>::const_iterator	lhs_first = lhs.begin();
-		typename ft::map<Key,T,Compare,Alloc>::const_iterator	lhs_last = lhs.end();
-		typename ft::map<Key,T,Compare,Alloc>::const_iterator	rhs_first = rhs.begin();
-		
 		if (lhs.size() != rhs.size())
 			return (false);
-		return (ft::equal(lhs_first, lhs_last, rhs_first));	
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));	
 	}
 
 	template< class Key, class T, class Compare, class Alloc >
