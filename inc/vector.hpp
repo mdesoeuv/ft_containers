@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/23 11:30:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/23 17:39:01 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "enable_if.hpp"
 # include "Reverse_Iterator.hpp"
 # include "is_integral.hpp"
+
+# include <vector>
 
 namespace ft
 {
@@ -97,6 +99,8 @@ namespace ft
 
 			class Iterator
 			{
+				friend class Const_Iterator; // a templater
+				
 				protected:
 
 					T*		ptr;
@@ -269,6 +273,9 @@ namespace ft
 					}
 					
 					Const_Iterator(const Const_Iterator& other) : ptr(other.ptr)
+					{}
+					
+					Const_Iterator(Iterator other) : ptr(other.ptr)
 					{}
 					
 					~Const_Iterator(void)
@@ -870,7 +877,7 @@ namespace ft
 				_size += count;
 			}
 
-			Iterator erase(Iterator pos)
+			Iterator erase(iterator pos)
 			{
 				Iterator	index = this->begin();
 				Iterator	save_pos = pos;
