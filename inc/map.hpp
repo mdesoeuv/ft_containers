@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 15:58:15 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 16:13:02 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -838,7 +838,7 @@ namespace ft
 
 			/* ----- member functions ----- */
 
-			map(void) : comp(std::less<Key>()), alloc(std::allocator<ft::pair<const Key, T> >()), _size(0)
+			map(void) : comp(Compare()), alloc(std::allocator<ft::pair<const Key, T> >()), _size(0)
 			{
 			}
 
@@ -852,7 +852,7 @@ namespace ft
 				insert(first, last);
 			}
 			
-			map(const map& other) : comp(other.comp), alloc(other.alloc), _size(0)
+			map(const map& other) : alloc(other.alloc), _size(0)
 			{
 				*this = other;
 			}
