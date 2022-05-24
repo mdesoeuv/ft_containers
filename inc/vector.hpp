@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 20:02:33 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 20:02:58 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "Reverse_Iterator.hpp"
 # include "is_integral.hpp"
 # include "lexicographical_compare.hpp"
-
-# include <vector>
 
 namespace ft
 {
