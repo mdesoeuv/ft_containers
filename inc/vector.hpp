@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 13:29:05 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 13:33:25 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -715,59 +715,19 @@ namespace ft
 			
 			void insert(Iterator pos, size_type count, const T& value)
 			{
-				T*			old_c = c;
-				size_type	index = 0;
-				size_type	count_alloc;
+				size_type	index = std::distance(begin(), pos);
 				
-				for (Iterator iter = this->begin(); iter != pos; ++iter)
-				{
-					index++;
-				}
 				size_type	nb_to_move = _size - index;		
-				if (_size + count > allocated_size)
+				prepare_alloc(_size + count);
+				for (size_type end = _size + count - 1; nb_to_move > 0; --end)
 				{
-					if (allocated_size != 0)
-						count_alloc = allocated_size + count;
-					else
-						count_alloc = count;
-					c = alloc.allocate(count_alloc);
-					try
-					{
-						init(c, old_c, old_c + index, this->alloc);
-						for (size_type i = 0; i < count; ++i)
-						{
-							alloc.construct(&c[index], value);
-							index++;
-						}
-						for (size_type end = _size + count - 1; nb_to_move > 0; --end)
-						{
-							alloc.construct(&c[end], old_c[end - count]);
-							nb_to_move--;
-						}
-						destroy(old_c, old_c + _size, alloc);
-						alloc.deallocate(old_c, allocated_size);
-						allocated_size = count_alloc;
-					}
-					catch (...)
-					{
-						alloc.deallocate(c, count_alloc);
-						c = old_c;
-						throw ;
-					}
+					alloc.construct(&c[end], c[end - count]);
+					nb_to_move--;
 				}
-				else
+				for (size_type i = 0; i < count; ++i)
 				{
-					for (size_type end = _size + count - 1; nb_to_move > 0; --end)
-					{
-						alloc.destroy(c + end - count);
-						alloc.construct(&c[end], c[end - count]);
-						nb_to_move--;
-					}
-					for (size_type i = 0; i < count; ++i)
-					{
-						alloc.construct(&c[index], value);
-						index++;
-					}
+					c[index] = value;
+					index++;
 				}
 				_size += count;
 			}
