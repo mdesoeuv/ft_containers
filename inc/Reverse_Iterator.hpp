@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 13:06:19 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 16:36:09 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ namespace ft
 				return (temp);
 			}
 
-			reference	operator*(void)
+			reference	operator*(void) const
 			{
 				Iter temp(current);
 				
 				temp--;
-				return (*(temp));
+				return (*temp);
 			}
 
-			pointer	operator->(void)
+			pointer	operator->(void) const
 			{
 				return (&(operator*()));
 			}

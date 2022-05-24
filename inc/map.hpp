@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 16:13:02 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 16:40:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -610,7 +610,7 @@ namespace ft
 
 					typedef ft::pair<const Key, T>			value_type;
 					typedef std::ptrdiff_t					difference_type;
-					typedef value_type&						reference;
+					typedef value_type& 					reference;
 					typedef	value_type*						pointer;
 					typedef std::bidirectional_iterator_tag iterator_category;
 
@@ -711,8 +711,8 @@ namespace ft
 
 					typedef ft::pair<const Key, T>			value_type;
 					typedef std::ptrdiff_t					difference_type;
-					typedef value_type&						reference;
-					typedef	value_type*						pointer;
+					typedef const value_type&				reference;
+					typedef	const value_type*				pointer;
 					typedef std::bidirectional_iterator_tag iterator_category;
 
 
