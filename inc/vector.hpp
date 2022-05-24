@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/23 17:39:01 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 11:00:21 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "enable_if.hpp"
 # include "Reverse_Iterator.hpp"
 # include "is_integral.hpp"
+# include "lexicographical_compare.hpp"
 
 # include <vector>
 
@@ -120,9 +121,6 @@ namespace ft
 					}
 
 					Iterator(const Iterator& other) : ptr(other.ptr)
-					{}
-					
-					Iterator(const Const_Iterator& other) : ptr(other.ptr)
 					{}
 					
 					~Iterator(void)
@@ -433,8 +431,9 @@ namespace ft
 				}
 			}
 			
+			/* enable_if to prevent mistaking InputIt with int or size_t */
 			template <class InputIt>
-			vector( InputIt first, InputIt last, const Allocator& alloc = Allocator() ) : alloc(alloc)
+			vector( typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last, const Allocator& alloc = Allocator() ) : alloc(alloc)
 			{
 				size_type	count = 0;
 				
@@ -533,7 +532,7 @@ namespace ft
 
 			allocator_type get_allocator(void) const
 			{
-				return (this->allocator_type);
+				return (alloc);
 			}
 		
 		/* ---------- element access ---------- */
@@ -880,7 +879,6 @@ namespace ft
 			Iterator erase(iterator pos)
 			{
 				Iterator	index = this->begin();
-				Iterator	save_pos = pos;
 
 				if (pos == this->end())
 					return (pos);
@@ -895,13 +893,12 @@ namespace ft
 				}
 				alloc.destroy(&(*index));
 				_size--;
-				return (save_pos);
+				return (pos);
 			}
 
 			Iterator erase(Iterator first, Iterator last)
 			{
 				Iterator	index = this->begin();
-				Iterator	save_pos = last;
 				size_type	range = 0;
 
 				if (first == last)
@@ -928,7 +925,7 @@ namespace ft
 					++index;
 				}
 				_size -= range;
-				return (save_pos);
+				return (first);
 			}
 
 			void	push_back(const T& value)
