@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 15:40:27 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 20:02:33 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ namespace ft
 
 			class Iterator
 			{
-				friend class Const_Iterator; // a templater
+				friend class Const_Iterator;
 				
 				protected:
 

@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:49 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/17 09:56:09 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 20:01:38 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ namespace ft
 			c = other.c;
 		}
 
-		T&			top(void) // change T by reference
+		T&			top(void)
 		{
 			return (c.back());
 		}
 
-		const T&	top(void) const	// change T by const reference
+		const T&	top(void) const
 		{
 			return (c.back());
 		}
