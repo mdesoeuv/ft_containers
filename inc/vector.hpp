@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 13:33:25 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 15:40:27 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -803,6 +803,7 @@ namespace ft
 			Iterator erase(iterator pos)
 			{
 				Iterator	index = this->begin();
+				Iterator	save_pos = pos;
 
 				if (pos == this->end())
 					return (pos);
@@ -817,7 +818,7 @@ namespace ft
 				}
 				alloc.destroy(&(*index));
 				_size--;
-				return (pos);
+				return (save_pos);
 			}
 
 			Iterator erase(Iterator first, Iterator last)
