@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 11:20:49 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 13:29:05 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -699,51 +699,15 @@ namespace ft
 
 			Iterator	insert(Iterator pos, const T& value)
 			{
-				T*				old_c = c;
 				size_type		index = std::distance(begin(), pos);
-				size_type		count;
 				
-				if (_size == allocated_size)
+				prepare_alloc(_size + 1);
+
+				for (size_type end = _size; end != index; --end)
 				{
-					if (allocated_size != 0)
-						count = allocated_size * 2;
-					else
-						count = 1;
-					c = alloc.allocate(count);
-					try
-					{
-						init(c, old_c, old_c + index, this->alloc);
-						for (size_type end = _size; end != index; --end)
-						{
-							if (end != _size)
-								alloc.destroy(&c[end]);
-							alloc.construct(&c[end], c[end - 1]);
-						}
-						if (index != _size)
-							alloc.destroy(&c[index]);
-						alloc.construct(&c[index], value);
-						alloc.deallocate(old_c, allocated_size);
-						allocated_size = count;
-					}
-					catch (...)
-					{
-						alloc.deallocate(c, count);
-						c = old_c;
-						throw ;
-					}
+					c[end] = c[end - 1];
 				}
-				else
-				{
-					for (size_type end = _size; end != index; --end)
-					{
-						if (end != _size)
-							alloc.destroy(&c[end]);
-						alloc.construct(&c[end], c[end - 1]);
-					}
-					if (index != _size)
-						alloc.destroy(&c[index]);
-					alloc.construct(&c[index], value);
-				}
+				alloc.construct(&c[index], value);
 				_size++;
 				Iterator insert_pos(this->data() + index);
 				return (insert_pos);
@@ -810,7 +774,7 @@ namespace ft
 
 			
 			template <class InputIt>
-			void insert(Iterator pos, InputIt first, InputIt last)
+			void insert(Iterator pos, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first, InputIt last)
 			{
 				T*			old_c = c;
 				size_type	index = 0;
