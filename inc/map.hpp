@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 16:40:55 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 19:53:55 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,16 +337,14 @@ namespace ft
 				else
 				{
 					BaseNode* y = node->next();
+					imbalance_node = y;
 					if (y->parent != node)
 					{
 						imbalance_node = y->parent;
 						subtree_shift(y, y->right);
 						y->right = node->right;
 						y->right->parent = y;
-						
-						rebalance(imbalance_node);
 					}
-					imbalance_node = y;
 					subtree_shift(node, y);
 					y->left = node->left;
 					y->left->parent = y;
