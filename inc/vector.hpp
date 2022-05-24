@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:12:39 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 11:00:21 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 11:20:49 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,7 +383,7 @@ namespace ft
 
 					friend bool	operator<=(const Const_Iterator lhs, const Const_Iterator rhs)
 					{
-						return (lhs.tr <= rhs.ptr);
+						return (lhs.ptr <= rhs.ptr);
 					}
 
 					friend bool	operator>(const Const_Iterator lhs, const Const_Iterator rhs)

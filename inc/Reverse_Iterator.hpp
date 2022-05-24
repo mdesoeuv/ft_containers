@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:44 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/24 11:18:31 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 13:04:03 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ namespace ft
 
 			friend difference_type	operator-(const Reverse_Iterator lhs, const Reverse_Iterator rhs)
 			{
-				return (rhs.current - lhs.current);
+				return (rhs.base() - lhs.base());
 			}
 
 			reference	operator[](difference_type n) const
@@ -174,8 +174,24 @@ namespace ft
 			{
 				return (lhs.base() <= rhs.base());
 			}
+
+
+			
 			
 			
 
 	};
+	
+	template <class Iterator>
+	typename Reverse_Iterator<Iterator>::difference_type operator-( const Reverse_Iterator<Iterator>& lhs, const Reverse_Iterator<Iterator>& rhs )
+	{
+		return (lhs.base() - rhs.base());				
+	}
+	
+	/* added template to handle const_reverse_iterator - reverse_iterator */
+	template <class Iterator1, class Iterator2>
+	typename Reverse_Iterator<Iterator1>::difference_type operator-( const Reverse_Iterator<Iterator1>& lhs, const Reverse_Iterator<Iterator2>& rhs )
+	{
+		return (lhs.base() - rhs.base());				
+	}
 }
