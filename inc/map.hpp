@@ -6,7 +6,7 @@
 /*   By: mdesoeuv <mdesoeuv@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 14:45:27 by mdesoeuv          #+#    #+#             */
-/*   Updated: 2022/05/23 12:04:26 by mdesoeuv         ###   ########lyon.fr   */
+/*   Updated: 2022/05/24 15:58:15 by mdesoeuv         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -684,14 +684,12 @@ namespace ft
 						return (it_temp);
 					}
 
-
-					value_type&	operator*(void)
+					value_type&	operator*(void) const
 					{
 						return (ptr->pair);
 					}
 
-					
-					value_type*	operator->(void)
+					value_type*	operator->(void) const
 					{
 						return (&(ptr->pair));
 					}
@@ -735,7 +733,7 @@ namespace ft
 					{
 					}
 
-					Const_Iterator(const Iterator& other) : ptr(other.ptr)
+					Const_Iterator(Iterator other) : ptr(other.ptr)
 					{
 					}
 
@@ -794,13 +792,13 @@ namespace ft
 					}
 
 
-					const value_type&	operator*(void)
+					const value_type&	operator*(void) const
 					{
 						return (ptr->pair);
 					}
 
 					
-					const value_type*	operator->(void)
+					const value_type*	operator->(void) const
 					{
 						return (&(ptr->pair));
 					}
